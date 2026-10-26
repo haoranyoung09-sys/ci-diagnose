@@ -1,0 +1,31 @@
+# Experimental sketch. Disabled.
+# Intended later shape: on a failed workflow_run, read the saved log and
+# post a short triage summary. This file does not do that.
+# The job is forced off. Permissions are contents: read only.
+# There is no token, no secret, and no pull-requests: write grant.
+# Do not enable this until a maintainer removes `if: false` on purpose
+# and reviews the comment step. Leave the repository private.
+
+name: triage-comment
+
+"on":
+  workflow_run:
+    workflows: ["smoke"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  comment:
+    name: triage summary (disabled)
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show the command that would score a saved log
+        run: |
+          echo "Experimental and disabled. This step does not post and does not call gh."
+          echo "python3 scripts/diagnose.py <saved-log>"

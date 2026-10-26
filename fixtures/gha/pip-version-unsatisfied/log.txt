@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run pip install
+##[endgroup]
+Collecting example-lib==9.9.9
+ERROR: Could not find a version that satisfies the requirement example-lib==9.9.9
+ERROR: No matching distribution found for example-lib==9.9.9
+##[error]Process completed with exit code 1.

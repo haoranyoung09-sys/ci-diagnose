@@ -1,0 +1,8 @@
+{
+  "id": "jest-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Jest exceeded a 5000 ms timeout. The same test passed on the previous attempt and failed on retry 2 of 3. Labeled flake, not a logic assertion."
+}

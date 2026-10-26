@@ -1,0 +1,15 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npx playwright test
+##[endgroup]
+  1) dialog.spec.ts:12:3 › billing dialog › shows the seat total
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('dialog')
+
+    This case passed on the previous run (attempt 1) and failed on retry 2 of 3.
+    Suspected flake: the dialog was not visible yet. The failure is intermittent on the same commit.
+
+  1 failed
+    dialog.spec.ts:12:3 › billing dialog › shows the seat total
+##[error]Process completed with exit code 1.

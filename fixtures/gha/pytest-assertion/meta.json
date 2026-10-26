@@ -1,0 +1,8 @@
+{
+  "id": "pytest-assertion",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "pytest AssertionError on an invoice total. The failure is deterministic and there is no retry or timeout note, so it is a test failure rather than a flake."
+}

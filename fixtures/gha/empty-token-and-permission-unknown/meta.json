@@ -1,0 +1,8 @@
+{
+  "id": "empty-token-and-permission-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "NODE_AUTH_TOKEN is empty and the token does not have permission. Equal scores, so unknown. Do not invent a token and do not grant write-all."
+}

@@ -1,0 +1,11 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm run migrate
+> example-app@1.4.2 migrate
+> node scripts/migrate.js
+##[endgroup]
+example-app migrate: loading config from the job environment
+##[error]Error: Required environment variable DATABASE_URL is not set
+    at loadConfig (/home/runner/work/example-app/example-app/src/config.ts:22:11)
+    at main (/home/runner/work/example-app/example-app/scripts/migrate.js:9:18)
+##[error]Process completed with exit code 1.
+##[notice]The variable name is not a secret. No connection string was printed.

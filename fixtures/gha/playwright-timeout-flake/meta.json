@@ -1,0 +1,8 @@
+{
+  "id": "playwright-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Playwright reports a 30000ms timeout. The same dialog test passed on the previous attempt and failed on retry 2 of 3. Suspected flake, not a stable assertion."
+}

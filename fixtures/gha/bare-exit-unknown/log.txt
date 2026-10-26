@@ -1,0 +1,4 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./scripts/check.sh
+##[endgroup]
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "canceled-step-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job was canceled before any step log was uploaded. No test, env, dependency, permission, flake, or host-limit signal is present, so taxonomy v0 stays unknown."
+}

@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the release checklist
+##[endgroup]
+##[error]The operation was canceled.
+The job stopped before a step log was uploaded.
+No checker output was recorded.

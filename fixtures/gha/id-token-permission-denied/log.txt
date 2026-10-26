@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run aws-actions/configure-aws-credentials
+##[endgroup]
+##[error]The job was not granted id-token: write.
+The workflow token does not have permission to request an OIDC token for example-org/example-app.
+permissions.id-token: write is the narrow grant this step needs.
+##[error]Process completed with exit code 1.

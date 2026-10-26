@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/cache restore
+##[endgroup]
+Error: EACCES: permission denied, mkdir '/home/runner/work/_temp/example-cache'
+The step could not create a local cache directory.
+##[error]Process completed with exit code 1.

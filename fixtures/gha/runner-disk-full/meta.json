@@ -1,0 +1,8 @@
+{
+  "id": "runner-disk-full",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Artifact upload hit 'No space left on device' after the runner disk quota was exceeded. Host storage, not a test or permission error."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "rspec-failure-error",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "RSpec Failure/Error on a status code. The example ran and the expectation failed. Not a timeout and not a missing env var."
+}

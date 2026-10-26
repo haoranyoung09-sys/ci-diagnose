@@ -1,0 +1,8 @@
+{
+  "id": "bare-exit-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The step exits 1 with no test, environment, dependency, permission, or host signal. Taxonomy v0 leaves this unknown on purpose."
+}

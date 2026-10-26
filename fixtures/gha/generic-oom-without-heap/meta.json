@@ -1,0 +1,8 @@
+{
+  "id": "generic-oom-without-heap",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The pack step ran out of memory without a V8 heap line or OOMKilled. Infra, not a test assertion and not a flake timeout."
+}

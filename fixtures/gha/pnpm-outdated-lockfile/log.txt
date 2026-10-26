@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run pnpm install --frozen-lockfile
+##[endgroup]
+ERR_PNPM_OUTDATED_LOCKFILE
+Cannot proceed with the frozen installation.
+The current "pnpm-lock.yaml" is out of date with the example-app package manifest.
+Update the lockfile and commit it. Do not drop --frozen-lockfile in CI to hide the drift.
+##[error]Process completed with exit code 1.

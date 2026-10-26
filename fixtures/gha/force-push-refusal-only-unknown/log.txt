@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the git step
+##[endgroup]
+Refusing to force-push.
+No remote 403 and no contents: grant line were recorded.
+##[error]Process completed with exit code 1.

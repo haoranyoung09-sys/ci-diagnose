@@ -1,0 +1,8 @@
+{
+  "id": "force-push-refusal-only-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Only Refusing to force-push, which scores under the v0 threshold. Unknown, not permissions. The line forbids a force-push; it does not authorize one."
+}

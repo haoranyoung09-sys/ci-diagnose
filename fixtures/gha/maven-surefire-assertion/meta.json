@@ -1,0 +1,8 @@
+{
+  "id": "maven-surefire-assertion",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Surefire reports an AssertionError, expected 200 but was 503. The JVM stayed up, so this is a test failure rather than an out-of-memory infra fault."
+}

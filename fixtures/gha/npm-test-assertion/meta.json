@@ -1,0 +1,8 @@
+{
+  "id": "npm-test-assertion",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Jest assertion on an HTTP status. The suite ran; one expectation failed. Shaped like `gh run view --log-failed` output, including job, step, and timestamp prefixes."
+}

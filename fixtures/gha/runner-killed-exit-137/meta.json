@@ -1,0 +1,8 @@
+{
+  "id": "runner-killed-exit-137",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The runner process was killed and the job exited 137. No heap line and no disk line. One rerun is a check, not a test edit."
+}

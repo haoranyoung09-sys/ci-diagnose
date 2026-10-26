@@ -1,0 +1,8 @@
+{
+  "id": "go-test-want-got",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Go test prints --- FAIL and a got/want mismatch for the health status. The suite started and the assertion is stable, so this is test rather than flake or infra."
+}

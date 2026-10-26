@@ -1,0 +1,13 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm run build
+> example-app@1.4.2 build
+> node --max-old-space-size=2048 scripts/build.js
+##[endgroup]
+
+<--- Last few GCs --->
+
+[4412] Mark-Compact (synthetic) 2043 MB -> 2041 MB allocation failure, scavenge might not succeed
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+##[error]The runner process was Killed (exit 137). Likely OOMKilled by the host.
+##[error]Process completed with exit code 137.

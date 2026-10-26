@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm publish
+##[endgroup]
+NODE_AUTH_TOKEN is empty
+The workflow token does not have permission to publish packages.
+Both lines are present. Neither outranks the other.
+##[error]Process completed with exit code 1.

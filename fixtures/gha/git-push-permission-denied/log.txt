@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run git push origin HEAD:refs/heads/release/1.4.2
+##[endgroup]
+remote: Permission to example-org/example-app.git denied to github-actions[bot].
+fatal: unable to access 'https://github.com/example-org/example-app/': The requested URL returned error: 403
+##[error]The job was not granted contents: write.
+Refusing to force-push or retry with a broader token automatically.
+##[error]Process completed with exit code 128.

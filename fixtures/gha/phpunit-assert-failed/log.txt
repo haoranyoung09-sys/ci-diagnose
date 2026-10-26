@@ -1,0 +1,11 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run vendor/bin/phpunit
+##[endgroup]
+PHPUnit 10.5.0 by Sebastian Bergmann and contributors.
+There was 1 failure:
+1) Example\HealthTest::test_status
+Failed asserting that 503 is identical to 200.
+/home/runner/work/example-app/example-app/tests/HealthTest.php:18
+FAILURES!
+Tests: 4, Assertions: 4, Failures: 1.
+##[error]Process completed with exit code 1.

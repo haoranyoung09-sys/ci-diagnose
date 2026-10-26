@@ -1,0 +1,23 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm ci
+> npm ci
+##[endgroup]
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR!
+npm ERR! While resolving: example-app@1.4.2
+npm ERR! Found: react@18.3.1
+npm ERR! node_modules/react
+npm ERR!   react@"^18.3.1" from the root project
+npm ERR!
+npm ERR! Could not resolve dependency:
+npm ERR! peer react@"^17.0.0" from example-widget@2.1.0
+npm ERR! node_modules/example-widget
+npm ERR!   example-widget@"^2.1.0" from the root project
+npm ERR!
+npm ERR! Conflicting peer dependency: react@17.0.2
+npm ERR! node_modules/react
+npm ERR!   peer react@"^17.0.0" from example-widget@2.1.0
+npm ERR!
+npm ERR! Fix the upstream dependency conflict before continuing.
+##[error]Process completed with exit code 1.

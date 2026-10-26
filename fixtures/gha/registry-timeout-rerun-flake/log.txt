@@ -1,0 +1,11 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm ci
+##[endgroup]
+npm ERR! network request to https://registry.npmjs.org/left-pad failed, reason: connect ETIMEDOUT
+npm ERR! network This is a problem related to network connectivity.
+npm ERR! network In most cases you are behind a proxy or have bad network settings.
+npm notice Attempt 1 failed at 2026-10-26T01:31:02Z
+##[notice]This step failed once and passed on the automatic rerun.
+Suspected flake: intermittent timeout talking to the public registry.
+The install log from the successful rerun is not repeated here. No package version conflict was reported.
+##[error]Process completed with exit code 1.

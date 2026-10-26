@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run python scripts/publish_manifest.py
+##[endgroup]
+publish_manifest: reading the job environment
+##[error]Error: Required environment variable API_BASE_URL is not set
+    at requireEnv (scripts/publish_manifest.py:14)
+##[notice]The variable name is not a secret. No endpoint was printed.
+##[error]Process completed with exit code 1.

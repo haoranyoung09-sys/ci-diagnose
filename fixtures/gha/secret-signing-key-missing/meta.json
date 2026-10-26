@@ -1,0 +1,8 @@
+{
+  "id": "secret-signing-key-missing",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "secret SIGNING_KEY was not provided. No value is printed. This is env, not a permissions 403 and not a lockfile drift."
+}

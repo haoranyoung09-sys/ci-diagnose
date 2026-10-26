@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the publish step
+##[endgroup]
+Error: Environment variable AWS_REGION is undefined
+The example-app publish step needs that name on the job. No key material is in this log.
+##[error]Process completed with exit code 1.

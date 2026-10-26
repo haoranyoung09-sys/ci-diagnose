@@ -1,0 +1,8 @@
+{
+  "id": "cargo-test-result-failed",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "cargo prints test result: FAILED for health_status. The harness ran. This is test, not a missing crate feature and not a runner OOM."
+}

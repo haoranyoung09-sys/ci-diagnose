@@ -1,0 +1,8 @@
+{
+  "id": "pnpm-outdated-lockfile",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "pnpm refuses a frozen install because pnpm-lock.yaml is out of date. Update the lockfile. This is not an empty token and not a test assertion."
+}

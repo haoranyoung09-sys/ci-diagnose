@@ -1,0 +1,8 @@
+{
+  "id": "npm-ci-lockfile-drift",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "npm ci refuses to install because package.json and package-lock.json disagree on left-pad. The lockfile needs an update; swapping in npm install is not the fix."
+}

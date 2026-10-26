@@ -1,0 +1,8 @@
+{
+  "id": "phpunit-assert-failed",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "PHPUnit Failed asserting that 503 is identical to 200. The suite started. This is a test failure, not a flake and not a resolver error."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "id-token-permission-denied",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job was not granted id-token: write, so it cannot request an OIDC token. No credential value appears. This is permissions, not a missing environment variable."
+}

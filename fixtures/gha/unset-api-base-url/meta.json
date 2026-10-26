@@ -1,0 +1,8 @@
+{
+  "id": "unset-api-base-url",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The deploy step stops because API_BASE_URL is unset. No URL value is printed. This is a missing name, not a permissions 403."
+}

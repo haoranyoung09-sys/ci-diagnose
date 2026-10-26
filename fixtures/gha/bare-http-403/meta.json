@@ -1,0 +1,8 @@
+{
+  "id": "bare-http-403",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A single HttpError 403 with no scope name. Weak permissions win, not env. The playbook must ask which API before granting a scope."
+}

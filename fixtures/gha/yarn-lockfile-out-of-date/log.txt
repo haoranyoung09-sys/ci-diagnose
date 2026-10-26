@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run yarn install --frozen-lockfile
+##[endgroup]
+error The yarn.lock file is out of date.
+error Found 1 package that does not match the manifest for example-app.
+error Run yarn install to refresh the lockfile locally. Do not delete yarn.lock in CI.
+##[error]Process completed with exit code 1.

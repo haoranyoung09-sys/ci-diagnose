@@ -1,0 +1,64 @@
+# Fixture corpus
+
+Synthetic, redacted GitHub Actions failures for taxonomy v0. Nothing here is a customer log. Every `log.txt` says it is a synthetic redacted fixture and not a real workflow run.
+
+```bash
+python3 scripts/diagnose.py --fixtures-dir fixtures/gha
+```
+
+The loader checks `meta.json`, rejects secret-like strings, and fails the smoke run when the classifier disagrees with `label`.
+
+## meta.json
+
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `id` | yes | Kebab-case, same as the directory name |
+| `label` | yes | One of `flake`, `env`, `test`, `deps`, `permissions`, `infra`, `unknown` |
+| `notes` | yes | Why this label, and why a neighbor is wrong |
+| `source` | yes | `synthetic` or `redacted-public` |
+| `redacted` | yes | Must be `true` |
+| `host` | yes under `gha/` | `github-actions` |
+
+`label` is ground truth for the smoke test. The classifier does not read it while scoring.
+
+## Cases
+
+| id | label | What the log is |
+| --- | --- | --- |
+| `npm-test-assertion` | test | Jest expected 200, received 503. `gh --log-failed` prefixes included. |
+| `pytest-assertion` | test | pytest `AssertionError` on an invoice total. |
+| `missing-database-url` | env | `DATABASE_URL` unset. No connection string. |
+| `missing-node-auth-token` | env | `NODE_AUTH_TOKEN` empty. No token value. |
+| `gha-token-integration-403` | permissions | Issue comment API: resource not accessible by integration. |
+| `git-push-permission-denied` | permissions | `github-actions[bot]` push denied, HTTP 403. |
+| `npm-peer-eresolve` | deps | react 18 root versus a react 17 peer. |
+| `npm-ci-lockfile-drift` | deps | `npm ci` lockfile out of sync on `left-pad`. |
+| `jest-timeout-flake` | flake | 5000 ms timeout; passed on the previous attempt. |
+| `registry-timeout-rerun-flake` | flake | Registry connect timed out; passed on automatic rerun. |
+| `node-heap-oom` | infra | V8 heap limit, runner killed, exit 137. |
+| `runner-disk-full` | infra | Artifact upload, no space left on device. |
+| `bare-exit-unknown` | unknown | Exit code 1 and no taxonomy signal. |
+| `go-test-want-got` | test | `go test` `--- FAIL`, got 503 want 200. |
+| `maven-surefire-assertion` | test | Surefire `AssertionError`, expected 200 was 503. |
+| `unset-api-base-url` | env | `API_BASE_URL` unset. No endpoint printed. |
+| `pnpm-outdated-lockfile` | deps | `ERR_PNPM_OUTDATED_LOCKFILE` on a frozen install. |
+| `id-token-permission-denied` | permissions | Job not granted `id-token: write`. No credential. |
+| `playwright-timeout-flake` | flake | 30000 ms timeout; passed on the previous attempt. |
+| `canceled-step-unknown` | unknown | Canceled before any step log. No v0 signal at all. |
+| `phpunit-assert-failed` | test | PHPUnit "Failed asserting that". Suite started. |
+| `rspec-failure-error` | test | RSpec `Failure/Error` with expected 200, got 503. |
+| `cargo-test-result-failed` | test | `test result: FAILED` from cargo. |
+| `pip-version-unsatisfied` | deps | pip could not satisfy `example-lib==9.9.9`. |
+| `yarn-lockfile-out-of-date` | deps | `yarn.lock` out of date on a frozen install. |
+| `secret-signing-key-missing` | env | `SIGNING_KEY` was not provided. No value. |
+| `aws-region-undefined` | env | `AWS_REGION` undefined. No access key. |
+| `bare-http-403` | permissions | One `HttpError: 403` and no scope name. |
+| `generic-oom-without-heap` | infra | "out of memory" without a V8 heap line. |
+| `runner-killed-exit-137` | infra | Runner process killed, exit 137. |
+| `cypress-timeout-flake` | flake | 4000 ms timeout; passed on the previous run. |
+| `timeout-and-assertion-unknown` | unknown | Tie: `AssertionError` and "Exceeded timeout of 5000". |
+| `empty-token-and-permission-unknown` | unknown | Tie: empty `NODE_AUTH_TOKEN` and "does not have permission". |
+| `force-push-refusal-only-unknown` | unknown | "Refusing to force-push" stays under the score threshold. |
+| `cache-eacces-unknown` | unknown | `EACCES` on a runner cache path. Not a GitHub 403. |
+
+Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

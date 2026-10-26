@@ -1,0 +1,28 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run python -m pytest -q
+##[endgroup]
+============================= test session starts ==============================
+platform linux -- Python 3.12.6, pytest-8.3.2, pluggy-1.5.0
+rootdir: /home/runner/work/example-app/example-app
+collected 6 items
+
+tests/test_billing.py::test_invoice_total FAILED                         [ 16%]
+tests/test_billing.py::test_empty_invoice PASSED                         [ 33%]
+tests/test_billing.py::test_currency PASSED                              [ 50%]
+tests/test_billing.py::test_tax_exempt PASSED                            [ 66%]
+tests/test_billing.py::test_rounding PASSED                              [ 83%]
+tests/test_billing.py::test_receipt_id PASSED                            [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_invoice_total ______________________________
+
+    def test_invoice_total():
+        total = invoice_total([Item("seat", 2, 5)])
+>       assert total == 12.5
+E       AssertionError: assert 10.0 == 12.5
+
+tests/test_billing.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_billing.py::test_invoice_total - AssertionError: assert 10.0 == 12.5
+========================= 1 failed, 5 passed in 0.42s ==========================
+##[error]Process completed with exit code 1.

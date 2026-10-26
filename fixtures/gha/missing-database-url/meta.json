@@ -1,0 +1,8 @@
+{
+  "id": "missing-database-url",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job exits before tests because DATABASE_URL is unset. The value is intentionally absent; only the variable name appears."
+}

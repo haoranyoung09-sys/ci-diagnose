@@ -1,0 +1,8 @@
+{
+  "id": "registry-timeout-rerun-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "npm registry connect timed out, then the same job passed on the automatic rerun. Intermittent network, not a peer-resolution conflict and not a runner OOM."
+}

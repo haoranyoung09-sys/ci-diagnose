@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cypress run
+##[endgroup]
+CypressError: Timed out retrying after 4000ms while looking for the modal.
+Timeout of 4000ms exceeded.
+This case passed on the previous run.
+Suspected flake: the modal was not in the DOM yet. The failure is intermittent on the same commit.
+##[error]Process completed with exit code 1.

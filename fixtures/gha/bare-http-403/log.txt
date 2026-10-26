@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the packages call
+##[endgroup]
+##[error]HttpError: 403
+The packages API rejected the call.
+##[error]Process completed with exit code 1.

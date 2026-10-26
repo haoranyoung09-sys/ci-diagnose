@@ -1,0 +1,8 @@
+{
+  "id": "aws-region-undefined",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Environment variable AWS_REGION is undefined. No access key is present. This is env, not infra disk and not an IAM 403."
+}

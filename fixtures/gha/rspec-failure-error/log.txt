@@ -1,0 +1,12 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundle exec rspec
+##[endgroup]
+Failures:
+  1) Health returns ok
+     Failure/Error: expect(status).to eq(200)
+       expected: 200
+       got: 503
+     # ./spec/health_spec.rb:12
+Finished in 0.04 seconds
+1 example, 1 failure
+##[error]Process completed with exit code 1.

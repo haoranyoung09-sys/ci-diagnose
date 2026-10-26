@@ -1,0 +1,28 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+ci	Run npm test	2026-10-26T01:14:22.1038427Z ##[group]Run npm test
+ci	Run npm test	2026-10-26T01:14:22.2041180Z > example-app@1.4.2 test
+ci	Run npm test	2026-10-26T01:14:22.2042104Z > jest --ci --color=false
+ci	Run npm test	2026-10-26T01:14:22.2042881Z ##[endgroup]
+ci	Run npm test	2026-10-26T01:14:25.5510021Z PASS src/api/status.test.ts
+ci	Run npm test	2026-10-26T01:14:25.7804419Z FAIL src/api/health.test.ts
+ci	Run npm test	2026-10-26T01:14:25.7805902Z   ● health endpoint › returns 200 when the process is up
+ci	Run npm test	2026-10-26T01:14:25.7807014Z
+ci	Run npm test	2026-10-26T01:14:25.7807708Z     expect(received).toBe(expected) // Object.is equality
+ci	Run npm test	2026-10-26T01:14:25.7808622Z
+ci	Run npm test	2026-10-26T01:14:25.7809204Z     Expected: 200
+ci	Run npm test	2026-10-26T01:14:25.7809886Z     Received: 503
+ci	Run npm test	2026-10-26T01:14:25.7811002Z
+ci	Run npm test	2026-10-26T01:14:25.7811884Z       16 |   it("returns 200 when the process is up", async () => {
+ci	Run npm test	2026-10-26T01:14:25.7813011Z       17 |     const res = await request(app).get("/health");
+ci	Run npm test	2026-10-26T01:14:25.7813908Z     > 18 |     expect(res.status).toBe(200);
+ci	Run npm test	2026-10-26T01:14:25.7814700Z          |                            ^
+ci	Run npm test	2026-10-26T01:14:25.7815488Z       19 |   });
+ci	Run npm test	2026-10-26T01:14:25.7816207Z       20 |
+ci	Run npm test	2026-10-26T01:14:25.7817440Z
+ci	Run npm test	2026-10-26T01:14:25.7818333Z       at Object.toBe (src/api/health.test.ts:18:28)
+ci	Run npm test	2026-10-26T01:14:25.9001124Z
+ci	Run npm test	2026-10-26T01:14:25.9002408Z Test Suites: 1 failed, 4 passed, 5 total
+ci	Run npm test	2026-10-26T01:14:25.9003615Z Tests:       1 failed, 22 passed, 23 total
+ci	Run npm test	2026-10-26T01:14:25.9004702Z Snapshots:   0 total
+ci	Run npm test	2026-10-26T01:14:25.9005888Z Time:        3.418 s
+ci	Run npm test	2026-10-26T01:14:25.9100440Z ##[error]Process completed with exit code 1.

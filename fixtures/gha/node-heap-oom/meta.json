@@ -1,0 +1,8 @@
+{
+  "id": "node-heap-oom",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "V8 reached the heap limit and the runner process was killed with exit 137. This is a host memory limit, not an assertion failure."
+}

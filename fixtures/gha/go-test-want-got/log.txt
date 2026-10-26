@@ -1,0 +1,9 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run go test ./...
+##[endgroup]
+--- FAIL: TestHealth (0.00s)
+    health_test.go:18: GET /health got 503, want 200
+FAIL
+FAIL	example.com/example-app/api	0.021s
+FAIL
+##[error]Process completed with exit code 1.

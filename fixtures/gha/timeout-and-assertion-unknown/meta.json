@@ -1,0 +1,8 @@
+{
+  "id": "timeout-and-assertion-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "AssertionError and Exceeded timeout of 5000 tie, so the label is unknown. Do not pick flake or test until one signal repeats alone."
+}

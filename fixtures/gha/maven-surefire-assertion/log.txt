@@ -1,0 +1,12 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run mvn -B test
+##[endgroup]
+[INFO] Running example.HealthTest
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.412 s <<< FAILURE! -- in example.HealthTest
+[ERROR] example.HealthTest.status -- Time elapsed: 0.018 s <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<503>
+	at example.HealthTest.status(HealthTest.java:18)
+[ERROR] Failures:
+[ERROR]   HealthTest.status:18 expected:<200> but was:<503>
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0
+##[error]Process completed with exit code 1.

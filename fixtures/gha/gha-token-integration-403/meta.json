@@ -1,0 +1,8 @@
+{
+  "id": "gha-token-integration-403",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The default GITHUB_TOKEN cannot create an issue comment. GitHub returns 403 and 'Resource not accessible by integration'. No token value is included."
+}

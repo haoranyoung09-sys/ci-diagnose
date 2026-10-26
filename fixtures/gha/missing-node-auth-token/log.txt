@@ -1,0 +1,11 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/setup-node@v4
+with:
+  registry-url: https://registry.npmjs.org
+  node-version: 22
+##[endgroup]
+##[error]Input required and not supplied: NODE_AUTH_TOKEN
+npm notice Publishing example-app@1.4.2 is blocked before any request is sent.
+##[error]NODE_AUTH_TOKEN is empty. The setup-node action requires this environment variable to talk to the registry.
+##[notice]Do not paste a token into the workflow log to debug this step.
+##[error]Process completed with exit code 1.

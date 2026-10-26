@@ -1,0 +1,12 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/upload-artifact@v4
+with:
+  name: build-logs
+  path: logs/
+##[endgroup]
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        14G   14G     0 100% /
+tar: logs/artifact.tar: Cannot write: No space left on device
+##[error]No space left on device
+The GitHub-hosted runner disk quota exceeded while uploading the artifact.
+##[error]Process completed with exit code 1.

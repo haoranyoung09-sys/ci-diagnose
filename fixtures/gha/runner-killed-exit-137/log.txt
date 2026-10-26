@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the build
+##[endgroup]
+##[error]The runner process was killed.
+The job ended with status 137. No test summary was written.
+##[error]Process completed with exit code 137.

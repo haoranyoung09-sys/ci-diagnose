@@ -1,0 +1,25 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+> example-app@1.4.2 test
+> jest --ci --color=false src/queue/worker.test.ts
+##[endgroup]
+FAIL src/queue/worker.test.ts
+  ● worker drains jobs › completes within the budget
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      11 | describe("worker drains jobs", () => {
+      12 |   it("completes within the budget", async () => {
+    > 13 |     await worker.drain();
+         |     ^
+      14 |     expect(worker.pending).toBe(0);
+      15 |   });
+      16 | });
+
+      at src/queue/worker.test.ts:13:5
+      at src/queue/worker.test.ts:12:30
+
+This case passed on the previous run (attempt 1) and failed on retry 2 of 3.
+Suspected flake: timing-sensitive wait on an in-memory queue. The failure is intermittent across attempts on the same commit.
+##[error]Process completed with exit code 1.

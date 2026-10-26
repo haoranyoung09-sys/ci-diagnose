@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+AssertionError: expected 200 received 503
+Exceeded timeout of 5000 ms for a test.
+The log does not say which line is stable across attempts.
+##[error]Process completed with exit code 1.

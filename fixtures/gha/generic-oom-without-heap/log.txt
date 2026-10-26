@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the pack step
+##[endgroup]
+Packing example-app assets.
+The pack step ran out of memory.
+The job stopped before the test suite started.
+##[error]Process completed with exit code 137.

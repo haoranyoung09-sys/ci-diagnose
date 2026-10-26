@@ -1,0 +1,8 @@
+{
+  "id": "cache-eacces-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "EACCES on a runner cache directory. No GitHub API 403, so this is not permissions. No OOM or disk-full line, so this is not infra."
+}

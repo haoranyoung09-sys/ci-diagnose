@@ -1,0 +1,8 @@
+{
+  "id": "missing-node-auth-token",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "setup-node publish step requires NODE_AUTH_TOKEN and the variable is empty. The token value is intentionally absent from this invented log."
+}

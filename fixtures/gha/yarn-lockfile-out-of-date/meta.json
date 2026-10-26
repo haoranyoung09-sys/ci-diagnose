@@ -1,0 +1,8 @@
+{
+  "id": "yarn-lockfile-out-of-date",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "yarn.lock is out of date on a frozen install. Commit an updated lockfile. Not an empty token and not a Jest assertion."
+}
