@@ -1,0 +1,8 @@
+{
+  "id": "checkout-tls-hook-cascade-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Checkout certificate verification failed, then the post-checkout hook could not run. The hook line is a cascade, not a separate test failure."
+}

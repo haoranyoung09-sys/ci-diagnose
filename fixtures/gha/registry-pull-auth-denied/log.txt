@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull mcr.microsoft.com/dotnet/sdk:8.0
+##[endgroup]
+Error response from daemon: pull access denied for mcr.microsoft.com/dotnet/sdk, repository does not exist or may require docker login
+unauthorized: authentication required
+##[error]Process completed with exit code 1.

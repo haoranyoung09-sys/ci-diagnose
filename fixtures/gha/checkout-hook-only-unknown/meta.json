@@ -1,0 +1,8 @@
+{
+  "id": "checkout-hook-only-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A post-checkout hook is missing and the log never shows a certificate or checkout failure. Below the threshold. Do not invent a TLS flake."
+}

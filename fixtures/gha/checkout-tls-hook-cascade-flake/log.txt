@@ -1,0 +1,10 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+fatal: unable to access 'https://github.com/example-org/example-repo/': SSL certificate problem: unable to get local issuer certificate
+##[group]Run .github/hooks/post-checkout
+##[endgroup]
+FAIL .github/hooks/post-checkout
+error: cannot run .git/hooks/post-checkout: No such file or directory
+The hook failed because checkout failed.
+##[error]Process completed with exit code 128.

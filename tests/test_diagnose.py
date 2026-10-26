@@ -295,6 +295,27 @@ class AmbiguousSignalsTest(unittest.TestCase):
         self.assertEqual(clear.confidence_level, "high")
         self.assertEqual(close.confidence_level, "medium")
 
+    def test_truncated_tail_is_not_scored(self) -> None:
+        text = ("noise line\n" * 200_000) + "FAIL src/hidden.test.ts\n"
+        self.assertGreater(len(text.encode()), diagnose.MAX_BYTES)
+        result = diagnose.classify(text)
+        self.assertTrue(result.truncated)
+        self.assertEqual(result.category, "unknown")
+        self.assertNotIn("FAIL path line", result.signals)
+
+    def test_green_job_cannot_outrank_the_failed_step(self) -> None:
+        text = (
+            "lint\tSetup\t2026-10-26T01:14:22.1038427Z suspected flake\n"
+            "lint\tSetup\t2026-10-26T01:14:22.2038427Z The job succeeded.\n"
+            "build\tTest\t2026-10-26T01:14:23.1038427Z AssertionError: expected 200\n"
+            "build\tTest\t2026-10-26T01:14:23.2038427Z "
+            "##[error]Process completed with exit code 1.\n"
+        )
+        result = diagnose.classify(text)
+        self.assertEqual(result.category, "test")
+        self.assertNotIn("suspected flake", result.signals)
+        self.assertNotIn("flake", result.alternates)
+
 
 class GhPathsTest(unittest.TestCase):
     def test_missing_binary_has_no_traceback(self) -> None:
@@ -417,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 57)
+        self.assertGreaterEqual(len(fixtures), 63)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -452,6 +473,12 @@ class CorpusFixturesTest(unittest.TestCase):
             "mcr-pull-egress-blocked": ("infra", [], None),
             "ghcr-pull-io-timeout": ("infra", [], None),
             "egress-and-permission-unknown": ("unknown", ["infra", "permissions"], 0.42),
+            "checkout-tls-hook-cascade-flake": ("flake", [], None),
+            "checkout-hook-only-unknown": ("unknown", [], None),
+            "multi-job-one-step-failed": ("test", [], None),
+            "multi-job-green-noise-unknown": ("unknown", [], None),
+            "registry-pull-auth-denied": ("permissions", [], None),
+            "registry-auth-and-egress-unknown": ("unknown", ["infra", "permissions"], 0.42),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
@@ -490,6 +517,25 @@ class CorpusFixturesTest(unittest.TestCase):
             diagnose.load_fixture(ROOT / "fixtures" / "gha" / "docker-rate-limit-flake")
         )
         self.assertNotIn("registry pull or egress blocked", rate_limit["signals"])
+        cascade = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "checkout-tls-hook-cascade-flake"
+            )
+        )
+        self.assertIn(
+            "downstream hook did not run after checkout", cascade["signals"]
+        )
+        self.assertNotIn("test", cascade["alternates"])
+        green = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "multi-job-green-noise-unknown"
+            )
+        )
+        self.assertNotIn("suspected flake", green["signals"])
+        auth = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "registry-pull-auth-denied")
+        )
+        self.assertNotIn("registry pull or egress blocked", auth["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

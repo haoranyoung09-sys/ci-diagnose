@@ -23,6 +23,8 @@ Corpus: `node-heap-oom`, `runner-disk-full`, `generic-oom-without-heap`, `runner
 | Docker Hub `toomanyrequests` that passed on the automatic rerun | `flake` (`docker-rate-limit-flake`), not this playbook. |
 | Checkout "SSL certificate problem" or "server certificate verification failed" | `flake` (`checkout-tls-verify-flake`). Do not treat a certificate-verification line as a blocked registry pull. |
 | Egress blocked and `remote: permission to … denied` in the same log (`egress-and-permission-unknown`) | Stay `unknown`. Do not open the network and grant a scope in one attempt. |
+| `pull access denied` or `unauthorized: authentication required` with no DNS or egress line (`registry-pull-auth-denied`) | `permissions`. Do not call it a blocked registry. |
+| Egress blocked and registry authentication denied in the same pull (`registry-auth-and-egress-unknown`) | Stay `unknown`. Do not open egress and mint a registry login in one attempt. |
 
 ## Recipe
 
@@ -51,4 +53,4 @@ Corpus: `node-heap-oom`, `runner-disk-full`, `generic-oom-without-heap`, `runner
 
 ## 中文
 
-引用宿主那一行，不要改断言去吞掉它。磁盘满包括 Docker 构建（`docker-build-disk-full`）：减少产物或加大 runner，不要删 Dockerfile。连不上 Docker daemon（`docker-daemon-unavailable`）时只重跑一次作检查。MCR 或 GHCR 拉不动（`mcr-pull-egress-blocked`、`ghcr-pull-io-timeout`：`no such host`、`egress blocked`、TLS handshake timeout、`i/o timeout`）是网络路径，不要改镜像标签，也不要粘贴 registry token。同一行再出现就停。Docker Hub `toomanyrequests` 且重跑已通过是 `flake`。checkout 证书校验失败是 `flake`，不是这类。`egress-and-permission-unknown` 与 `oom-and-permission-unknown` 都是打平，不要同时改网络和权限。只有 “runner process was killed” 时，无代码改动地重跑一次。第二次还是同一行宿主错误就停止。
+引用宿主那一行，不要改断言去吞掉它。磁盘满包括 Docker 构建（`docker-build-disk-full`）：减少产物或加大 runner，不要删 Dockerfile。连不上 Docker daemon（`docker-daemon-unavailable`）时只重跑一次作检查。MCR 或 GHCR 拉不动（`mcr-pull-egress-blocked`、`ghcr-pull-io-timeout`：`no such host`、`egress blocked`、TLS handshake timeout、`i/o timeout`）是网络路径，不要改镜像标签，也不要粘贴 registry token。`pull access denied` 或 `unauthorized: authentication required` 且没有 egress 行是 `permissions`（`registry-pull-auth-denied`）。两行同时在（`registry-auth-and-egress-unknown`）保持 `unknown`。同一行再出现就停。Docker Hub `toomanyrequests` 且重跑已通过是 `flake`。checkout 证书校验失败是 `flake`，不是这类。`egress-and-permission-unknown` 与 `oom-and-permission-unknown` 都是打平，不要同时改网络和权限。只有 “runner process was killed” 时，无代码改动地重跑一次。第二次还是同一行宿主错误就停止。

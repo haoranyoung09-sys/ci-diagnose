@@ -23,6 +23,71 @@ People look for this when a workflow run failed, a check is red, or they want an
 
 The diagnose CLI is a deterministic heuristic, not a model. It is the offline path and the smoke oracle for the fixtures. The skill may disagree when confidence is low; it has to say so.
 
+## Features
+
+<a id="features"></a>
+
+CI Doctor classifies a failed GitHub Actions log, quotes redacted evidence, and names one next step. It does not merge, and it does not decide that a change is safe to land.
+
+### What it classifies
+
+Seven ids. A category wins when its score is at least 6 and it leads. A tie at or above 6 is `unknown`. The CLI does not read `meta.json` while it scores.
+
+| id | What it means | A shape you will see in Actions |
+| --- | --- | --- |
+| `flake` | The result moved, or a transient checkout, registry, or dataset failure | certificate verification failed; external dataset host timed out; a hook that failed only because checkout failed |
+| `env` | A named variable, action input, or secret was never set | `DATABASE_URL` is not set |
+| `test` | The suite started and an expectation failed | Jest `FAIL`, `AssertionError` |
+| `deps` | The resolver or the lockfile disagreed | `npm ci` lockfile drift |
+| `permissions` | The token or the registry login was refused | `GITHUB_TOKEN` 403; `pull access denied` |
+| `infra` | The runner, its disk, or its network path failed | disk full; MCR `no such host`; Docker daemon down |
+| `unknown` | Nothing cleared the threshold, or two categories tied | exit code only; checkout TLS tied with an assertion; egress tied with registry auth |
+
+Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md). The corpus index is [fixtures/README.md](fixtures/README.md).
+
+### How it works
+
+1. Read the log. Stop at 2MB. An empty log stays `unknown`. A signal that sits past the cut is not scored, and the report says `truncated`.
+2. Strip `gh` job, step, and timestamp prefixes. Redact common token shapes, then score. Redaction is best-effort.
+3. If the log names more than one job and only some of them failed, score the failed jobs. A phrase on a green job does not win (`multi-job-one-step-failed`). If the failed job has no signal, the result stays `unknown` (`multi-job-green-noise-unknown`).
+4. Open the playbook for that category and follow one recipe. A tie is not permission to pick the easier side.
+5. `make eval` checks every fixture label offline. It does not call `gh`.
+
+### When to use it
+
+- A GitHub Actions job is red and you have the log, a run URL, or a fixture id.
+- You want one category, the lines that support it, and one way to verify.
+- You are checking the skill against this corpus.
+
+### When not to use it
+
+- To approve a merge, or to say a change is safe to land.
+- Dependabot or Renovate version bumps. That sibling is not in this repo.
+- GitLab CI, CircleCI, or any host other than GitHub Actions.
+- A private log that only makes sense if you paste a secret. Save a redacted file instead.
+- The comment workflow. [`.github/workflows/triage-comment.yml`](.github/workflows/triage-comment.yml) is disabled (`if: false`).
+
+### Playbooks and real Actions failures
+
+| What the log shows | Category | Fixture |
+| --- | --- | --- |
+| Checkout `SSL certificate problem` or `server certificate verification failed` | `flake` | `checkout-tls-verify-flake` |
+| That checkout failure, then a hook cannot run | `flake` | `checkout-tls-hook-cascade-flake` |
+| A hook cannot run, and the log has no checkout error | `unknown` | `checkout-hook-only-unknown` |
+| External dataset host timed out | `flake` | `external-dataset-host-flake` |
+| `mcr.microsoft.com` or `ghcr.io`: `no such host`, `egress blocked`, `i/o timeout` | `infra` | `mcr-pull-egress-blocked`, `ghcr-pull-io-timeout` |
+| `pull access denied` or `unauthorized: authentication required` | `permissions` | `registry-pull-auth-denied` |
+| Egress blocked and registry authentication denied in the same pull | `unknown` | `registry-auth-and-egress-unknown` |
+| Several jobs, and only one of them failed | the failed job | `multi-job-one-step-failed` |
+
+Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
+
+### Offline demo and eval
+
+The [30-second demo](#30-second-demo) is the supported offline path. No packages, no token, no network.
+
+`python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift` prints a `deps` report. `make eval` prints accuracy and a confusion matrix for `fixtures/gha`. `make test` covers empty logs, the 2MB cut, redaction, and ambiguous signals. `make smoke` runs the self-check, the tests, every fixture, and `make eval`.
+
 ## Install the skill
 
 The skill source is [`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md). This checkout also links it at [`.agents/skills/ci-doctor`](.agents/skills/ci-doctor) so Cursor and Codex discover it from the repo.

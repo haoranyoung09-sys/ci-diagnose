@@ -54,3 +54,20 @@ Fixtures in this repo are synthetic. Do not add a log from a private repository,
 ## Reporting other problems
 
 Bug reports are welcome with the fixture id or a redacted log snippet, the command you ran, and the report you got. Please do not include tokens in the snippet.
+
+## 中文
+
+开发循环只要 Python 3.9+ 的标准库：
+
+```bash
+python3 scripts/diagnose.py --self-check
+make test
+make eval
+make smoke
+```
+
+`make eval` 不访问网络，也不调用 `gh`。fixture 的 `label` 必须是 `flake`、`env`、`test`、`deps`、`permissions`、`infra`、`unknown` 之一。合成日志必须包含 `synthetic redacted fixture` 和 `not a real workflow run`。不要贴私有日志或 token。
+
+改了英文文档，就要一起改中文孪生文件：`README` / `README.zh-CN`、`docs/taxonomy` / `docs/taxonomy.zh-CN`、`docs/hosts` / `docs/hosts.zh-CN`。功能说明在 README 的 Features / 功能。类别 id 保持英文。
+
+护栏不能改松：不要 force-push，不要打印 secret，两次修复失败就停，不要说可以安全合并。

@@ -66,6 +66,14 @@ _GH_PREFIX = re.compile(
     r"^(?:[^\t\n]+\t[^\t\n]+\t)?"
     r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z\s+"
 )
+# job \t step \t 2026-10-26T01:14:22.1038427Z message
+_GH_JOB = re.compile(
+    r"^([^\t\n]+)\t[^\t\n]+\t\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"
+)
+_FAILED_STEP = re.compile(
+    r"##\[error\]|process completed with exit code (?!0\b)\d+|\bexit code (?:[1-9]\d*)\b",
+    re.IGNORECASE,
+)
 
 _SECRET_RULES: tuple[tuple[re.Pattern[str], str], ...] = (
     (
@@ -225,6 +233,12 @@ RULES: tuple[Rule, ...] = (
     Rule("permissions", 6, r"insufficient permissions", "insufficient permissions"),
     Rule(
         "permissions",
+        8,
+        r"unauthorized: authentication required|pull access denied|requested access to the resource is denied",
+        "registry authentication was denied",
+    ),
+    Rule(
+        "permissions",
         5,
         r"refusing to (?:force-push|allow)",
         "token refused a force-push or broader grant",
@@ -351,6 +365,12 @@ RULES: tuple[Rule, ...] = (
         8,
         r"failed to (?:download|fetch) (?:the )?(?:external )?dataset|external host (?:timed out|timeout|connection reset)",
         "external dataset or host dependency failed",
+    ),
+    Rule(
+        "flake",
+        5,
+        r"cannot run \S*hooks?\b|hook failed because checkout",
+        "downstream hook did not run after checkout",
     ),
     Rule("test", 8, r"\bAssertionError\b", "AssertionError"),
     Rule("test", 7, r"expect\(received\)", "expect(received) mismatch"),
@@ -486,6 +506,36 @@ def normalize_line(line: str) -> str:
     return _GH_PREFIX.sub("", line).rstrip()
 
 
+def _job_name(raw: str) -> str | None:
+    """GitHub job name from a `gh run view --log-failed` line, if present."""
+    match = _GH_JOB.match(_ANSI.sub("", raw.rstrip("\n\r")))
+    if match is None:
+        return None
+    return match.group(1)
+
+
+def _failed_jobs(text: str) -> frozenset[str] | None:
+    """Failed job names when the log mixes failed and successful jobs.
+
+    Returns None when every line should be scored: no job prefixes, a single
+    job, or every job failed. A successful job's signals must not outrank the
+    step that actually failed.
+    """
+    seen: dict[str, bool] = {}
+    for raw in text.splitlines():
+        name = _job_name(raw)
+        if name is None:
+            continue
+        failed = _FAILED_STEP.search(normalize_line(raw)) is not None
+        seen[name] = seen.get(name, False) or failed
+    if len(seen) < 2:
+        return None
+    failed_names = frozenset(name for name, failed in seen.items() if failed)
+    if not failed_names or len(failed_names) == len(seen):
+        return None
+    return failed_names
+
+
 def confidence_level(confidence: float) -> str:
     if confidence >= 0.8:
         return "high"
@@ -597,6 +647,7 @@ def classify(text: str) -> Classification:
     a signal. Evidence keeps a bounded pool per category.
     """
     body, truncated = _prepare(text)
+    failed_jobs = _failed_jobs(body)
     scores = {category: 0 for category in CATEGORIES}
     matched = [False] * len(COMPILED)
     pools: dict[str, list[Hit]] = {category: [] for category in CATEGORIES}
@@ -605,6 +656,10 @@ def classify(text: str) -> Classification:
     last_line = 0
 
     for line_no, raw in enumerate(body.splitlines(), start=1):
+        if failed_jobs is not None:
+            job = _job_name(raw)
+            if job is not None and job not in failed_jobs:
+                continue
         cleaned = normalize_line(raw)
         if cleaned != raw.rstrip("\n\r"):
             prefix_stripped = True
@@ -1513,7 +1568,8 @@ def main(argv: list[str] | None = None) -> int:
             if match is None:
                 known = ", ".join(str(fixture["id"]) for fixture in fixtures)
                 print(
-                    f"unknown fixture {args.fixture!r}. known: {known}",
+                    f"unknown fixture {args.fixture!r}. "
+                    f"Run --fixtures-dir to list ids. Known: {known}",
                     file=sys.stderr,
                 )
                 return 2
@@ -1521,7 +1577,11 @@ def main(argv: list[str] | None = None) -> int:
         elif args.log:
             log_path = resolve_file(Path(args.log))
             if not log_path.is_file():
-                print(f"log not found: {args.log}", file=sys.stderr)
+                print(
+                    f"log not found: {args.log}. "
+                    "Pass a saved log, --fixture, or --run-url.",
+                    file=sys.stderr,
+                )
                 return 2
             log_text, truncated = read_log_text(log_path)
             report = build_report(log_text, log_path=log_path, truncated=truncated)
