@@ -6,6 +6,16 @@ Pull a failed CI run, classify the root cause, propose a minimal fix, and verify
 
 The diagnose CLI is a deterministic heuristic, not a model. It is the offline path and the smoke oracle for the fixtures. The skill may disagree when confidence is low; it has to say so. A report is advisory. It is not a merge decision.
 
+## 30-second demo
+
+```bash
+git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
+cd ci-diagnose
+python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
+```
+
+`make eval` scores the fixture corpus.
+
 ## Install the skill
 
 The skill source is [`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md). This checkout also links it at [`.agents/skills/ci-doctor`](.agents/skills/ci-doctor) so Cursor and Codex discover it from the repo.
