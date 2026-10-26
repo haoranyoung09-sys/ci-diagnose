@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run uv sync --frozen
+##[endgroup]
+error: The lockfile at uv.lock needs to be updated.
+The example-app project was not installed.
+##[error]Process completed with exit code 1.

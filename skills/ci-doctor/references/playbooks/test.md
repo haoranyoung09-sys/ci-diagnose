@@ -6,7 +6,7 @@ The suite started. An expectation failed. Quote the test name and the expected v
 
 The CLI category is `test`. Signals include `AssertionError`, `expect(received)`, a `FAIL path` line, `--- FAIL:` from `go test`, `Expected:`, pytest `FAILED path`, `Failed asserting that` (PHPUnit), `Failure/Error:` (RSpec), and `test result: FAILED` (cargo).
 
-Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-surefire-assertion`, `phpunit-assert-failed`, `rspec-failure-error`, `cargo-test-result-failed`.
+Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-surefire-assertion`, `phpunit-assert-failed`, `rspec-failure-error`, `cargo-test-result-failed`, `gradle-test-assertion`.
 
 ## Near misses
 

@@ -15,7 +15,7 @@ compatibility: >-
   prints the gh command and does not call the network.
 metadata:
   author: ci-doctor
-  version: "0.2.0"
+  version: "0.3.0"
   taxonomy: v0
 ---
 

@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the assume-role step
+##[endgroup]
+AWS_ROLE_ARN is empty
+The workflow token does not have permission to assume the example role.
+Both lines are present. Neither outranks the other.
+##[error]Process completed with exit code 1.

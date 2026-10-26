@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker compose up db
+##[endgroup]
+service "db" exited before the healthcheck
+Error: Required environment variable DATABASE_URL is not set
+##[error]Process completed with exit code 1.

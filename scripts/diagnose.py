@@ -110,9 +110,51 @@ _SECRET_RULES: tuple[tuple[re.Pattern[str], str], ...] = (
         r"\1[REDACTED]",
     ),
     (
+        re.compile(r"\bASIA[0-9A-Z]{16}\b"),
+        "[REDACTED_AWS_ACCESS_KEY]",
+    ),
+    (
+        re.compile(r"\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b"),
+        "[REDACTED_API_KEY]",
+    ),
+    (
+        re.compile(r"\bAIza[0-9A-Za-z\-_]{20,}\b"),
+        "[REDACTED_API_KEY]",
+    ),
+    (
+        re.compile(r"\bnpm_[A-Za-z0-9]{36}\b"),
+        "[REDACTED_NPM_TOKEN]",
+    ),
+    (
+        re.compile(r"\bpypi-[A-Za-z0-9_\-]{16,}\b"),
+        "[REDACTED_PYPI_TOKEN]",
+    ),
+    (
+        re.compile(r"\bdckr_pat_[A-Za-z0-9_\-]{16,}\b"),
+        "[REDACTED_DOCKER_TOKEN]",
+    ),
+    (
+        re.compile(r"\bhf_[A-Za-z0-9]{20,}\b"),
+        "[REDACTED_HF_TOKEN]",
+    ),
+    (
         re.compile(
-            r"(?i)\b((?:aws_secret_access_key|npm_token|auth_token|"
-            r"_?authtoken|api[_-]?key|token|password|passwd|secret)"
+            r"https://hooks\.slack\.com/services/T[A-Z0-9]+/B[A-Z0-9]+/[A-Za-z0-9]+"
+        ),
+        "[REDACTED_SLACK_WEBHOOK]",
+    ),
+    (
+        re.compile(
+            r"(?i)(?<![A-Za-z0-9])(bearer\s+)(?!\[REDACTED\])"
+            r"[A-Za-z0-9\-._~+/]{20,}"
+        ),
+        r"\1[REDACTED]",
+    ),
+    (
+        re.compile(
+            r"(?i)\b((?:aws_secret_access_key|aws_session_token|npm_token|"
+            r"auth_token|_?authtoken|api[_-]?key|refresh_token|client_secret|"
+            r"secret_key|token|password|passwd|secret)"
             r"\s*[=:]\s*)(?!\[REDACTED\])(?!(?:read|write|none)\b)\S+"
         ),
         r"\1[REDACTED]",
@@ -123,8 +165,15 @@ _FORBIDDEN_IN_CORPUS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{8,}\b"),
     re.compile(r"\bgithub_pat_[A-Za-z0-9_]{8,}\b"),
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
+    re.compile(r"\bASIA[0-9A-Z]{16}\b"),
     re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----"),
-    re.compile(r"(?i)\b(?:password|aws_secret_access_key|api[_-]?key)\s*=\s*\S+"),
+    re.compile(
+        r"(?i)\b(?:password|aws_secret_access_key|aws_session_token|"
+        r"api[_-]?key|client_secret|refresh_token|secret_key)\s*=\s*\S+"
+    ),
+    re.compile(r"\bsk_(?:live|test)_[A-Za-z0-9]{16,}\b"),
+    re.compile(r"\bnpm_[A-Za-z0-9]{36}\b"),
+    re.compile(r"\bdckr_pat_[A-Za-z0-9_\-]{16,}\b"),
     re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b"),
 )
 
@@ -256,6 +305,24 @@ RULES: tuple[Rule, ...] = (
         r"yarn\.lock.+(?:out of date|needs to be updated)",
         "yarn lockfile is out of date",
     ),
+    Rule(
+        "deps",
+        8,
+        r"poetry\.lock.+(?:out of date|not consistent)|since poetry\.lock was last generated",
+        "poetry lockfile is out of date",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"uv\.lock needs to be updated",
+        "uv lockfile needs an update",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"could not resolve all (?:files|artifacts|dependencies) for configuration",
+        "Gradle could not resolve a configuration",
+    ),
     Rule("flake", 9, r"suspected flake", "suspected flake"),
     Rule("flake", 8, r"exceeded timeout of \d+", "test exceeded its timeout"),
     Rule(
@@ -300,6 +367,12 @@ RULES: tuple[Rule, ...] = (
         6,
         r"runner (?:process|has received).*(?:killed|shutdown)",
         "runner process killed or shut down",
+    ),
+    Rule(
+        "infra",
+        7,
+        r"cannot connect to the docker daemon",
+        "Docker daemon is not reachable",
     ),
     Rule(
         "unknown",
@@ -1119,6 +1192,28 @@ def run_self_check() -> int:
         ".dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
     )
     check(jwt not in redact("bearer " + jwt), "jwt leaked")
+    asia = "ASIA" + ("0" * 16)
+    stripe = "sk_live_" + ("a" * 24)
+    npm_token = "npm_" + ("b" * 36)
+    slack = (
+        "https://hooks.slack.com/services/"
+        + "T" + ("0" * 8)
+        + "/B" + ("0" * 8)
+        + "/" + ("X" * 24)
+    )
+    client_secret = "client_secret=example-client-secret-value"
+    extra = redact(
+        f"{asia}\n{stripe}\n{npm_token}\n{slack}\n{client_secret}\n"
+        "x-api-key: example-header-secret\n"
+    )
+    check(asia not in extra, "aws session key leaked")
+    check(stripe not in extra, "stripe key leaked")
+    check(npm_token not in extra, "npm token leaked")
+    check("hooks.slack.com" not in extra, "slack webhook leaked")
+    check("example-client-secret-value" not in extra, "client secret leaked")
+    check("example-header-secret" not in extra, "api key header leaked")
+    check(redact(extra) == extra, "extended redact is not idempotent")
+    check(redact(scope) == scope, "permission scope still intact")
 
     samples = {
         "test": "FAIL src/a.test.ts\nExpected: 1\nReceived: 2\nexpect(received).toBe(expected)\n",

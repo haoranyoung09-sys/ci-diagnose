@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./gradlew :app:compileClasspath
+##[endgroup]
+Execution failed for task ':app:compileClasspath'.
+Could not resolve all files for configuration ':app:compileClasspath'.
+Could not find com.example:example-lib:9.9.9.
+##[error]Process completed with exit code 1.

@@ -2,19 +2,26 @@
 
 [中文](README.zh-CN.md)
 
-Pull a failed CI run, classify the root cause, propose a minimal fix, and verify it. This repository is the portable skill and the public redacted fixture corpus. The first host is GitHub Actions.
-
-The diagnose CLI is a deterministic heuristic, not a model. It is the offline path and the smoke oracle for the fixtures. The skill may disagree when confidence is low; it has to say so. A report is advisory. It is not a merge decision.
+CI failed, or GitHub Actions is red? Classify the log, quote redacted evidence, propose one minimal fix, and say how to verify it. Advisory only. Not a merge decision.
 
 ## 30-second demo
+
+Python 3.9+. No packages, no token, no network.
 
 ```bash
 git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
 cd ci-diagnose
 python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
+make eval
 ```
 
-`make eval` scores the fixture corpus.
+The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha`. It does not call `gh`.
+
+Weekly notes: [docs/PROGRESS.md](docs/PROGRESS.md).
+
+People look for this when a workflow run failed, a check is red, or they want an Actions triage skill. The first host is GitHub Actions. This repository is the skill plus a public synthetic fixture corpus.
+
+The diagnose CLI is a deterministic heuristic, not a model. It is the offline path and the smoke oracle for the fixtures. The skill may disagree when confidence is low; it has to say so.
 
 ## Install the skill
 
@@ -131,7 +138,7 @@ Definitions, signals, and the fixture that demonstrates each one: [docs/taxonomy
 skills/ci-doctor/     agent skill, playbooks, gh recipe
 scripts/diagnose.py   classifier, redaction, and live gh fetch
 fixtures/gha/         synthetic GitHub Actions failures
-docs/                 taxonomy and host install notes
+docs/                 taxonomy, host notes, weekly progress
 ```
 
 Later hosts, a workflow comment bot, and a Dependabot sibling are tracked in [ROADMAP.md](ROADMAP.md).

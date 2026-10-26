@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker build
+##[endgroup]
+#1 [internal] load build definition from Dockerfile
+ERROR: failed to solve: write /var/lib/docker/overlay2/example: no space left on device
+##[error]Process completed with exit code 1.

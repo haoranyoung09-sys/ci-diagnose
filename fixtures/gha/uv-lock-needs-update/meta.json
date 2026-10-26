@@ -1,0 +1,8 @@
+{
+  "id": "uv-lock-needs-update",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "uv.lock needs to be updated on a frozen install. Not a pytest failure and not a missing cloud role."
+}

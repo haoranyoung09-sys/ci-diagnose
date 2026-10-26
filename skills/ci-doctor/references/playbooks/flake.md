@@ -6,7 +6,7 @@ A result that moved across attempts on the same commit. Quote the timeout or the
 
 The CLI category is `flake`, or you confirmed a flake signal the CLI ranked first: "suspected flake", "exceeded timeout of N", "timeout of N ms exceeded", "passed on the previous run" / "automatic rerun", "intermittent", "retry N of M".
 
-Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeout-flake`, `cypress-timeout-flake`.
+Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeout-flake`, `cypress-timeout-flake`, `matrix-shard-flake`, `docker-rate-limit-flake`.
 
 ## Near misses
 
@@ -16,7 +16,9 @@ Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeou
 | The same assertion, same expected and received, on every attempt | Reclassify as `test`. That reclassification spends an attempt if you then edit. |
 | "JavaScript heap out of memory" or "No space left on device" | That is `infra`, even if a test timed out afterwards. |
 | Registry `ETIMEDOUT` that passed on the automatic rerun (`registry-timeout-rerun-flake`) | Still flake. Do not pin a new version and do not replace `npm ci` with `npm install`. |
-| Only "retry N of M" or only the word "flaky", and the CLI stayed under the threshold | Stay on `unknown`. One weak word is not a fix license. |
+| Only "retry N of M" or only the word "flaky", and the CLI stayed under the threshold (`shard-retry-only-unknown`) | Stay on `unknown`. A matrix shard number alone is not a fix license. |
+| Matrix shard with "suspected flake" or "passed on the previous run" (`matrix-shard-flake`) | Flake. Quote the shard. Do not edit every matrix cell. |
+| Docker Hub `toomanyrequests` that passed on the automatic rerun (`docker-rate-limit-flake`) | Flake. Do not pin a new base image in that attempt. |
 
 ## Recipe
 
@@ -47,4 +49,4 @@ An attempt starts when you apply the change or ask for a rerun that tests this h
 
 ## 中文
 
-先引用会变动的那一行（超时、重跑、intermittent），再提出一个确定性等待、假时钟，或隔离共享状态。同一次尝试里不要同时加超时。`timeout-and-assertion-unknown` 是打平，保持 `unknown`，不要选更好改的一边。验证看测试名和同一行是否复现；连续两次相同失败就改判 `test` 或 `infra` 并停止。fixture 上重跑 CLI 只核对报告。
+先引用会变动的那一行（超时、重跑、intermittent、矩阵分片）。`matrix-shard-flake` 只改共享状态，不要改每一个 matrix cell。只有 `retry N of M`（`shard-retry-only-unknown`）低于阈值，保持 `unknown`。Docker Hub `toomanyrequests` 且重跑已通过时，不要在同一次尝试里更换基础镜像。`timeout-and-assertion-unknown` 是打平。连续两次相同失败就改判并停止。

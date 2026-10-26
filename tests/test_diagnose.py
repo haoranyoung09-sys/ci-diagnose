@@ -151,6 +151,41 @@ class RedactionTest(unittest.TestCase):
             "NODE_AUTH_TOKEN is empty",
             diagnose.redact("NODE_AUTH_TOKEN is empty"),
         )
+        self.assertEqual(
+            diagnose.redact("x-api-key: write"),
+            "x-api-key: write",
+        )
+
+    def test_more_secret_shapes_are_masked(self) -> None:
+        samples = {
+            "ASIA" + ("0" * 16): "[REDACTED_AWS_ACCESS_KEY]",
+            "sk_live_" + ("a" * 24): "[REDACTED_API_KEY]",
+            "AIza" + ("b" * 35): "[REDACTED_API_KEY]",
+            "npm_" + ("c" * 36): "[REDACTED_NPM_TOKEN]",
+            "pypi-" + ("d" * 32): "[REDACTED_PYPI_TOKEN]",
+            "dckr_pat_" + ("e" * 32): "[REDACTED_DOCKER_TOKEN]",
+            "hf_" + ("f" * 32): "[REDACTED_HF_TOKEN]",
+        }
+        slack = (
+            "https://hooks.slack.com/services/"
+            + "T" + ("0" * 8)
+            + "/B" + ("0" * 8)
+            + "/" + ("X" * 24)
+        )
+        samples[slack] = "[REDACTED_SLACK_WEBHOOK]"
+        for secret, marker in samples.items():
+            cleaned = diagnose.redact("value " + secret + " tail")
+            self.assertNotIn(secret, cleaned)
+            self.assertIn(marker, cleaned)
+            self.assertEqual(diagnose.redact(cleaned), cleaned)
+        self.assertNotIn(
+            "example-client-secret-value",
+            diagnose.redact("client_secret=example-client-secret-value"),
+        )
+        self.assertNotIn(
+            "example-header-secret",
+            diagnose.redact("x-api-key: example-header-secret"),
+        )
 
     def test_loader_rejects_a_secret_without_echoing_it(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -382,7 +417,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 35)
+        self.assertGreaterEqual(len(fixtures), 50)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -407,6 +442,9 @@ class CorpusFixturesTest(unittest.TestCase):
             "cache-eacces-unknown": ("unknown", [], None),
             "bare-http-403": ("permissions", [], None),
             "phpunit-assert-failed": ("test", [], None),
+            "poetry-lock-and-assertion-unknown": ("unknown", ["deps", "test"], 0.42),
+            "oom-and-permission-unknown": ("unknown", ["infra", "permissions"], 0.42),
+            "oidc-role-and-empty-arn-unknown": ("unknown", ["env", "permissions"], 0.42),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)

@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker compose up
+##[endgroup]
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+docker compose up example-app failed before any container started.
+##[error]Process completed with exit code 1.

@@ -60,5 +60,20 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `empty-token-and-permission-unknown` | unknown | Tie: empty `NODE_AUTH_TOKEN` and "does not have permission". |
 | `force-push-refusal-only-unknown` | unknown | "Refusing to force-push" stays under the score threshold. |
 | `cache-eacces-unknown` | unknown | `EACCES` on a runner cache path. Not a GitHub 403. |
+| `poetry-lock-out-of-date` | deps | `poetry.lock` out of date with `pyproject.toml`. |
+| `uv-lock-needs-update` | deps | `uv.lock` needs an update on a frozen install. |
+| `gradle-configuration-unresolved` | deps | Gradle could not resolve `:app:compileClasspath`. |
+| `gradle-test-assertion` | test | Gradle `:app:test` `AssertionError`. |
+| `docker-build-disk-full` | infra | `docker build` ran out of disk. |
+| `docker-daemon-unavailable` | infra | Cannot connect to the Docker daemon. |
+| `compose-db-url-unset` | env | Compose `db` failed because `DATABASE_URL` is unset. |
+| `matrix-shard-flake` | flake | Matrix shard 3 of 8 passed on the previous run. |
+| `docker-rate-limit-flake` | flake | Docker Hub `toomanyrequests`, passed on rerun. |
+| `concurrency-cancel-unknown` | unknown | Concurrency group canceled the run. No v0 signal. |
+| `oidc-assume-role-denied` | permissions | Not granted `id-token: write`. No static cloud key. |
+| `oidc-role-and-empty-arn-unknown` | unknown | Tie: empty `AWS_ROLE_ARN` and "does not have permission". |
+| `poetry-lock-and-assertion-unknown` | unknown | Tie: poetry lockfile and `AssertionError`. |
+| `oom-and-permission-unknown` | unknown | Tie: "out of memory" and "does not have permission". |
+| `shard-retry-only-unknown` | unknown | Matrix shard only says `retry 2 of 4`. Under the threshold. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

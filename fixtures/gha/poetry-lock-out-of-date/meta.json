@@ -1,0 +1,8 @@
+{
+  "id": "poetry-lock-out-of-date",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "poetry.lock is out of date with pyproject.toml. Commit an updated lockfile. Not a test assertion and not an empty token."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "gradle-test-assertion",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Gradle :app:test failed with AssertionError expected 200 was 503. The suite started. Not a dependency resolution failure."
+}

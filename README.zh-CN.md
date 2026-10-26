@@ -2,19 +2,26 @@
 
 [English](README.md)
 
-拉取一次失败的 CI，归类根因，给出最小修复，并说明如何验证。这个仓库是可安装的 Agent Skill，加上一份公开、已脱敏的 fixture 语料。第一个宿主是 GitHub Actions。
-
-`diagnose` 命令行是确定性的启发式规则，不是模型。它是离线路径，也是 fixture 的冒烟测试基准。置信度低时，skill 可以不同意分类结果，但必须明说。报告只供参考，不是合并结论。
+CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
 ## 30 秒演示
+
+Python 3.9 或更高。不安装依赖，不需要 token，也不访问网络。
 
 ```bash
 git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
 cd ci-diagnose
 python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
+make eval
 ```
 
-`make eval` 会对 fixture 语料打分。
+这条 fixture 会打印一份 `deps` 报告，对应 `npm ci` 的锁文件不同步。`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵，不调用 `gh`。
+
+每周记录：[docs/PROGRESS.md](docs/PROGRESS.md)。
+
+适合在这些时候用：workflow run failed、检查变红、要做 Actions triage、找一个 agent skill。第一个宿主是 GitHub Actions。这个仓库是 skill，加上一份公开的合成 fixture 语料。
+
+`diagnose` 命令行是确定性的启发式规则，不是模型。它是离线路径，也是 fixture 的冒烟测试基准。置信度低时，skill 可以不同意分类结果，但必须明说。
 
 ## 安装 skill
 
@@ -133,7 +140,7 @@ python3 scripts/diagnose.py /tmp/ci-doctor-run.log
 skills/ci-doctor/     agent skill、playbook、gh 步骤
 scripts/diagnose.py   分类、打码，以及用 gh 拉取日志
 fixtures/gha/         合成的 GitHub Actions 失败
-docs/                 分类说明与宿主安装
+docs/                 分类说明、宿主安装、每周进展
 ```
 
 后续宿主、失败评论机器人，以及 Dependabot 旁路 skill，记在 [ROADMAP.md](ROADMAP.md)。
