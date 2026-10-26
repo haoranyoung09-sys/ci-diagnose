@@ -1,0 +1,8 @@
+{
+  "id": "egress-and-permission-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Registry egress is blocked and the remote also denied a git permission. Tie between infra and permissions. Do not open the network and grant a scope together."
+}

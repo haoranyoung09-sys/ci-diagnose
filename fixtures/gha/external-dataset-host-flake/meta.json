@@ -1,0 +1,8 @@
+{
+  "id": "external-dataset-host-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job failed while downloading an external dataset because the host timed out. Not a lockfile miss and not an assertion."
+}

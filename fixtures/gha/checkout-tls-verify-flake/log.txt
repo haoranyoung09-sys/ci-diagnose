@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+Syncing repository: example-org/example-repo
+##[endgroup]
+fatal: unable to access 'https://github.com/example-org/example-repo/': SSL certificate problem: unable to get local issuer certificate
+error: RPC failed; curl 56 The TLS connection was non-properly terminated
+##[error]The process '/usr/bin/git' failed with exit code 128
+##[error]Process completed with exit code 128.

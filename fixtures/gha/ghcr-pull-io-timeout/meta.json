@@ -1,0 +1,8 @@
+{
+  "id": "ghcr-pull-io-timeout",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "ghcr.io image pull hit a TLS handshake timeout and i/o timeout. Egress failure, not a rate-limit rerun and not a lockfile."
+}

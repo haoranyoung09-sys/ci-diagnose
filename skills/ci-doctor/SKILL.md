@@ -5,8 +5,10 @@ description: >-
   (flake, env, test, deps, permissions, infra, or unknown), quote redacted
   evidence, propose a minimal fix, and say how to verify it. Use when CI
   failed, GitHub Actions is red, a workflow run failed, checks are failing,
-  the build is broken, or the user asks to fix the build, diagnose a failing
-  check, explain a red Actions job, or triage a fixture log.
+  the build is broken, checkout fails certificate verification, a registry
+  or MCR pull is blocked, an external dataset host flakes, or the user asks
+  to fix the build, diagnose a failing check, explain a red Actions job, or
+  triage a fixture log.
 license: MIT
 compatibility: >-
   Offline diagnosis needs Python 3.9+ with the standard library only. A
@@ -15,7 +17,7 @@ compatibility: >-
   prints the gh command and does not call the network.
 metadata:
   author: ci-doctor
-  version: "0.3.0"
+  version: "0.4.0"
   taxonomy: v0
 ---
 

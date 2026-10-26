@@ -340,6 +340,18 @@ RULES: tuple[Rule, ...] = (
     Rule("flake", 6, r"\bintermittent\b", "intermittent failure"),
     Rule("flake", 5, r"retry \d+ of \d+", "failed on a numbered retry"),
     Rule("flake", 6, r"\bflak(?:e|y|iness)\b", "flake or flaky wording"),
+    Rule(
+        "flake",
+        8,
+        r"ssl certificate problem|server certificate verification failed|unable to get local issuer certificate|tls connection was non-properly terminated",
+        "checkout TLS certificate verification failed",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"failed to (?:download|fetch) (?:the )?(?:external )?dataset|external host (?:timed out|timeout|connection reset)",
+        "external dataset or host dependency failed",
+    ),
     Rule("test", 8, r"\bAssertionError\b", "AssertionError"),
     Rule("test", 7, r"expect\(received\)", "expect(received) mismatch"),
     Rule("test", 6, r"^\s*FAIL\s+\S", "FAIL path line"),
@@ -375,6 +387,12 @@ RULES: tuple[Rule, ...] = (
         "Docker daemon is not reachable",
     ),
     Rule(
+        "infra",
+        8,
+        r"dial tcp: lookup|no such host|network is unreachable|tls handshake timeout|egress blocked|\bi/o timeout\b",
+        "registry pull or egress blocked",
+    ),
+    Rule(
         "unknown",
         1,
         r"process completed with exit code",
@@ -408,12 +426,12 @@ NEXT_STEPS: dict[str, tuple[str, ...]] = {
         "Re-run the job after the workflow change. A 403 from a different API is a new finding, not a cue to grant write-all.",
     ),
     "flake": (
-        "Quote the timeout or rerun line before changing product logic. A pass on rerun is a flake signal, not a fix.",
+        "Quote the timeout, rerun, checkout TLS, or external-dataset line before changing product logic. A pass on rerun is a flake signal, not a fix.",
         "Prefer a deterministic wait or isolating shared state over raising the timeout as the only edit.",
         "After a code change, rerun the test more than once if the user agrees. If it fails the same way every time, reclassify toward test or infra. Stop after two attempts.",
     ),
     "infra": (
-        "Quote the host signal (heap, disk, runner killed). Do not edit the assertion to absorb an out-of-memory or disk-full failure.",
+        "Quote the host signal (heap, disk, runner killed, registry egress). Do not edit the assertion or the image tag to absorb an out-of-memory, disk-full, or blocked-pull failure.",
         "Suggest one resource change: a smaller build, fewer artifacts, a heap cap, or a larger runner class.",
         "One rerun is reasonable after a runner shutdown. A second identical host failure means report infra and stop.",
     ),
