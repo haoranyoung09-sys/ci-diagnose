@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull mcr.microsoft.com/dotnet/sdk:8.0
+##[endgroup]
+Error response from daemon: Get "https://mcr.microsoft.com/v2/": dial tcp: lookup mcr.microsoft.com: no such host
+egress blocked: the runner cannot open mcr.microsoft.com:443
+##[error]Process completed with exit code 1.

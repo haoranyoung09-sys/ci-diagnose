@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull mcr.microsoft.com/dotnet/sdk:8.0
+##[endgroup]
+egress blocked: dial tcp: lookup mcr.microsoft.com: no such host
+remote: permission to example-org/example-repo.git denied to github-actions[bot]
+##[error]Process completed with exit code 1.

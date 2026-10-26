@@ -1,0 +1,8 @@
+{
+  "id": "checkout-tls-verify-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "actions/checkout died on server certificate verification. No assertion and no rerun sentence. One rerun is the check. Do not disable sslVerify."
+}

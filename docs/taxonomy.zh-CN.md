@@ -12,11 +12,11 @@
 
 失败会自己挪位置：超时后重跑通过、被标成间歇性的测试、某一次编号重试变绿。
 
-**信号：** “suspected flake”、“exceeded timeout of N”、“timeout of N ms exceeded”、“passed on the previous run” 或 “passed on the automatic rerun”、“intermittent”、“retry N of M”。和 `AssertionError` 打平时仍是 `unknown`（`timeout-and-assertion-unknown`）。
+**信号：** “suspected flake”、“exceeded timeout of N”、“timeout of N ms exceeded”、“passed on the previous run” 或 “passed on the automatic rerun”、“intermittent”、“retry N of M”、checkout 的 “SSL certificate problem” / “server certificate verification failed” / “unable to get local issuer certificate” / “The TLS connection was non-properly terminated”、“failed to download the external dataset”、“external host timed out”。和 `AssertionError` 打平时仍是 `unknown`（`timeout-and-assertion-unknown`、`checkout-tls-and-assertion-unknown`、`dataset-and-assertion-unknown`）。
 
-**不是这类：** 稳定的断言（`test`）、运行器内存耗尽（`infra`）、包不存在的 404（`deps`）。
+**不是这类：** 稳定的断言（`test`）、运行器内存耗尽（`infra`）、注册表 DNS 或 egress 失败（`infra`）、包不存在的 404（`deps`）。
 
-**Fixture：** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake)、[`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake)、[`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake)、[`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake)、[`matrix-shard-flake`](../fixtures/gha/matrix-shard-flake)、[`docker-rate-limit-flake`](../fixtures/gha/docker-rate-limit-flake)。只有 “retry N of M” 的分片仍是 `unknown`（`shard-retry-only-unknown`）。
+**Fixture：** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake)、[`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake)、[`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake)、[`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake)、[`matrix-shard-flake`](../fixtures/gha/matrix-shard-flake)、[`docker-rate-limit-flake`](../fixtures/gha/docker-rate-limit-flake)、[`checkout-tls-verify-flake`](../fixtures/gha/checkout-tls-verify-flake)、[`external-dataset-host-flake`](../fixtures/gha/external-dataset-host-flake)。只有 “retry N of M” 的分片仍是 `unknown`（`shard-retry-only-unknown`）。
 
 **最小下一步：** 先引用重跑或超时那一行。优先改成确定性等待，而不是只把超时调大。重跑一次是证据，不是修复。
 
@@ -72,11 +72,11 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 宿主倒下了。堆内存耗尽、运行器磁盘满、进程被杀死、运行器关闭。断言不是缺陷。
 
-**信号：** “JavaScript heap out of memory”、“Reached heap limit”、`OOMKilled`、“No space left on device”、“disk quota exceeded”、“runner process was killed”。
+**信号：** “JavaScript heap out of memory”、“Reached heap limit”、`OOMKilled`、“No space left on device”、“disk quota exceeded”、“runner process was killed”、“Cannot connect to the Docker daemon”、注册表拉取的 `dial tcp: lookup` / “no such host” / “network is unreachable” / “TLS handshake timeout” / “i/o timeout” / “egress blocked”。和 “does not have permission” 打平的内存耗尽仍是 `unknown`（`oom-and-permission-unknown`）。egress 被阻断且 `remote: permission to … denied` 仍是 `unknown`（`egress-and-permission-unknown`）。
 
-**不是这类：** 重跑通过的测试超时（`flake`）、`npm` 解析错误（`deps`）。
+**不是这类：** 重跑通过的测试超时（`flake`）、checkout 证书校验失败（`flake`）、`npm` 解析错误（`deps`）。
 
-**Fixture：** [`node-heap-oom`](../fixtures/gha/node-heap-oom)、[`runner-disk-full`](../fixtures/gha/runner-disk-full)、[`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap)、[`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137)、[`docker-build-disk-full`](../fixtures/gha/docker-build-disk-full)、[`docker-daemon-unavailable`](../fixtures/gha/docker-daemon-unavailable)。和 “does not have permission” 打平的内存耗尽仍是 `unknown`（`oom-and-permission-unknown`）。
+**Fixture：** [`node-heap-oom`](../fixtures/gha/node-heap-oom)、[`runner-disk-full`](../fixtures/gha/runner-disk-full)、[`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap)、[`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137)、[`docker-build-disk-full`](../fixtures/gha/docker-build-disk-full)、[`docker-daemon-unavailable`](../fixtures/gha/docker-daemon-unavailable)、[`mcr-pull-egress-blocked`](../fixtures/gha/mcr-pull-egress-blocked)、[`ghcr-pull-io-timeout`](../fixtures/gha/ghcr-pull-io-timeout)。
 
 **最小下一步：** 只改一处资源（堆上限、更少产物、更大的 runner）。关闭之后重跑一次是合理的。第二次还是同样的宿主失败，就停止。
 
@@ -88,7 +88,7 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 **不是这类：** 用来藏一个猜测的桶。不要在报告里发明第八个类别。不要把文件系统 `EACCES` 当成 `permissions`，也不要把低于阈值的 force-push 拒绝当成可以 force-push。
 
-**Fixture：** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown)、[`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown)、[`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown)、[`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown)、[`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown)、[`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown)、[`concurrency-cancel-unknown`](../fixtures/gha/concurrency-cancel-unknown)、[`poetry-lock-and-assertion-unknown`](../fixtures/gha/poetry-lock-and-assertion-unknown)、[`oom-and-permission-unknown`](../fixtures/gha/oom-and-permission-unknown)、[`oidc-role-and-empty-arn-unknown`](../fixtures/gha/oidc-role-and-empty-arn-unknown)、[`shard-retry-only-unknown`](../fixtures/gha/shard-retry-only-unknown)。
+**Fixture：** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown)、[`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown)、[`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown)、[`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown)、[`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown)、[`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown)、[`concurrency-cancel-unknown`](../fixtures/gha/concurrency-cancel-unknown)、[`poetry-lock-and-assertion-unknown`](../fixtures/gha/poetry-lock-and-assertion-unknown)、[`oom-and-permission-unknown`](../fixtures/gha/oom-and-permission-unknown)、[`oidc-role-and-empty-arn-unknown`](../fixtures/gha/oidc-role-and-empty-arn-unknown)、[`shard-retry-only-unknown`](../fixtures/gha/shard-retry-only-unknown)、[`checkout-tls-and-assertion-unknown`](../fixtures/gha/checkout-tls-and-assertion-unknown)、[`dataset-and-assertion-unknown`](../fixtures/gha/dataset-and-assertion-unknown)、[`egress-and-permission-unknown`](../fixtures/gha/egress-and-permission-unknown)。
 
 **最小下一步：** 要失败步骤的名字，以及退出码上面的那些行。在等到之前不要顺手重构。
 

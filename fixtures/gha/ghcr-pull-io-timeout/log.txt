@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull ghcr.io/example-org/example-app:1.2.3
+##[endgroup]
+Error: image pull ghcr.io/example-org/example-app:1.2.3 stopped: net/http: TLS handshake timeout
+Error response from daemon: Get "https://ghcr.io/v2/": i/o timeout
+##[error]Process completed with exit code 1.

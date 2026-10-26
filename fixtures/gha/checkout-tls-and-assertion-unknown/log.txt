@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+fatal: unable to access 'https://github.com/example-org/example-repo/': server certificate verification failed
+##[group]Run npm test
+##[endgroup]
+AssertionError: expected 200 received 503
+##[error]Process completed with exit code 1.

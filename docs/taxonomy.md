@@ -12,11 +12,11 @@ Logs may be raw step output or `gh run view --log-failed` lines (`job`, `step`, 
 
 A failure that moved when nothing else did: a timeout that passed on rerun, a test marked intermittent, a numbered retry that sometimes goes green.
 
-**Signals:** "suspected flake", "exceeded timeout of N", "timeout of N ms exceeded", "passed on the previous run" or "passed on the automatic rerun", "intermittent", "retry N of M". A tie with an `AssertionError` stays `unknown` (`timeout-and-assertion-unknown`).
+**Signals:** "suspected flake", "exceeded timeout of N", "timeout of N ms exceeded", "passed on the previous run" or "passed on the automatic rerun", "intermittent", "retry N of M", checkout "SSL certificate problem" / "server certificate verification failed" / "unable to get local issuer certificate" / "The TLS connection was non-properly terminated", "failed to download the external dataset", "external host timed out". A tie with an `AssertionError` stays `unknown` (`timeout-and-assertion-unknown`, `checkout-tls-and-assertion-unknown`, `dataset-and-assertion-unknown`).
 
-**Not this:** a stable assertion (`test`), a runner that ran out of memory (`infra`), a registry 404 for a missing package (`deps`).
+**Not this:** a stable assertion (`test`), a runner that ran out of memory (`infra`), a registry DNS or egress failure (`infra`), a registry 404 for a missing package (`deps`).
 
-**Fixtures:** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake), [`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake), [`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake), [`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake), [`matrix-shard-flake`](../fixtures/gha/matrix-shard-flake), [`docker-rate-limit-flake`](../fixtures/gha/docker-rate-limit-flake). A shard that only says "retry N of M" stays `unknown` (`shard-retry-only-unknown`).
+**Fixtures:** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake), [`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake), [`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake), [`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake), [`matrix-shard-flake`](../fixtures/gha/matrix-shard-flake), [`docker-rate-limit-flake`](../fixtures/gha/docker-rate-limit-flake), [`checkout-tls-verify-flake`](../fixtures/gha/checkout-tls-verify-flake), [`external-dataset-host-flake`](../fixtures/gha/external-dataset-host-flake). A shard that only says "retry N of M" stays `unknown` (`shard-retry-only-unknown`).
 
 **Minimal next step:** quote the rerun or timeout line. Prefer a deterministic wait over bumping the timeout as the only edit. One rerun is evidence, not a fix.
 
@@ -72,11 +72,11 @@ The token, role, or `permissions:` block refused an API. Typical shape: HTTP 403
 
 The host fell over. Heap OOM, runner disk full, process killed, runner shutdown. The assertion is not the bug.
 
-**Signals:** "JavaScript heap out of memory", "Reached heap limit", `OOMKilled`, "No space left on device", "disk quota exceeded", "runner process was killed", "Cannot connect to the Docker daemon". An "out of memory" line tied with "does not have permission" stays `unknown` (`oom-and-permission-unknown`).
+**Signals:** "JavaScript heap out of memory", "Reached heap limit", `OOMKilled`, "No space left on device", "disk quota exceeded", "runner process was killed", "Cannot connect to the Docker daemon", registry pull `dial tcp: lookup` / "no such host" / "network is unreachable" / "TLS handshake timeout" / "i/o timeout" / "egress blocked". An "out of memory" line tied with "does not have permission" stays `unknown` (`oom-and-permission-unknown`). Egress blocked tied with `remote: permission to … denied` stays `unknown` (`egress-and-permission-unknown`).
 
-**Not this:** a test timeout that passed on rerun (`flake`), an `npm` resolver error (`deps`).
+**Not this:** a test timeout that passed on rerun (`flake`), checkout certificate verification (`flake`), an `npm` resolver error (`deps`).
 
-**Fixtures:** [`node-heap-oom`](../fixtures/gha/node-heap-oom), [`runner-disk-full`](../fixtures/gha/runner-disk-full), [`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap), [`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137), [`docker-build-disk-full`](../fixtures/gha/docker-build-disk-full), [`docker-daemon-unavailable`](../fixtures/gha/docker-daemon-unavailable).
+**Fixtures:** [`node-heap-oom`](../fixtures/gha/node-heap-oom), [`runner-disk-full`](../fixtures/gha/runner-disk-full), [`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap), [`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137), [`docker-build-disk-full`](../fixtures/gha/docker-build-disk-full), [`docker-daemon-unavailable`](../fixtures/gha/docker-daemon-unavailable), [`mcr-pull-egress-blocked`](../fixtures/gha/mcr-pull-egress-blocked), [`ghcr-pull-io-timeout`](../fixtures/gha/ghcr-pull-io-timeout).
 
 **Minimal next step:** one resource change (heap cap, fewer artifacts, larger runner). One rerun after a shutdown is reasonable. A second identical host failure stops the loop.
 
@@ -88,7 +88,7 @@ The log does not carry a v0 signal strong enough to pick a category, or two cate
 
 **Not this:** a place to hide a guess. Do not invent an eighth category in the report. Do not treat a filesystem `EACCES` as `permissions`, and do not treat a below-threshold force-push refusal as permission to force-push.
 
-**Fixtures:** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown), [`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown), [`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown), [`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown), [`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown), [`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown), [`concurrency-cancel-unknown`](../fixtures/gha/concurrency-cancel-unknown), [`poetry-lock-and-assertion-unknown`](../fixtures/gha/poetry-lock-and-assertion-unknown), [`oom-and-permission-unknown`](../fixtures/gha/oom-and-permission-unknown), [`oidc-role-and-empty-arn-unknown`](../fixtures/gha/oidc-role-and-empty-arn-unknown), [`shard-retry-only-unknown`](../fixtures/gha/shard-retry-only-unknown).
+**Fixtures:** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown), [`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown), [`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown), [`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown), [`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown), [`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown), [`concurrency-cancel-unknown`](../fixtures/gha/concurrency-cancel-unknown), [`poetry-lock-and-assertion-unknown`](../fixtures/gha/poetry-lock-and-assertion-unknown), [`oom-and-permission-unknown`](../fixtures/gha/oom-and-permission-unknown), [`oidc-role-and-empty-arn-unknown`](../fixtures/gha/oidc-role-and-empty-arn-unknown), [`shard-retry-only-unknown`](../fixtures/gha/shard-retry-only-unknown), [`checkout-tls-and-assertion-unknown`](../fixtures/gha/checkout-tls-and-assertion-unknown), [`dataset-and-assertion-unknown`](../fixtures/gha/dataset-and-assertion-unknown), [`egress-and-permission-unknown`](../fixtures/gha/egress-and-permission-unknown).
 
 **Minimal next step:** ask for the failed step name and the lines above the exit. Do not refactor while you wait.
 

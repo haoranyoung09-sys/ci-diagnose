@@ -28,6 +28,18 @@ Improvement: The synthetic GitHub Actions corpus now includes Docker, Poetry, uv
 
 Next: Add another near-miss only when `make eval` stays perfect. Leave `.github/workflows/triage-comment.yml` disabled (`if: false`).
 
+## 2026-10-26 — checkout, egress, datasets
+
+Date: 2026-10-26
+
+Fixtures: 57
+
+Eval: 57/57 (1.000)
+
+Improvement: Checkout TLS certificate failures and flaky external dataset hosts now classify as flake, and blocked MCR or GHCR pulls classify as infra. Ties with an assertion or a git permission denial stay unknown.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Add another near-miss only when `make eval` stays perfect.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

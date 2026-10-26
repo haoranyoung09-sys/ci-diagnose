@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run python -m pytest tests/test_loader.py
+##[endgroup]
+ERROR: failed to fetch the external dataset from https://data.example.invalid/fixtures/sample.csv
+AssertionError: expected 200 received 503
+##[error]Process completed with exit code 1.

@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run python -m pytest tests/test_loader.py
+##[endgroup]
+ERROR: failed to download the external dataset from https://data.example.invalid/fixtures/sample.csv
+urllib.error.URLError: external host timed out
+##[error]Process completed with exit code 1.

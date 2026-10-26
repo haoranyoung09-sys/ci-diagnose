@@ -1,0 +1,8 @@
+{
+  "id": "mcr-pull-egress-blocked",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "docker pull of mcr.microsoft.com failed DNS lookup and egress is blocked. Not a Docker Hub rate limit and not an image tag bump."
+}

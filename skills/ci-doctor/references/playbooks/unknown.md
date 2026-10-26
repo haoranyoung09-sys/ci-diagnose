@@ -21,6 +21,9 @@ Corpus:
 | `oom-and-permission-unknown` | Tie: "out of memory" and "does not have permission". Alternates `infra` and `permissions`. |
 | `oidc-role-and-empty-arn-unknown` | Tie: `AWS_ROLE_ARN is empty` and "does not have permission". Alternates `env` and `permissions`. |
 | `shard-retry-only-unknown` | Only "retry N of M" on a matrix shard. Under the threshold. |
+| `checkout-tls-and-assertion-unknown` | Tie: checkout certificate verification and `AssertionError`. Alternates `flake` and `test`. |
+| `dataset-and-assertion-unknown` | Tie: external dataset download and `AssertionError`. Alternates `flake` and `test`. |
+| `egress-and-permission-unknown` | Tie: registry egress blocked and `remote: permission to … denied`. Alternates `infra` and `permissions`. |
 
 ## Near misses
 
@@ -39,6 +42,8 @@ If `truncated: true`, you do not have the tail of the log. Ask for the failed st
    - **`EACCES` on a path:** whether that path is a GitHub API or a local directory. Do not grant a token scope for a local directory.
    - **Concurrency cancel:** whether a newer run on the same group was the one that should finish. Do not rerun in a loop.
    - **Shard retry only:** the suspected-flake or "passed on rerun" line, if it exists. Do not edit the matrix yet.
+   - **Checkout TLS or a dataset host tied with an assertion:** which line repeats on a clean rerun. Do not disable certificate verification and do not edit the assertion yet.
+   - **Egress tied with a git permission denial:** which failure remains if the other step is skipped. Do not open the network and grant a scope together.
 4. Do not propose a drive-by refactor, a dependency bump, or a permission widening while you wait.
 
 ## Verify
@@ -55,4 +60,4 @@ If the user later pastes the missing lines, start the workflow again from classi
 
 ## 中文
 
-`unknown` 是合法结论。打平（超时对断言、空 token 对 permission、poetry 锁文件对断言、内存耗尽对 permission、空角色 ARN 对 permission）不要选更好改的一类。并发组取消（`concurrency-cancel-unknown`）只要更新的那一次运行是否才是该完成的，不要循环重跑。矩阵分片只有 `retry N of M` 时不要改矩阵。force-push 拒绝低于阈值。缓存路径 `EACCES` 不是 GitHub 403。在分类清楚之前不要改代码，尝试次数保持 0。
+`unknown` 是合法结论。打平（超时对断言、空 token 对 permission、poetry 锁文件对断言、内存耗尽对 permission、空角色 ARN 对 permission、checkout 证书校验对断言、外部数据集对断言、egress 对 git permission）不要选更好改的一类。并发组取消（`concurrency-cancel-unknown`）只要更新的那一次运行是否才是该完成的，不要循环重跑。矩阵分片只有 `retry N of M` 时不要改矩阵。force-push 拒绝低于阈值。缓存路径 `EACCES` 不是 GitHub 403。在分类清楚之前不要改代码，尝试次数保持 0。

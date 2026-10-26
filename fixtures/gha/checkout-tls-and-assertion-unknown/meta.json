@@ -1,0 +1,8 @@
+{
+  "id": "checkout-tls-and-assertion-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Checkout server certificate verification failed and an AssertionError landed in the same log. Tie between flake and test. Do not pick."
+}

@@ -75,5 +75,12 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `poetry-lock-and-assertion-unknown` | unknown | Tie: poetry lockfile and `AssertionError`. |
 | `oom-and-permission-unknown` | unknown | Tie: "out of memory" and "does not have permission". |
 | `shard-retry-only-unknown` | unknown | Matrix shard only says `retry 2 of 4`. Under the threshold. |
+| `checkout-tls-verify-flake` | flake | `actions/checkout` SSL certificate verification failed. |
+| `checkout-tls-and-assertion-unknown` | unknown | Tie: checkout certificate verification and `AssertionError`. |
+| `external-dataset-host-flake` | flake | External dataset host timed out. No assertion. |
+| `dataset-and-assertion-unknown` | unknown | Tie: external dataset download and `AssertionError`. |
+| `mcr-pull-egress-blocked` | infra | `mcr.microsoft.com` pull: DNS lookup failed, egress blocked. |
+| `ghcr-pull-io-timeout` | infra | `ghcr.io` pull: TLS handshake timeout and `i/o timeout`. |
+| `egress-and-permission-unknown` | unknown | Tie: registry egress blocked and a git permission denial. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

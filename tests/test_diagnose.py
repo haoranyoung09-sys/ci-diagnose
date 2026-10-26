@@ -417,7 +417,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 50)
+        self.assertGreaterEqual(len(fixtures), 57)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -445,6 +445,13 @@ class CorpusFixturesTest(unittest.TestCase):
             "poetry-lock-and-assertion-unknown": ("unknown", ["deps", "test"], 0.42),
             "oom-and-permission-unknown": ("unknown", ["infra", "permissions"], 0.42),
             "oidc-role-and-empty-arn-unknown": ("unknown", ["env", "permissions"], 0.42),
+            "checkout-tls-verify-flake": ("flake", [], None),
+            "checkout-tls-and-assertion-unknown": ("unknown", ["flake", "test"], 0.42),
+            "external-dataset-host-flake": ("flake", [], None),
+            "dataset-and-assertion-unknown": ("unknown", ["flake", "test"], 0.42),
+            "mcr-pull-egress-blocked": ("infra", [], None),
+            "ghcr-pull-io-timeout": ("infra", [], None),
+            "egress-and-permission-unknown": ("unknown", ["infra", "permissions"], 0.42),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
@@ -461,6 +468,28 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertIn("PHPUnit assertion failed", phpunit["signals"])
         self.assertNotIn("pytest FAILED line", phpunit["signals"])
+        checkout = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "checkout-tls-verify-flake")
+        )
+        self.assertEqual(
+            checkout["signals"],
+            ["checkout TLS certificate verification failed"],
+        )
+        dataset = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "external-dataset-host-flake")
+        )
+        self.assertEqual(
+            dataset["signals"],
+            ["external dataset or host dependency failed"],
+        )
+        registry = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "mcr-pull-egress-blocked")
+        )
+        self.assertEqual(registry["signals"], ["registry pull or egress blocked"])
+        rate_limit = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "docker-rate-limit-flake")
+        )
+        self.assertNotIn("registry pull or egress blocked", rate_limit["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")
