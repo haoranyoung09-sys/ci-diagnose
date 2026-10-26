@@ -6,6 +6,16 @@
 
 `diagnose` 命令行是确定性的启发式规则，不是模型。它是离线路径，也是 fixture 的冒烟测试基准。置信度低时，skill 可以不同意分类结果，但必须明说。报告只供参考，不是合并结论。
 
+## 30 秒演示
+
+```bash
+git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
+cd ci-diagnose
+python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
+```
+
+`make eval` 会对 fixture 语料打分。
+
 ## 安装 skill
 
 Skill 源文件是 [`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md)。本仓库把它链接到 [`.agents/skills/ci-doctor`](.agents/skills/ci-doctor)，Cursor 和 Codex 打开仓库时就能发现它。
