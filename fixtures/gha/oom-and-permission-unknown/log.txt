@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the pack step
+##[endgroup]
+The pack step ran out of memory
+The workflow token does not have permission to upload the artifact.
+Neither line outranks the other.
+##[error]Process completed with exit code 1.

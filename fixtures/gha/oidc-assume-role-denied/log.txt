@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the assume-role step
+##[endgroup]
+The job was not granted id-token: write.
+Could not assume role with OIDC: arn:aws:iam::000000000000:role/example-app-ci
+No static cloud key is in this log.
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "shard-retry-only-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A matrix shard only says retry 2 of 4, which is under the v0 threshold. Unknown until a suspected-flake or rerun line appears."
+}

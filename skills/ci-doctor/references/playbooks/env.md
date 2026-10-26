@@ -6,7 +6,7 @@ A name was missing. The value must stay out of the report, the workflow file, an
 
 The CLI category is `env`. Typical lines: "Required environment variable NAME is not set", "Environment variable NAME is undefined", "Input required and not supplied", "NAME is empty", "secret NAME was not provided".
 
-Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`, `secret-signing-key-missing`, `aws-region-undefined`.
+Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`, `secret-signing-key-missing`, `aws-region-undefined`, `compose-db-url-unset`.
 
 ## Near misses
 

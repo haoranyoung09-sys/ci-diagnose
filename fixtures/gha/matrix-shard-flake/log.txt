@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the matrix shard
+##[endgroup]
+GitHub Actions matrix shard 3 of 8 (node 20) failed.
+Suspected flake: the same shard passed on the previous run.
+The failure is intermittent across shards on the same commit.
+##[error]Process completed with exit code 1.

@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull
+##[endgroup]
+Error response from daemon: toomanyrequests: Too Many Requests.
+Suspected flake: this image pull passed on the automatic rerun.
+##[error]Process completed with exit code 1.

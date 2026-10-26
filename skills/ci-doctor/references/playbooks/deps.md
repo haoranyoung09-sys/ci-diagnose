@@ -4,9 +4,9 @@ The resolver or the lockfile failed before the suite could mean anything.
 
 ## When to follow this
 
-The CLI category is `deps`. Signals include `ERESOLVE`, "unable to resolve dependency tree", "Conflicting peer dependency", "Could not resolve dependency", `package.json` and `package-lock.json` out of sync, "Missing: … from lock file", `ERR_PNPM_OUTDATED_LOCKFILE`, "Could not find a version that satisfies" (pip), and `yarn.lock` out of date.
+The CLI category is `deps`. Signals include `ERESOLVE`, "unable to resolve dependency tree", "Conflicting peer dependency", "Could not resolve dependency", `package.json` and `package-lock.json` out of sync, "Missing: … from lock file", `ERR_PNPM_OUTDATED_LOCKFILE`, "Could not find a version that satisfies" (pip), `yarn.lock` out of date, `poetry.lock` out of date, `uv.lock needs to be updated`, and Gradle "Could not resolve all files for configuration".
 
-Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, `pip-version-unsatisfied`, `yarn-lockfile-out-of-date`.
+Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, `pip-version-unsatisfied`, `yarn-lockfile-out-of-date`, `poetry-lock-out-of-date`, `uv-lock-needs-update`, `gradle-configuration-unresolved`.
 
 ## Near misses
 
@@ -16,6 +16,7 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | A test summary after a clean install | `test`. |
 | Only the words "peer dep", and the CLI is under the threshold | `unknown`. Ask for the resolver block. |
 | `ERESOLVE` leading, with a stray assertion in `alternates` | Stay on `deps` for this attempt. Do not also edit the test. |
+| `poetry.lock` tied with `AssertionError` (`poetry-lock-and-assertion-unknown`) | Stay `unknown`. Do not update the lockfile and the test in one attempt. |
 
 ## Recipe
 
@@ -26,6 +27,9 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
    - **pnpm:** commit an updated `pnpm-lock.yaml`. Do not drop `--frozen-lockfile` in CI to hide the drift.
    - **yarn:** commit an updated `yarn.lock`. Do not delete the lockfile. Do not switch the job to `npm install`.
    - **pip:** name the requirement that has no matching distribution. Change that pin, or the index the log already uses. Do not `pip install --upgrade` the world.
+   - **poetry:** commit an updated `poetry.lock`. Do not delete it to hide the drift.
+   - **uv:** commit an updated `uv.lock`. Do not drop `--frozen` in CI.
+   - **Gradle:** quote the configuration (`:app:compileClasspath`) and the missing module. Do not `--refresh-dependencies` the whole build as the only change.
 3. Do not bump unrelated packages in the same attempt.
 
 ## Verify
@@ -44,4 +48,4 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 
 ## 中文
 
-只引用冲突的两侧，或 pip 找不到的那一个要求。锁文件不同步就更新并提交对应的 lock 文件，不要把 CI 里的 `npm ci` / 冻结安装改成宽松安装。一次不要顺手升级无关包。安装步骤重跑后如果换了一对新约束，展示两对；这是第二次就停止。上游发版才能解开时，报告约束并停止。
+只引用冲突的两侧，或 pip / Gradle 找不到的那一个模块。`poetry.lock`、`uv.lock` 不同步就提交更新后的锁文件，不要在 CI 里关掉冻结安装。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。一次不要顺手升级无关包。第二次仍是新的约束对就停止。

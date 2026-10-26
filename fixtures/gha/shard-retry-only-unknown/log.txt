@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run the matrix shard
+##[endgroup]
+matrix shard 2 of 4 failed this attempt
+retry 2 of 4
+##[error]Process completed with exit code 1.

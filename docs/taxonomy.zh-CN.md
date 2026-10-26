@@ -16,7 +16,7 @@
 
 **不是这类：** 稳定的断言（`test`）、运行器内存耗尽（`infra`）、包不存在的 404（`deps`）。
 
-**Fixture：** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake)、[`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake)、[`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake)、[`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake)。
+**Fixture：** [`jest-timeout-flake`](../fixtures/gha/jest-timeout-flake)、[`registry-timeout-rerun-flake`](../fixtures/gha/registry-timeout-rerun-flake)、[`playwright-timeout-flake`](../fixtures/gha/playwright-timeout-flake)、[`cypress-timeout-flake`](../fixtures/gha/cypress-timeout-flake)、[`matrix-shard-flake`](../fixtures/gha/matrix-shard-flake)、[`docker-rate-limit-flake`](../fixtures/gha/docker-rate-limit-flake)。只有 “retry N of M” 的分片仍是 `unknown`（`shard-retry-only-unknown`）。
 
 **最小下一步：** 先引用重跑或超时那一行。优先改成确定性等待，而不是只把超时调大。重跑一次是证据，不是修复。
 
@@ -28,7 +28,7 @@
 
 **不是这类：** `GITHUB_TOKEN` 的 403（`permissions`）、peer 冲突（`deps`）。
 
-**Fixture：** [`missing-database-url`](../fixtures/gha/missing-database-url)、[`missing-node-auth-token`](../fixtures/gha/missing-node-auth-token)、[`unset-api-base-url`](../fixtures/gha/unset-api-base-url)、[`secret-signing-key-missing`](../fixtures/gha/secret-signing-key-missing)、[`aws-region-undefined`](../fixtures/gha/aws-region-undefined)。和 “does not have permission” 打平时仍是 `unknown`（`empty-token-and-permission-unknown`）。
+**Fixture：** [`missing-database-url`](../fixtures/gha/missing-database-url)、[`missing-node-auth-token`](../fixtures/gha/missing-node-auth-token)、[`unset-api-base-url`](../fixtures/gha/unset-api-base-url)、[`secret-signing-key-missing`](../fixtures/gha/secret-signing-key-missing)、[`aws-region-undefined`](../fixtures/gha/aws-region-undefined)、[`compose-db-url-unset`](../fixtures/gha/compose-db-url-unset)。和 “does not have permission” 打平时仍是 `unknown`（`empty-token-and-permission-unknown`、`oidc-role-and-empty-arn-unknown`）。
 
 **最小下一步：** 在 job 或该 job 使用的 Actions environment 上提供这个名字。不要编造值，也不要打印值。
 
@@ -40,7 +40,7 @@
 
 **不是这类：** 另一次尝试通过的超时（`flake`）、`npm ci` 拒绝锁文件（`deps`）。
 
-**Fixture：** [`npm-test-assertion`](../fixtures/gha/npm-test-assertion)、[`pytest-assertion`](../fixtures/gha/pytest-assertion)、[`go-test-want-got`](../fixtures/gha/go-test-want-got)、[`maven-surefire-assertion`](../fixtures/gha/maven-surefire-assertion)、[`phpunit-assert-failed`](../fixtures/gha/phpunit-assert-failed)、[`rspec-failure-error`](../fixtures/gha/rspec-failure-error)、[`cargo-test-result-failed`](../fixtures/gha/cargo-test-result-failed)。
+**Fixture：** [`npm-test-assertion`](../fixtures/gha/npm-test-assertion)、[`pytest-assertion`](../fixtures/gha/pytest-assertion)、[`go-test-want-got`](../fixtures/gha/go-test-want-got)、[`maven-surefire-assertion`](../fixtures/gha/maven-surefire-assertion)、[`phpunit-assert-failed`](../fixtures/gha/phpunit-assert-failed)、[`rspec-failure-error`](../fixtures/gha/rspec-failure-error)、[`cargo-test-result-failed`](../fixtures/gha/cargo-test-result-failed)、[`gradle-test-assertion`](../fixtures/gha/gradle-test-assertion)。
 
 **最小下一步：** 改失败所指的产品代码或断言。不要删测试来换绿。
 
@@ -48,11 +48,11 @@
 
 安装或解析失败。peer 冲突、`ERESOLVE`、`npm ci` 拒绝不同步的锁文件。
 
-**信号：** `ERESOLVE`、“unable to resolve dependency tree”、“Conflicting peer dependency”、“Could not resolve dependency”、`package.json` 与 `package-lock.json` 不同步、“Missing: … from lock file”、`ERR_PNPM_OUTDATED_LOCKFILE`、pip 的 “Could not find a version that satisfies”、`yarn.lock` 过期。
+**信号：** `ERESOLVE`、“unable to resolve dependency tree”、“Conflicting peer dependency”、“Could not resolve dependency”、`package.json` 与 `package-lock.json` 不同步、“Missing: … from lock file”、`ERR_PNPM_OUTDATED_LOCKFILE`、pip 的 “Could not find a version that satisfies”、`yarn.lock` / `poetry.lock` / `uv.lock` 过期、Gradle “Could not resolve all files for configuration”。
 
 **不是这类：** 发布前缺少 `NODE_AUTH_TOKEN`（`env`）、干净安装之后才失败的测试（`test`）。
 
-**Fixture：** [`npm-peer-eresolve`](../fixtures/gha/npm-peer-eresolve)、[`npm-ci-lockfile-drift`](../fixtures/gha/npm-ci-lockfile-drift)、[`pnpm-outdated-lockfile`](../fixtures/gha/pnpm-outdated-lockfile)、[`pip-version-unsatisfied`](../fixtures/gha/pip-version-unsatisfied)、[`yarn-lockfile-out-of-date`](../fixtures/gha/yarn-lockfile-out-of-date)。
+**Fixture：** [`npm-peer-eresolve`](../fixtures/gha/npm-peer-eresolve)、[`npm-ci-lockfile-drift`](../fixtures/gha/npm-ci-lockfile-drift)、[`pnpm-outdated-lockfile`](../fixtures/gha/pnpm-outdated-lockfile)、[`pip-version-unsatisfied`](../fixtures/gha/pip-version-unsatisfied)、[`yarn-lockfile-out-of-date`](../fixtures/gha/yarn-lockfile-out-of-date)、[`poetry-lock-out-of-date`](../fixtures/gha/poetry-lock-out-of-date)、[`uv-lock-needs-update`](../fixtures/gha/uv-lock-needs-update)、[`gradle-configuration-unresolved`](../fixtures/gha/gradle-configuration-unresolved)。和 `AssertionError` 打平时仍是 `unknown`（`poetry-lock-and-assertion-unknown`）。
 
 **最小下一步：** 对齐证据里的版本，或提交更新后的锁文件。不要先用 `--force` 或 `--legacy-peer-deps`。不要把 CI 里的 `npm ci` 换成 `npm install` 当作修复。
 
@@ -64,7 +64,7 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 **不是这类：** 构建脚本里与 GitHub API 无关的文件系统 `EACCES`（看清路径后多半是 `infra` 或 `env`）、secret 的值缺失（`env`）。
 
-**Fixture：** [`gha-token-integration-403`](../fixtures/gha/gha-token-integration-403)、[`git-push-permission-denied`](../fixtures/gha/git-push-permission-denied)、[`id-token-permission-denied`](../fixtures/gha/id-token-permission-denied)、[`bare-http-403`](../fixtures/gha/bare-http-403)。
+**Fixture：** [`gha-token-integration-403`](../fixtures/gha/gha-token-integration-403)、[`git-push-permission-denied`](../fixtures/gha/git-push-permission-denied)、[`id-token-permission-denied`](../fixtures/gha/id-token-permission-denied)、[`bare-http-403`](../fixtures/gha/bare-http-403)、[`oidc-assume-role-denied`](../fixtures/gha/oidc-assume-role-denied)。
 
 **最小下一步：** 指出最窄的缺失 scope。不要改用个人访问令牌。不要 force-push。
 
@@ -76,7 +76,7 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 **不是这类：** 重跑通过的测试超时（`flake`）、`npm` 解析错误（`deps`）。
 
-**Fixture：** [`node-heap-oom`](../fixtures/gha/node-heap-oom)、[`runner-disk-full`](../fixtures/gha/runner-disk-full)、[`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap)、[`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137)。
+**Fixture：** [`node-heap-oom`](../fixtures/gha/node-heap-oom)、[`runner-disk-full`](../fixtures/gha/runner-disk-full)、[`generic-oom-without-heap`](../fixtures/gha/generic-oom-without-heap)、[`runner-killed-exit-137`](../fixtures/gha/runner-killed-exit-137)、[`docker-build-disk-full`](../fixtures/gha/docker-build-disk-full)、[`docker-daemon-unavailable`](../fixtures/gha/docker-daemon-unavailable)。和 “does not have permission” 打平的内存耗尽仍是 `unknown`（`oom-and-permission-unknown`）。
 
 **最小下一步：** 只改一处资源（堆上限、更少产物、更大的 runner）。关闭之后重跑一次是合理的。第二次还是同样的宿主失败，就停止。
 
@@ -88,7 +88,7 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 **不是这类：** 用来藏一个猜测的桶。不要在报告里发明第八个类别。不要把文件系统 `EACCES` 当成 `permissions`，也不要把低于阈值的 force-push 拒绝当成可以 force-push。
 
-**Fixture：** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown)、[`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown)、[`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown)、[`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown)、[`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown)、[`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown)。
+**Fixture：** [`bare-exit-unknown`](../fixtures/gha/bare-exit-unknown)、[`canceled-step-unknown`](../fixtures/gha/canceled-step-unknown)、[`timeout-and-assertion-unknown`](../fixtures/gha/timeout-and-assertion-unknown)、[`empty-token-and-permission-unknown`](../fixtures/gha/empty-token-and-permission-unknown)、[`force-push-refusal-only-unknown`](../fixtures/gha/force-push-refusal-only-unknown)、[`cache-eacces-unknown`](../fixtures/gha/cache-eacces-unknown)、[`concurrency-cancel-unknown`](../fixtures/gha/concurrency-cancel-unknown)、[`poetry-lock-and-assertion-unknown`](../fixtures/gha/poetry-lock-and-assertion-unknown)、[`oom-and-permission-unknown`](../fixtures/gha/oom-and-permission-unknown)、[`oidc-role-and-empty-arn-unknown`](../fixtures/gha/oidc-role-and-empty-arn-unknown)、[`shard-retry-only-unknown`](../fixtures/gha/shard-retry-only-unknown)。
 
 **最小下一步：** 要失败步骤的名字，以及退出码上面的那些行。在等到之前不要顺手重构。
 

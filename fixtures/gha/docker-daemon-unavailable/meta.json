@@ -1,0 +1,8 @@
+{
+  "id": "docker-daemon-unavailable",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The runner cannot connect to the Docker daemon. One rerun is a check. Do not rewrite the Dockerfile for this line."
+}

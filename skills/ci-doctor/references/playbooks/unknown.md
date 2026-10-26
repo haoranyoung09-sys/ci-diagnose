@@ -16,6 +16,11 @@ Corpus:
 | `empty-token-and-permission-unknown` | Tie: `NODE_AUTH_TOKEN is empty` and "does not have permission". Alternates `env` and `permissions`. |
 | `force-push-refusal-only-unknown` | "Refusing to force-push" is below the threshold. It is a guardrail, not a win. |
 | `cache-eacces-unknown` | `EACCES` on a runner cache path. Not a GitHub token 403. |
+| `concurrency-cancel-unknown` | Concurrency group canceled the run. No v0 signal. |
+| `poetry-lock-and-assertion-unknown` | Tie: poetry lockfile and `AssertionError`. Alternates `deps` and `test`. |
+| `oom-and-permission-unknown` | Tie: "out of memory" and "does not have permission". Alternates `infra` and `permissions`. |
+| `oidc-role-and-empty-arn-unknown` | Tie: `AWS_ROLE_ARN is empty` and "does not have permission". Alternates `env` and `permissions`. |
+| `shard-retry-only-unknown` | Only "retry N of M" on a matrix shard. Under the threshold. |
 
 ## Near misses
 
@@ -32,6 +37,8 @@ If `truncated: true`, you do not have the tail of the log. Ask for the failed st
    - **Tie:** one rerun, or the lines that show which signal is stable. Do not edit either side yet.
    - **Force-push line only:** the git 403 or the "not granted contents:" line, if it exists. Do not push.
    - **`EACCES` on a path:** whether that path is a GitHub API or a local directory. Do not grant a token scope for a local directory.
+   - **Concurrency cancel:** whether a newer run on the same group was the one that should finish. Do not rerun in a loop.
+   - **Shard retry only:** the suspected-flake or "passed on rerun" line, if it exists. Do not edit the matrix yet.
 4. Do not propose a drive-by refactor, a dependency bump, or a permission widening while you wait.
 
 ## Verify
@@ -48,4 +55,4 @@ If the user later pastes the missing lines, start the workflow again from classi
 
 ## 中文
 
-`unknown` 是合法结论。打平（超时对断言、空 token 对 permission）不要选更好改的一类。只有 “Refusing to force-push” 时不要 force-push，也不要升格成 `permissions`。缓存路径上的 `EACCES` 不是 GitHub 403，不要授予 `contents: write`。取消或裸退出只要失败步骤名和退出前的日志。在此之前不要改代码，尝试次数保持 0。日志被截断时只要失败的那一个步骤。
+`unknown` 是合法结论。打平（超时对断言、空 token 对 permission、poetry 锁文件对断言、内存耗尽对 permission、空角色 ARN 对 permission）不要选更好改的一类。并发组取消（`concurrency-cancel-unknown`）只要更新的那一次运行是否才是该完成的，不要循环重跑。矩阵分片只有 `retry N of M` 时不要改矩阵。force-push 拒绝低于阈值。缓存路径 `EACCES` 不是 GitHub 403。在分类清楚之前不要改代码，尝试次数保持 0。

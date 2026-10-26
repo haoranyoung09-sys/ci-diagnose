@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Queue the workflow
+##[endgroup]
+Canceling since a higher priority waiting request for example-app-ci exists.
+##[error]The operation was canceled.
+The concurrency group example-app-ci dropped this run.
+No step log was uploaded.

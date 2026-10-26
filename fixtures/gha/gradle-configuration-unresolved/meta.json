@@ -1,0 +1,8 @@
+{
+  "id": "gradle-configuration-unresolved",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Gradle could not resolve configuration :app:compileClasspath for example-lib. The suite never started. Not an assertion and not a 403."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "docker-build-disk-full",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "docker build failed with no space left on device. Host disk, not a Dockerfile assertion and not a registry flake."
+}

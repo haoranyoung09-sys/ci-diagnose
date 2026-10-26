@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./gradlew :app:test
+##[endgroup]
+Execution failed for task ':app:test'.
+java.lang.AssertionError: expected:<200> but was:<503>
+There were failing tests. See the report in example-app.
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "oidc-role-and-empty-arn-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "AWS_ROLE_ARN is empty and the token does not have permission. Equal scores, so unknown. Do not invent a role ARN and do not grant write-all."
+}

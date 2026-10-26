@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run poetry install and pytest
+##[endgroup]
+The poetry.lock file is not consistent with pyproject.toml
+AssertionError: expected 1 received 2
+The log does not say which line is the stable failure.
+##[error]Process completed with exit code 1.
