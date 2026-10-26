@@ -24,6 +24,9 @@ Corpus:
 | `checkout-tls-and-assertion-unknown` | Tie: checkout certificate verification and `AssertionError`. Alternates `flake` and `test`. |
 | `dataset-and-assertion-unknown` | Tie: external dataset download and `AssertionError`. Alternates `flake` and `test`. |
 | `egress-and-permission-unknown` | Tie: registry egress blocked and `remote: permission to … denied`. Alternates `infra` and `permissions`. |
+| `registry-auth-and-egress-unknown` | Tie: registry authentication denied and egress blocked. Alternates `infra` and `permissions`. |
+| `checkout-hook-only-unknown` | A hook cannot run, and the log has no checkout or certificate line. Under the threshold. |
+| `multi-job-green-noise-unknown` | The only taxonomy phrase is on a job that succeeded. The failed job has no signal. |
 
 ## Near misses
 

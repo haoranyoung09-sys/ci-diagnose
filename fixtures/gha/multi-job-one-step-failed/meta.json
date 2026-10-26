@@ -1,0 +1,8 @@
+{
+  "id": "multi-job-one-step-failed",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The lint job succeeded and mentioned a flake. Only the test job failed, with AssertionError. Do not classify the green job."
+}

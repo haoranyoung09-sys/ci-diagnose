@@ -8,7 +8,11 @@ description: >-
   the build is broken, checkout fails certificate verification, a registry
   or MCR pull is blocked, an external dataset host flakes, or the user asks
   to fix the build, diagnose a failing check, explain a red Actions job, or
-  triage a fixture log.
+  triage a fixture log. Also use it when a later hook fails because
+  checkout failed, a registry pull is authentication-denied rather than
+  blocked, or only one job in a multi-job log failed. Do not use it to
+  approve a merge, to review Dependabot, or on a CI host other than
+  GitHub Actions.
 license: MIT
 compatibility: >-
   Offline diagnosis needs Python 3.9+ with the standard library only. A
@@ -17,7 +21,7 @@ compatibility: >-
   prints the gh command and does not call the network.
 metadata:
   author: ci-doctor
-  version: "0.4.0"
+  version: "0.5.0"
   taxonomy: v0
 ---
 
@@ -26,6 +30,23 @@ metadata:
 Advisory triage for a failed GitHub Actions run. Classify, quote evidence, propose one minimal fix, and say how to verify it. Do not merge. Do not force-push.
 
 If the user writes in Chinese, write the final report in Chinese. Keep category ids in English.
+
+## When to use this skill
+
+- CI failed, GitHub Actions is red, or the user pasted a log, a run URL, or a fixture id.
+- Checkout certificate verification failed, or a later hook failed only because checkout did not finish (`checkout-tls-verify-flake`, `checkout-tls-hook-cascade-flake`).
+- A registry or MCR pull was blocked (`infra`) or the registry denied authentication (`permissions`). If both lines are present, stay on `unknown`.
+- An external dataset host timed out.
+- A multi-job log where only one job failed. Run the CLI. Do not classify a phrase that appears only on a green job.
+
+## When not to use this skill
+
+- The user wants a merge decision or "safe to merge". Refuse.
+- Dependabot, Renovate, GitLab CI, or CircleCI. Say this skill does not cover that, and do not invent a category.
+- The log is empty, or `truncated: true` and the failed step is past the 2MB cut. Ask for the failed step. Do not guess from the kept prefix.
+- The category is `unknown` or `alternates` is non-empty. Do not pick the easier side. A hook line with no checkout error (`checkout-hook-only-unknown`) is not a TLS flake.
+
+Human feature intro, in English and 中文: repository `README.md` and `README.zh-CN.md`, section Features. Taxonomy and playbooks in this directory stay in English; category ids stay English in a Chinese report.
 
 ## Guardrails
 

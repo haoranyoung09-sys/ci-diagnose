@@ -1,0 +1,8 @@
+{
+  "id": "multi-job-green-noise-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The only taxonomy phrase sits on the green job. The failed job is an exit code with no signal. Stay unknown. Do not borrow the green job."
+}

@@ -23,6 +23,71 @@ make eval
 
 `diagnose` 命令行是确定性的启发式规则，不是模型。它是离线路径，也是 fixture 的冒烟测试基准。置信度低时，skill 可以不同意分类结果，但必须明说。
 
+## 功能
+
+<a id="features"></a>
+
+CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，并指出一步下一步。它不合并，也不判断某个改动可以安全落地。
+
+### 它分类什么
+
+七个 id。某一类得分至少为 6 且领先时胜出。两类在 6 分上打平，结果是 `unknown`。打分时不读 `meta.json`。
+
+| id | 含义 | Actions 里常见的样子 |
+| --- | --- | --- |
+| `flake` | 结果会变，或 checkout、注册表、数据集的短暂失败 | 证书校验失败；外部数据集主机超时；hook 失败只是因为 checkout 没完成 |
+| `env` | 某个具名变量、action 输入或 secret 从未设置 | `DATABASE_URL` 未设置 |
+| `test` | 测试已经跑起来，某个期望失败 | Jest `FAIL`、`AssertionError` |
+| `deps` | 解析器或锁文件不一致 | `npm ci` 锁文件不同步 |
+| `permissions` | token 或镜像仓库登录被拒绝 | `GITHUB_TOKEN` 403；`pull access denied` |
+| `infra` | 运行器、磁盘或网络路径失败 | 磁盘满；MCR `no such host`；Docker daemon 不在 |
+| `unknown` | 没有信号过线，或两类打平 | 只有退出码；checkout TLS 和断言打平；egress 和仓库认证打平 |
+
+每个信号的定义和 fixture：[docs/taxonomy.zh-CN.md](docs/taxonomy.zh-CN.md)。语料索引：[fixtures/README.md](fixtures/README.md)。类别 id 保持英文。
+
+### 它怎么工作
+
+1. 读日志，到 2MB 停止。空日志是 `unknown`。截断点之后的信号不计分，报告会标 `truncated`。
+2. 去掉 `gh` 的 job、step 和时间戳前缀。先打码常见 token，再打分。打码不是完整扫描。
+3. 日志里有多个 job、且只有一部分失败时，只给失败的 job 打分。绿 job 上的一句话不能获胜（`multi-job-one-step-failed`）。失败 job 本身没有信号时，结果保持 `unknown`（`multi-job-green-noise-unknown`）。
+4. 打开该类别的 playbook，只跟一条配方。打平不是去选更好改的那一类。
+5. `make eval` 离线核对每条 fixture 的标签，不调用 `gh`。
+
+### 什么时候用
+
+- GitHub Actions 的 job 是红的，你手头有日志、运行 URL 或 fixture id。
+- 你要一个类别、支撑它的行，以及一种验证方式。
+- 你在用这份语料核对 skill。
+
+### 什么时候不用
+
+- 用来批准合并，或说某个改动可以安全落地。
+- Dependabot 或 Renovate 的版本更新。那个旁路 skill 还不在这个仓库里。
+- GitLab CI、CircleCI，或 GitHub Actions 以外的宿主。
+- 一条私有日志，不贴 secret 就讲不清楚。请改存一份打码后的文件。
+- 评论工作流。[`.github/workflows/triage-comment.yml`](.github/workflows/triage-comment.yml) 是关掉的（`if: false`）。
+
+### Playbook 和真实的 Actions 失败
+
+| 日志里有什么 | 类别 | Fixture |
+| --- | --- | --- |
+| Checkout 出现 `SSL certificate problem` 或 `server certificate verification failed` | `flake` | `checkout-tls-verify-flake` |
+| 这次 checkout 失败之后，hook 跑不起来 | `flake` | `checkout-tls-hook-cascade-flake` |
+| hook 跑不起来，日志里没有 checkout 错误 | `unknown` | `checkout-hook-only-unknown` |
+| 外部数据集主机超时 | `flake` | `external-dataset-host-flake` |
+| `mcr.microsoft.com` 或 `ghcr.io`：`no such host`、`egress blocked`、`i/o timeout` | `infra` | `mcr-pull-egress-blocked`、`ghcr-pull-io-timeout` |
+| `pull access denied` 或 `unauthorized: authentication required` | `permissions` | `registry-pull-auth-denied` |
+| 同一次拉取里既有 egress 阻断，又有仓库认证拒绝 | `unknown` | `registry-auth-and-egress-unknown` |
+| 多个 job，只有一个失败 | 失败的那个 job | `multi-job-one-step-failed` |
+
+Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
+
+### 离线演示和 eval
+
+上面的 [30 秒演示](#30-秒演示) 是支持的离线路径。不装包，不要 token，不访问网络。
+
+`python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift` 打印一份 `deps` 报告。`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵。`make test` 覆盖空日志、2MB 截断、打码和含糊信号。`make smoke` 跑自检、测试、全部 fixture 和 `make eval`。
+
 ## 安装 skill
 
 Skill 源文件是 [`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md)。本仓库把它链接到 [`.agents/skills/ci-doctor`](.agents/skills/ci-doctor)，Cursor 和 Codex 打开仓库时就能发现它。

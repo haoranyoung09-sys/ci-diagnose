@@ -4,6 +4,8 @@
 
 The skill is a directory with `SKILL.md` plus `references/`. Canonical source in this repo: [`skills/ci-doctor/`](../skills/ci-doctor/). A relative symlink at [`.agents/skills/ci-doctor`](../.agents/skills/ci-doctor) makes Cursor and Codex load it when this repo is the workspace.
 
+What it classifies, when to skip it, and how playbooks map to checkout TLS, registry egress, and external datasets: [README.md](../README.md#features). 中文：[README.zh-CN.md](../README.zh-CN.md#features).
+
 Frontmatter follows the Agent Skills spec: `name` is `ci-doctor` (it matches the directory), and `description` says what the skill does and when to use it, including “CI failed”, “GitHub Actions is red”, and “fix the build”.
 
 ## Cursor

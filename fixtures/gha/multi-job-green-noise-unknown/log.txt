@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+lint	Setup	2026-10-26T01:14:22.1038427Z suspected flake in a comment on the green job
+lint	Setup	2026-10-26T01:14:22.2038427Z Lint finished. The job succeeded.
+build	Test	2026-10-26T01:14:23.1038427Z step ended without a named cause
+build	Test	2026-10-26T01:14:23.2038427Z ##[error]Process completed with exit code 1.

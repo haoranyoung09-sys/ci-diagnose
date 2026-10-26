@@ -82,5 +82,11 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `mcr-pull-egress-blocked` | infra | `mcr.microsoft.com` pull: DNS lookup failed, egress blocked. |
 | `ghcr-pull-io-timeout` | infra | `ghcr.io` pull: TLS handshake timeout and `i/o timeout`. |
 | `egress-and-permission-unknown` | unknown | Tie: registry egress blocked and a git permission denial. |
+| `checkout-tls-hook-cascade-flake` | flake | Checkout TLS failed, then the post-checkout hook could not run. |
+| `checkout-hook-only-unknown` | unknown | Hook missing, no checkout or certificate line. Under the threshold. |
+| `multi-job-one-step-failed` | test | Green job mentions a flake. Only the test job failed. |
+| `multi-job-green-noise-unknown` | unknown | The only taxonomy phrase is on the green job. |
+| `registry-pull-auth-denied` | permissions | Image pull access denied. Not an egress block. |
+| `registry-auth-and-egress-unknown` | unknown | Tie: registry auth denied and egress blocked. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

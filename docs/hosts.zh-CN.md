@@ -4,6 +4,8 @@
 
 Skill 是一个带 `SKILL.md` 和 `references/` 的目录。本仓库里的规范位置是 [`skills/ci-doctor/`](../skills/ci-doctor/)。[`.agents/skills/ci-doctor`](../.agents/skills/ci-doctor) 是相对符号链接，Cursor 和 Codex 把本仓库当作工作区时会加载它。
 
+它分类什么、什么时候不要用、playbook 如何对应 checkout TLS、注册表 egress 和外部数据集：见 [README.zh-CN.md](../README.zh-CN.md#features)。English: [README.md](../README.md#features).
+
 Frontmatter 遵循 Agent Skills 规范：`name` 为 `ci-doctor`（与目录名一致），`description` 说明它做什么、何时使用，并包含 “CI failed”、“GitHub Actions is red” 和 “fix the build”。
 
 ## Cursor

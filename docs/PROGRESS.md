@@ -12,6 +12,7 @@ Do not invent star counts, download numbers, or badges.
 Date: YYYY-MM-DD
 Fixtures: <count>
 Eval: <matched>/<count> (<accuracy>)
+Version: <skill version, optional>
 Improvement: <one sentence>
 Next: <one sentence>
 ```
@@ -37,6 +38,20 @@ Fixtures: 57
 Eval: 57/57 (1.000)
 
 Improvement: Checkout TLS certificate failures and flaky external dataset hosts now classify as flake, and blocked MCR or GHCR pulls classify as infra. Ties with an assertion or a git permission denial stay unknown.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Add another near-miss only when `make eval` stays perfect.
+
+## 2026-10-26 — feature guide and edge logs
+
+Date: 2026-10-26
+
+Fixtures: 63
+
+Eval: 63/63 (1.000)
+
+Version: 0.5.0
+
+Improvement: The READMEs now explain the seven categories, when to skip the skill, and how playbooks map to checkout TLS, registry auth versus egress, and external dataset hosts. The classifier ignores a green job in a multi-job log, treats a post-checkout hook as a cascade of the checkout failure, and keeps registry authentication denial distinct from a blocked pull.
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Add another near-miss only when `make eval` stays perfect.
 

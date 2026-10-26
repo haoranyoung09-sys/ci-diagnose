@@ -1,0 +1,8 @@
+{
+  "id": "registry-auth-and-egress-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The same pull log says egress is blocked and that registry authentication was denied. Tie between infra and permissions. Do not pick."
+}
