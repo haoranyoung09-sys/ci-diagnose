@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Initialize containers
+##[endgroup]
+Error: service container postgres failed to start within the allocated timeout
+Health check timed out waiting for postgres to become healthy
+##[error]Process completed with exit code 1.

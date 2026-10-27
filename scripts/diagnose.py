@@ -337,6 +337,24 @@ RULES: tuple[Rule, ...] = (
         r"could not resolve all (?:files|artifacts|dependencies) for configuration",
         "Gradle could not resolve a configuration",
     ),
+    Rule(
+        "deps",
+        8,
+        r"updated gemfile\.lock to version control|bundler could not find compatible versions|gemfile\.lock.+(?:out of date|does not match)",
+        "Bundler lockfile is out of date",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"missing go\.sum entry|verifying module: checksum mismatch",
+        "go.sum entry is missing or mismatched",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"cargo\.lock needs to be updated|failed to select a version for the requirement",
+        "Cargo lockfile could not select a version",
+    ),
     Rule("flake", 9, r"suspected flake", "suspected flake"),
     Rule("flake", 8, r"exceeded timeout of \d+", "test exceeded its timeout"),
     Rule(
@@ -365,6 +383,12 @@ RULES: tuple[Rule, ...] = (
         8,
         r"failed to (?:download|fetch) (?:the )?(?:external )?dataset|external host (?:timed out|timeout|connection reset)",
         "external dataset or host dependency failed",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"health ?check (?:failed|timed out)|service container \S+ failed to start|timed out waiting for \S+ to become healthy|timeout waiting for [^:\n]{0,80}inprogress",
+        "service health check timed out",
     ),
     Rule(
         "flake",
@@ -411,6 +435,24 @@ RULES: tuple[Rule, ...] = (
         8,
         r"dial tcp: lookup|no such host|network is unreachable|tls handshake timeout|egress blocked|\bi/o timeout\b",
         "registry pull or egress blocked",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"temporary failure in name resolution|getaddrinfo|name or service not known|could not resolve host",
+        "DNS name resolution failed",
+    ),
+    Rule(
+        "infra",
+        12,
+        r"failed to restore cache(?: entry)?|cache restore failed",
+        "actions cache restore failed",
+    ),
+    Rule(
+        "infra",
+        5,
+        r"\bEACCES: permission denied\b",
+        "cache path EACCES",
     ),
     Rule(
         "unknown",
@@ -639,6 +681,24 @@ def _select_evidence(hits: list[Hit], category: str) -> list[Hit]:
     return sorted(top, key=lambda hit: hit.line_no)
 
 
+def _tie_cache_eacces_with_lockfile(
+    scores: dict[str, int], matched: list[bool]
+) -> None:
+    """Keep a bare cache EACCES under the threshold.
+
+    The same EACCES line plus a lockfile hit would otherwise be reported as
+    deps and hide the cache failure. Match the infra score to deps so the
+    two tie. A stronger infra hit, such as a corrupt cache restore, is left
+    as the leader.
+    """
+    eacces = any(
+        matched[index] and rule.signal == "cache path EACCES"
+        for index, (rule, _pattern) in enumerate(COMPILED)
+    )
+    if eacces and scores["deps"] >= MIN_SCORE and scores["infra"] < scores["deps"]:
+        scores["infra"] = scores["deps"]
+
+
 def classify(text: str) -> Classification:
     """Classify log text. Does not read fixture labels.
 
@@ -685,6 +745,7 @@ def classify(text: str) -> Classification:
                 ),
             )
 
+    _tie_cache_eacces_with_lockfile(scores, matched)
     hits = [hit for pool in pools.values() for hit in pool]
     ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
     top_category, top_score = ranked[0]

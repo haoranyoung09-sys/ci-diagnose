@@ -10,9 +10,11 @@ description: >-
   to fix the build, diagnose a failing check, explain a red Actions job, or
   triage a fixture log. Also use it when a later hook fails because
   checkout failed, a registry pull is authentication-denied rather than
-  blocked, or only one job in a multi-job log failed. Do not use it to
-  approve a merge, to review Dependabot, or on a CI host other than
-  GitHub Actions.
+  blocked, or only one job in a multi-job log failed. Also use it for a
+  service or Helm health-check timeout, a chronic external dataset host,
+  Bundler, Cargo.lock, or go.sum drift, DNS name resolution, or an
+  actions/cache restore failure. Do not use it to approve a merge, to
+  review Dependabot, or on a CI host other than GitHub Actions.
 license: MIT
 compatibility: >-
   Offline diagnosis needs Python 3.9+ with the standard library only. A
@@ -21,7 +23,7 @@ compatibility: >-
   prints the gh command and does not call the network.
 metadata:
   author: ci-doctor
-  version: "0.5.0"
+  version: "0.6.0"
   taxonomy: v0
 ---
 
@@ -36,7 +38,9 @@ If the user writes in Chinese, write the final report in Chinese. Keep category 
 - CI failed, GitHub Actions is red, or the user pasted a log, a run URL, or a fixture id.
 - Checkout certificate verification failed, or a later hook failed only because checkout did not finish (`checkout-tls-verify-flake`, `checkout-tls-hook-cascade-flake`).
 - A registry or MCR pull was blocked (`infra`) or the registry denied authentication (`permissions`). If both lines are present, stay on `unknown`.
-- An external dataset host timed out.
+- An external dataset host timed out. If the log says the same URL failed on every attempt, prefer a mirror or a vendored file over another rerun.
+- A service container or Helm health check timed out, and there is no assertion. If both are present, stay on `unknown`.
+- Bundler `Gemfile.lock`, `go.sum`, or `Cargo.lock` failed before the tests. `getaddrinfo` / name resolution with no auth line. `actions/cache` failed to restore, even if a lockfile line follows. Cache `EACCES` plus a lockfile line stays `unknown`.
 - A multi-job log where only one job failed. Run the CLI. Do not classify a phrase that appears only on a green job.
 
 ## When not to use this skill

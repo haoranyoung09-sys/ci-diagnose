@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundle install --deployment
+##[endgroup]
+You are trying to install in deployment mode after changing your Gemfile.
+Run `bundle install` elsewhere and add the updated Gemfile.lock to version control.
+Bundler could not find compatible versions for gem "example-lib"
+##[error]Process completed with exit code 1.

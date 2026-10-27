@@ -4,9 +4,9 @@ The resolver or the lockfile failed before the suite could mean anything.
 
 ## When to follow this
 
-The CLI category is `deps`. Signals include `ERESOLVE`, "unable to resolve dependency tree", "Conflicting peer dependency", "Could not resolve dependency", `package.json` and `package-lock.json` out of sync, "Missing: … from lock file", `ERR_PNPM_OUTDATED_LOCKFILE`, "Could not find a version that satisfies" (pip), `yarn.lock` out of date, `poetry.lock` out of date, `uv.lock needs to be updated`, and Gradle "Could not resolve all files for configuration".
+The CLI category is `deps`. Signals include `ERESOLVE`, "unable to resolve dependency tree", "Conflicting peer dependency", "Could not resolve dependency", `package.json` and `package-lock.json` out of sync, "Missing: … from lock file", `ERR_PNPM_OUTDATED_LOCKFILE`, "Could not find a version that satisfies" (pip), `yarn.lock` / `poetry.lock` / `uv.lock` out of date, Gradle "Could not resolve all files for configuration", Bundler "add the updated Gemfile.lock" / "could not find compatible versions", `missing go.sum entry` / "verifying module: checksum mismatch", and `Cargo.lock needs to be updated` / "failed to select a version".
 
-Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, `pip-version-unsatisfied`, `yarn-lockfile-out-of-date`, `poetry-lock-out-of-date`, `uv-lock-needs-update`, `gradle-configuration-unresolved`.
+Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, `pip-version-unsatisfied`, `yarn-lockfile-out-of-date`, `poetry-lock-out-of-date`, `uv-lock-needs-update`, `gradle-configuration-unresolved`, `bundler-lockfile-out-of-date`, `go-sum-checksum-mismatch`, `cargo-lock-needs-update`.
 
 ## Near misses
 
@@ -17,6 +17,8 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | Only the words "peer dep", and the CLI is under the threshold | `unknown`. Ask for the resolver block. |
 | `ERESOLVE` leading, with a stray assertion in `alternates` | Stay on `deps` for this attempt. Do not also edit the test. |
 | `poetry.lock` tied with `AssertionError` (`poetry-lock-and-assertion-unknown`) | Stay `unknown`. Do not update the lockfile and the test in one attempt. |
+| Cache `EACCES` and a lockfile line together (`cache-eacces-and-lockfile-unknown`) | Stay `unknown`. Do not chmod the cache and rewrite the lockfile in one attempt. |
+| `Failed to restore cache` above a lockfile complaint (`actions-cache-restore-corrupt`) | That is `infra`. Do not start with the lockfile. |
 
 ## Recipe
 
@@ -30,6 +32,9 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
    - **poetry:** commit an updated `poetry.lock`. Do not delete it to hide the drift.
    - **uv:** commit an updated `uv.lock`. Do not drop `--frozen` in CI.
    - **Gradle:** quote the configuration (`:app:compileClasspath`) and the missing module. Do not `--refresh-dependencies` the whole build as the only change.
+   - **Bundler:** commit an updated `Gemfile.lock`. Do not drop `--deployment` in CI to hide the drift (`bundler-lockfile-out-of-date`).
+   - **Go:** add the missing `go.sum` entry with `go mod download` or `go mod tidy` locally and commit `go.sum`. Do not pass `-mod=mod` in CI to skip the checksum (`go-sum-checksum-mismatch`).
+   - **Cargo:** commit an updated `Cargo.lock`. Do not drop `--locked` in CI (`cargo-lock-needs-update`).
 3. Do not bump unrelated packages in the same attempt.
 
 ## Verify
@@ -48,4 +53,4 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 
 ## 中文
 
-只引用冲突的两侧，或 pip / Gradle 找不到的那一个模块。`poetry.lock`、`uv.lock` 不同步就提交更新后的锁文件，不要在 CI 里关掉冻结安装。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。一次不要顺手升级无关包。第二次仍是新的约束对就停止。
+只引用冲突的两侧，或 pip / Gradle / Bundler / Cargo 找不到的那一个模块。`poetry.lock`、`uv.lock`、`Gemfile.lock`、`Cargo.lock` 不同步就提交更新后的锁文件，不要在 CI 里关掉冻结安装。`go.sum` 缺条目或校验和不匹配时提交补齐后的 `go.sum`，不要在 CI 里用 `-mod=mod` 跳过。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。缓存 `EACCES` 加锁文件（`cache-eacces-and-lockfile-unknown`）也是打平。`Failed to restore cache`（`actions-cache-restore-corrupt`）是 `infra`，不要先改锁文件。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。一次不要顺手升级无关包。第二次仍是新的约束对就停止。

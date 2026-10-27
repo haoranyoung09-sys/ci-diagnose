@@ -1,0 +1,8 @@
+{
+  "id": "actions-cache-restore-corrupt",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "actions/cache failed to restore a corrupt entry, and npm then complained that the lockfile was out of sync. The cache line is the root. Do not start by editing the lockfile."
+}

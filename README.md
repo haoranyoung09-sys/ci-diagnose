@@ -79,6 +79,13 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | `pull access denied` or `unauthorized: authentication required` | `permissions` | `registry-pull-auth-denied` |
 | Egress blocked and registry authentication denied in the same pull | `unknown` | `registry-auth-and-egress-unknown` |
 | Several jobs, and only one of them failed | the failed job | `multi-job-one-step-failed` |
+| Postgres/Redis service or Helm health check timed out | `flake` | `service-healthcheck-timeout-flake`, `helm-healthcheck-timeout-flake` |
+| That health check tied with `AssertionError` | `unknown` | `healthcheck-and-assertion-unknown` |
+| External host failed on every recent attempt | `flake` (mirror or vendor; do not rerun the URL twice) | `external-host-chronic-flake` |
+| `Gemfile.lock`, `go.sum`, or `Cargo.lock` out of date | `deps` | `bundler-lockfile-out-of-date`, `go-sum-checksum-mismatch`, `cargo-lock-needs-update` |
+| `getaddrinfo` / "Temporary failure in name resolution" | `infra` | `dns-name-resolution-infra` |
+| `actions/cache` failed to restore, then the lockfile complains | `infra` | `actions-cache-restore-corrupt` |
+| Cache `EACCES` and a lockfile line together | `unknown` | `cache-eacces-and-lockfile-unknown` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

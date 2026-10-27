@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cargo build --locked
+##[endgroup]
+error: the lock file Cargo.lock needs to be updated but --locked was passed to prevent this
+error: failed to select a version for the requirement `example-lib = "^9.9.9"`
+##[error]Process completed with exit code 101.

@@ -1,0 +1,8 @@
+{
+  "id": "external-host-chronic-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The external dataset host failed on every attempt for a week. Category stays flake. The playbook should mirror or vendor the file, not rerun the same URL twice."
+}

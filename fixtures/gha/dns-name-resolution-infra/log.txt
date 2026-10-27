@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run curl --fail https://data.example.invalid/fixtures/sample.csv
+##[endgroup]
+curl: (6) getaddrinfo: Temporary failure in name resolution
+Could not resolve host: data.example.invalid
+##[error]Process completed with exit code 6.

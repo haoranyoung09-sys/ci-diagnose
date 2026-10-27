@@ -25,6 +25,9 @@ Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeou
 | `dial tcp: lookup`, "no such host", "egress blocked", or "TLS handshake timeout" on a registry pull | That is `infra` (`mcr-pull-egress-blocked`, `ghcr-pull-io-timeout`), not a checkout flake. |
 | Checkout TLS failed and a later hook says it cannot run (`checkout-tls-hook-cascade-flake`) | Still flake. The hook is a cascade. Do not debug the hook script and do not disable `sslVerify`. |
 | Only "cannot run … hook", no checkout or certificate line (`checkout-hook-only-unknown`) | Below the threshold. Stay `unknown`. Do not invent a TLS failure. |
+| Service container or Helm "health check timed out" / "failed to start" (`service-healthcheck-timeout-flake`, `helm-healthcheck-timeout-flake`) | Flake. One rerun is the check. Do not edit the app assertion and do not raise the health timeout in that attempt. |
+| That health-check line tied with `AssertionError` (`healthcheck-and-assertion-unknown`) | Stay `unknown`. |
+| External dataset host that failed on every recent attempt (`external-host-chronic-flake`) | Still `flake`. Do not spend both attempts on reruns. Mirror, cache, or use a file the repo already vendors. |
 
 ## Recipe
 
@@ -39,6 +42,8 @@ Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeou
 6. Checkout TLS (`checkout-tls-verify-flake`): the one hypothesis is a single rerun of that checkout step. Do not disable certificate verification to make it pass.
 7. External dataset or host (`external-dataset-host-flake`): name the host from the log. The one hypothesis is a rerun, or a fixture the repo already vendors. Do not add a new network retry loop and a new pin in the same attempt.
 8. Checkout cascade (`checkout-tls-hook-cascade-flake`): quote the certificate line, then the hook line, and say the hook did not run because checkout did not finish. One rerun of checkout is the hypothesis.
+9. Service or Helm health check (`service-healthcheck-timeout-flake`, `helm-healthcheck-timeout-flake`): quote the service or the InProgress object. One rerun is the hypothesis. Do not change the chart and the test in that attempt.
+10. Chronic external host (`external-host-chronic-flake`): if the log says the same URL failed on every attempt, the one change is a mirror, a cache, or a file already in the repo. A second rerun of the same URL is not a new hypothesis. Stop after you have named that path.
 
 ## Verify
 
@@ -58,4 +63,4 @@ An attempt starts when you apply the change or ask for a rerun that tests this h
 
 ## 中文
 
-先引用会变动的那一行（超时、重跑、intermittent、矩阵分片、checkout 证书校验、外部数据集主机）。`checkout-tls-verify-flake` 只重跑一次，不要关掉 `sslVerify`。证书失败之后 hook 跑不起来（`checkout-tls-hook-cascade-flake`）仍是 flake，不要去修 hook。只有 hook、没有 checkout 行（`checkout-hook-only-unknown`）低于阈值，保持 `unknown`。同一条证书错误再出现，就停下来问是不是自定义 CA。`external-dataset-host-flake` 引用主机名，不要在同一次尝试里改断言或换数据集。和 `AssertionError` 打平（`checkout-tls-and-assertion-unknown`、`dataset-and-assertion-unknown`）保持 `unknown`。`matrix-shard-flake` 只改共享状态，不要改每一个 matrix cell。只有 `retry N of M`（`shard-retry-only-unknown`）低于阈值，保持 `unknown`。Docker Hub `toomanyrequests` 且重跑已通过时，不要在同一次尝试里更换基础镜像。注册表 `no such host` 或 `egress blocked` 是 `infra`，不是这类。连续两次相同失败就改判并停止。
+先引用会变动的那一行（超时、重跑、intermittent、矩阵分片、checkout 证书校验、外部数据集主机）。`checkout-tls-verify-flake` 只重跑一次，不要关掉 `sslVerify`。证书失败之后 hook 跑不起来（`checkout-tls-hook-cascade-flake`）仍是 flake，不要去修 hook。只有 hook、没有 checkout 行（`checkout-hook-only-unknown`）低于阈值，保持 `unknown`。服务或 Helm 健康检查超时（`service-healthcheck-timeout-flake`、`helm-healthcheck-timeout-flake`）只重跑一次，不要同时改测试。和 `AssertionError` 打平（`healthcheck-and-assertion-unknown`）保持 `unknown`。外部主机每次都失败（`external-host-chronic-flake`）仍是 flake，但不要把两次尝试都花在重跑同一个 URL 上，改用镜像、缓存或仓库里已有的文件。同一条证书错误再出现，就停下来问是不是自定义 CA。`external-dataset-host-flake` 引用主机名，不要在同一次尝试里改断言或换数据集。和 `AssertionError` 打平（`checkout-tls-and-assertion-unknown`、`dataset-and-assertion-unknown`）保持 `unknown`。`matrix-shard-flake` 只改共享状态，不要改每一个 matrix cell。只有 `retry N of M`（`shard-retry-only-unknown`）低于阈值，保持 `unknown`。Docker Hub `toomanyrequests` 且重跑已通过时，不要在同一次尝试里更换基础镜像。注册表 `no such host` 或 `egress blocked` 是 `infra`，不是这类。连续两次相同失败就改判并停止。
