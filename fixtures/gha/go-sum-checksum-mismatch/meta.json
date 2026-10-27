@@ -1,0 +1,8 @@
+{
+  "id": "go-sum-checksum-mismatch",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "go mod download stopped on a missing go.sum entry and a checksum mismatch. The test suite did not start. Not a got/want assertion."
+}

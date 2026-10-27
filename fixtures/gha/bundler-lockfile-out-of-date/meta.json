@@ -1,0 +1,8 @@
+{
+  "id": "bundler-lockfile-out-of-date",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "bundle install --deployment refused because Gemfile.lock is stale. Bundler could not find compatible versions. Not an unset secret and not a test failure."
+}

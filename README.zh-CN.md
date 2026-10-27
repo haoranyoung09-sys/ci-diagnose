@@ -79,6 +79,13 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | `pull access denied` 或 `unauthorized: authentication required` | `permissions` | `registry-pull-auth-denied` |
 | 同一次拉取里既有 egress 阻断，又有仓库认证拒绝 | `unknown` | `registry-auth-and-egress-unknown` |
 | 多个 job，只有一个失败 | 失败的那个 job | `multi-job-one-step-failed` |
+| Postgres/Redis 服务或 Helm 健康检查超时 | `flake` | `service-healthcheck-timeout-flake`、`helm-healthcheck-timeout-flake` |
+| 这次健康检查和 `AssertionError` 打平 | `unknown` | `healthcheck-and-assertion-unknown` |
+| 外部主机最近每次尝试都失败 | `flake`（改用镜像或仓库内文件，不要把同一个 URL 重跑两次） | `external-host-chronic-flake` |
+| `Gemfile.lock`、`go.sum` 或 `Cargo.lock` 过期 | `deps` | `bundler-lockfile-out-of-date`、`go-sum-checksum-mismatch`、`cargo-lock-needs-update` |
+| `getaddrinfo` / “Temporary failure in name resolution” | `infra` | `dns-name-resolution-infra` |
+| `actions/cache` 恢复失败，随后锁文件报错 | `infra` | `actions-cache-restore-corrupt` |
+| 缓存 `EACCES` 和锁文件行同时出现 | `unknown` | `cache-eacces-and-lockfile-unknown` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

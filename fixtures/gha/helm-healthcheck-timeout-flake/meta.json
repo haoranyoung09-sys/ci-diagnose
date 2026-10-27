@@ -1,0 +1,8 @@
+{
+  "id": "helm-healthcheck-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A Helm release health check timed out while a Deployment stayed InProgress. No test assertion. Not a lockfile miss and not a permission error."
+}

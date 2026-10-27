@@ -1,0 +1,8 @@
+{
+  "id": "service-healthcheck-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The postgres service container failed its health check on a slow runner. No assertion. One rerun is the check. Not an application test failure."
+}

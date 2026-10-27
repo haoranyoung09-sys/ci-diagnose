@@ -1,0 +1,8 @@
+{
+  "id": "cache-eacces-and-lockfile-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Cache mkdir failed with EACCES and npm ci also reported a lockfile mismatch. Tie between infra and deps. Do not chmod and rewrite the lockfile in one attempt."
+}

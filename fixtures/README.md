@@ -88,5 +88,15 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `multi-job-green-noise-unknown` | unknown | The only taxonomy phrase is on the green job. |
 | `registry-pull-auth-denied` | permissions | Image pull access denied. Not an egress block. |
 | `registry-auth-and-egress-unknown` | unknown | Tie: registry auth denied and egress blocked. |
+| `service-healthcheck-timeout-flake` | flake | Postgres service container health check timed out. |
+| `helm-healthcheck-timeout-flake` | flake | Helm health check timed out on InProgress. |
+| `healthcheck-and-assertion-unknown` | unknown | Tie: health check timeout and `AssertionError`. |
+| `external-host-chronic-flake` | flake | External dataset host failed on every attempt. Still flake. |
+| `bundler-lockfile-out-of-date` | deps | `Gemfile.lock` stale under `bundle install --deployment`. |
+| `go-sum-checksum-mismatch` | deps | Missing `go.sum` entry and a checksum mismatch. |
+| `cargo-lock-needs-update` | deps | `Cargo.lock` needs an update under `--locked`. |
+| `dns-name-resolution-infra` | infra | `getaddrinfo` temporary failure in name resolution. |
+| `actions-cache-restore-corrupt` | infra | Cache restore failed; lockfile noise is downstream. |
+| `cache-eacces-and-lockfile-unknown` | unknown | Tie: cache `EACCES` and a lockfile mismatch. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

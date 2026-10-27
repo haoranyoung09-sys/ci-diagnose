@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run go mod download
+##[endgroup]
+go: example.com/example-lib@v1.2.3: missing go.sum entry
+verifying module: checksum mismatch
+##[error]Process completed with exit code 1.

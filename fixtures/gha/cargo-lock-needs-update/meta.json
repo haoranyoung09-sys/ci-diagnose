@@ -1,0 +1,8 @@
+{
+  "id": "cargo-lock-needs-update",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "cargo build --locked said Cargo.lock needs to be updated and failed to select a version. Not cargo test result FAILED and not a registry 403."
+}

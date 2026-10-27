@@ -1,0 +1,9 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/cache/restore@v4
+##[endgroup]
+Failed to restore cache entry for key example-app-linux-npm
+Cache restore failed: the tarball is corrupt
+##[group]Run npm ci
+##[endgroup]
+npm ERR! `npm ci` can only install packages when your package.json and package-lock.json are in sync.
+##[error]Process completed with exit code 1.

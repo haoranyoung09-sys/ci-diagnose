@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/cache restore
+##[endgroup]
+Error: EACCES: permission denied, mkdir '/home/runner/work/_temp/example-cache'
+##[group]Run npm ci
+##[endgroup]
+npm ERR! `npm ci` can only install packages when your package.json and package-lock.json are in sync.
+##[error]Process completed with exit code 1.

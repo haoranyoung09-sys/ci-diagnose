@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 63)
+        self.assertGreaterEqual(len(fixtures), 73)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -479,6 +479,16 @@ class CorpusFixturesTest(unittest.TestCase):
             "multi-job-green-noise-unknown": ("unknown", [], None),
             "registry-pull-auth-denied": ("permissions", [], None),
             "registry-auth-and-egress-unknown": ("unknown", ["infra", "permissions"], 0.42),
+            "service-healthcheck-timeout-flake": ("flake", [], None),
+            "helm-healthcheck-timeout-flake": ("flake", [], None),
+            "healthcheck-and-assertion-unknown": ("unknown", ["flake", "test"], 0.42),
+            "external-host-chronic-flake": ("flake", [], None),
+            "bundler-lockfile-out-of-date": ("deps", [], None),
+            "go-sum-checksum-mismatch": ("deps", [], None),
+            "cargo-lock-needs-update": ("deps", [], None),
+            "dns-name-resolution-infra": ("infra", [], None),
+            "actions-cache-restore-corrupt": ("infra", [], None),
+            "cache-eacces-and-lockfile-unknown": ("unknown", ["deps", "infra"], 0.42),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
@@ -536,6 +546,33 @@ class CorpusFixturesTest(unittest.TestCase):
             diagnose.load_fixture(ROOT / "fixtures" / "gha" / "registry-pull-auth-denied")
         )
         self.assertNotIn("registry pull or egress blocked", auth["signals"])
+        health = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "service-healthcheck-timeout-flake"
+            )
+        )
+        self.assertEqual(health["signals"], ["service health check timed out"])
+        chronic = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "external-host-chronic-flake")
+        )
+        self.assertNotIn("flake or flaky wording", chronic["signals"])
+        dns = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "dns-name-resolution-infra")
+        )
+        self.assertEqual(dns["signals"], ["DNS name resolution failed"])
+        self.assertNotIn("permissions", dns["alternates"])
+        cache = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "actions-cache-restore-corrupt"
+            )
+        )
+        self.assertEqual(cache["signals"], ["actions cache restore failed"])
+        self.assertNotIn("deps", cache["alternates"])
+        compose = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "compose-db-url-unset")
+        )
+        self.assertEqual(compose["category"], "env")
+        self.assertNotIn("service health check timed out", compose["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

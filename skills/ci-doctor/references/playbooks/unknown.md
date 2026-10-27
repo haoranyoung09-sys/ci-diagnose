@@ -27,6 +27,8 @@ Corpus:
 | `registry-auth-and-egress-unknown` | Tie: registry authentication denied and egress blocked. Alternates `infra` and `permissions`. |
 | `checkout-hook-only-unknown` | A hook cannot run, and the log has no checkout or certificate line. Under the threshold. |
 | `multi-job-green-noise-unknown` | The only taxonomy phrase is on a job that succeeded. The failed job has no signal. |
+| `healthcheck-and-assertion-unknown` | Tie: service health check timed out and `AssertionError`. Alternates `flake` and `test`. |
+| `cache-eacces-and-lockfile-unknown` | Tie: cache `EACCES` and a lockfile mismatch. Alternates `deps` and `infra`. |
 
 ## Near misses
 
