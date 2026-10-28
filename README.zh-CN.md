@@ -4,6 +4,46 @@
 
 CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
+## 快速开始：加到工作流
+
+不用安装，也不调用 LLM。名为 `CI` 的工作流变红并结束后，这个 job 拉取该次运行的日志（`actions: read`），把类别写进 job summary。
+
+```yaml
+name: CI Doctor
+"on":
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  triage:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: haoranyoung09-sys/ci-diagnose@v1
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+```
+
+同一个 job、并且你已经把日志存下来时用下面这段。`if: failure()` 拉不到当前这次运行的日志，因为 job 还没结束。
+
+```yaml
+- uses: haoranyoung09-sys/ci-diagnose@v1
+  if: failure()
+  with:
+    log-path: ci.log
+```
+
+`comment` 默认关闭。取舍、权限和 `v1` 标签见 [docs/action.zh-CN.md](docs/action.zh-CN.md)。
+
+下面两张图由 [`scripts/render_demo.py`](scripts/render_demo.py) 根据 `npm-ci-lockfile-drift` 的真实报告生成，不是 github.com 的录屏。
+
+![npm-ci-lockfile-drift 的终端分类](docs/demo-terminal.svg)
+
+![同一份报告的 job summary 字段](docs/demo-summary.svg)
+
 ## 30 秒演示
 
 Python 3.9 或更高。不安装依赖，不需要 token，也不访问网络。
@@ -27,7 +67,7 @@ make eval
 
 <a id="features"></a>
 
-CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，并指出一步下一步。它不合并，也不判断某个改动可以安全落地。
+CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，并指出一步下一步。它不合并，也不判断某个改动可以安全落地。[`action.yml`](action.yml) 里的 GitHub Action 调用同一个分类器。说明见 [docs/action.zh-CN.md](docs/action.zh-CN.md)。
 
 ### 它分类什么
 
@@ -209,10 +249,12 @@ python3 scripts/diagnose.py /tmp/ci-doctor-run.log
 ## 目录
 
 ```text
+action.yml            composite GitHub Action
+examples/workflows/   可复制的工作流
 skills/ci-doctor/     agent skill、playbook、gh 步骤
 scripts/diagnose.py   分类、打码，以及用 gh 拉取日志
 fixtures/gha/         合成的 GitHub Actions 失败
-docs/                 分类说明、宿主安装、每周进展
+docs/                 分类说明、宿主安装、Action 说明、每周进展
 ```
 
 后续宿主、失败评论机器人，以及 Dependabot 旁路 skill，记在 [ROADMAP.md](ROADMAP.md)。

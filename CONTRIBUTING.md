@@ -14,7 +14,9 @@ make eval
 make smoke
 ```
 
-`make test` runs the stdlib edge-case tests in `tests/`. `make eval` scores every fixture label and prints a confusion matrix. It does not use the network or `gh`. `make smoke` runs the self-check, `make test`, the human-readable fixture pass, and `make eval`. It exits non-zero when a fixture's `meta.json` label disagrees with the classifier. That disagreement is the bug to fix, not something to silence.
+`make test` runs the stdlib edge-case tests in `tests/`, including the GitHub Action entrypoint. Those tests do not call the network. `make eval` scores every fixture label and prints a confusion matrix. It does not use the network or `gh`. `make smoke` runs the self-check, `make test`, the human-readable fixture pass, and `make eval`. It exits non-zero when a fixture's `meta.json` label disagrees with the classifier. That disagreement is the bug to fix, not something to silence.
+
+Regenerate the README pictures after a report-format change: `python3 scripts/render_demo.py`. Commit the SVGs with the script.
 
 ## Add a fixture
 
@@ -57,7 +59,7 @@ Bug reports are welcome with the fixture id or a redacted log snippet, the comma
 
 ## 中文
 
-开发循环只要 Python 3.9+ 的标准库：
+`make test` 也覆盖 GitHub Action 的入口，这些测试不访问网络。开发循环只要 Python 3.9+ 的标准库：
 
 ```bash
 python3 scripts/diagnose.py --self-check

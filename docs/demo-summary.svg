@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="396" viewBox="0 0 760 396" role="img">
+<title>CI Doctor job summary</title>
+<desc>Rendered by scripts/render_demo.py from the diagnose report for npm-ci-lockfile-drift. Not a screenshot of GitHub.</desc>
+<rect width="100%" height="100%" rx="12" fill="#f6f8fa"/>
+<rect width="100%" height="40" rx="12" fill="#fff1e6"/>
+<rect y="20" width="100%" height="20" fill="#fff1e6"/>
+<text x="20" y="26" fill="#9a3412" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">Generated from the diagnose report. Not a GitHub screenshot.</text>
+<text x="20" y="56" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">CI Doctor  ·  job summary</text>
+<text x="20" y="76" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">Advisory classification. Not a merge decision.</text>
+<text x="20" y="96" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14"></text>
+<text x="20" y="116" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">category     deps</text>
+<text x="20" y="136" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">confidence   0.87 (high)</text>
+<text x="20" y="156" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">advisory     classification only; not a merge decision</text>
+<text x="20" y="176" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14"></text>
+<text x="20" y="196" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">Evidence</text>
+<text x="20" y="216" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">L6  npm ERR! `npm ci` can only install packages when your package.json and package-loc</text>
+<text x="20" y="236" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">k.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm inst</text>
+<text x="20" y="256" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">all` before continuing.</text>
+<text x="20" y="276" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">L9  npm ERR! Missing: left-pad@1.3.0 from lock file</text>
+<text x="20" y="296" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14"></text>
+<text x="20" y="316" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">Next step</text>
+<text x="20" y="336" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">Align the versions quoted in the evidence, or regenerate the lockfile and commit it. D</text>
+<text x="20" y="356" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">o not start with --force or --legacy-peer-deps.</text>
+</svg>

@@ -69,6 +69,20 @@ Improvement: Service and Helm health-check timeouts classify as flake, Bundler, 
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Add another near-miss only when `make eval` stays perfect.
 
+## 2026-10-28
+
+Date: 2026-10-28
+
+Fixtures: 73
+
+Eval: 73/73 (1.000)
+
+Version: 0.7.0
+
+Improvement: A composite GitHub Action writes the category, confidence, evidence, and one next step to the job summary. Log-path and fixture stay offline. A completed run is downloaded with actions: read. Pull request comments stay off unless comment is true. The moving v1 tag is documented and not created from this repo.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Publish the Action only after the public mirror has this commit and the v0.7.0 / v1 tags.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

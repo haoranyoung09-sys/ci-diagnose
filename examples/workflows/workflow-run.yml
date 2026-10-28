@@ -1,0 +1,24 @@
+# Recommended. Runs after the named workflow finishes, then downloads that
+# run's logs. Match `workflows` to the workflow `name:` you already have.
+# Needs actions: read. No pull request comment unless you opt in.
+
+name: CI Doctor
+
+"on":
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  triage:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Classify the failed run
+        uses: haoranyoung09-sys/ci-diagnose@v1
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
