@@ -1,0 +1,86 @@
+name: ci-diagnose
+description: >-
+  Classify a failed Actions log as flake, env, test, deps, permissions,
+  infra, or unknown. Advisory only. No LLM.
+author: Young
+branding:
+  icon: alert-circle
+  color: orange
+
+inputs:
+  log-path:
+    description: >-
+      Path to a saved log, relative to the workspace. Offline. Mutually
+      exclusive with fixture and run-id.
+    required: false
+    default: ""
+  fixture:
+    description: >-
+      Fixture id shipped with this action under fixtures/gha. Offline demo
+      and self-test. Mutually exclusive with log-path and run-id.
+    required: false
+    default: ""
+  run-id:
+    description: >-
+      Completed Actions run whose logs to download. Omit log-path and fixture
+      to use the current run. A still-running job has no log archive yet.
+    required: false
+    default: ""
+  token:
+    description: >-
+      Token for the logs API and the opt-in pull request comment. Not used
+      for log-path or fixture. Defaults to the workflow GITHUB_TOKEN.
+    required: false
+    default: ${{ github.token }}
+  comment:
+    description: >-
+      Post or update one pull request comment. Default false. Requires
+      pull-requests: write and a pull request number.
+    required: false
+    default: "false"
+  pull-request:
+    description: >-
+      Pull request number for comment. Empty uses the event payload when it
+      has one.
+    required: false
+    default: ""
+  api-url:
+    description: >-
+      GitHub API root. Empty uses GITHUB_API_URL, then https://api.github.com.
+    required: false
+    default: ""
+
+outputs:
+  category:
+    description: Taxonomy id (flake, env, test, deps, permissions, infra, or unknown).
+    value: ${{ steps.diagnose.outputs.category }}
+  confidence:
+    description: Confidence from 0.00 to 1.00.
+    value: ${{ steps.diagnose.outputs.confidence }}
+  confidence-level:
+    description: high, medium, or low.
+    value: ${{ steps.diagnose.outputs.confidence-level }}
+  advisory:
+    description: Always true. The result is not a merge decision.
+    value: ${{ steps.diagnose.outputs.advisory }}
+  next-step:
+    description: First suggested next step.
+    value: ${{ steps.diagnose.outputs.next-step }}
+  evidence:
+    description: Redacted evidence lines, joined.
+    value: ${{ steps.diagnose.outputs.evidence }}
+
+runs:
+  using: composite
+  steps:
+    - id: diagnose
+      shell: bash
+      env:
+        INPUT_LOG_PATH: ${{ inputs.log-path }}
+        INPUT_FIXTURE: ${{ inputs.fixture }}
+        INPUT_RUN_ID: ${{ inputs.run-id }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_COMMENT: ${{ inputs.comment }}
+        INPUT_PULL_REQUEST: ${{ inputs.pull-request }}
+        INPUT_API_URL: ${{ inputs.api-url }}
+      run: python3 "$GITHUB_ACTION_PATH/scripts/action_entry.py"

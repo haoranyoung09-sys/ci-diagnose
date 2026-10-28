@@ -20,10 +20,11 @@ compatibility: >-
   Offline diagnosis needs Python 3.9+ with the standard library only. A
   GitHub Actions run URL is fetched with gh run view --log-failed when gh
   is installed and logged in. Without gh, pass a saved log. --dry-run
-  prints the gh command and does not call the network.
+  prints the gh command and does not call the network. The GitHub
+  Action is composite, runs python3 on the runner, and does not call an LLM.
 metadata:
   author: ci-doctor
-  version: "0.6.0"
+  version: "0.7.0"
   taxonomy: v0
 ---
 
@@ -42,6 +43,7 @@ If the user writes in Chinese, write the final report in Chinese. Keep category 
 - A service container or Helm health check timed out, and there is no assertion. If both are present, stay on `unknown`.
 - Bundler `Gemfile.lock`, `go.sum`, or `Cargo.lock` failed before the tests. `getaddrinfo` / name resolution with no auth line. `actions/cache` failed to restore, even if a lockfile line follows. Cache `EACCES` plus a lockfile line stays `unknown`.
 - A multi-job log where only one job failed. Run the CLI. Do not classify a phrase that appears only on a green job.
+- The user wants the result in a GitHub Actions job summary. The composite action is `action.yml` at the repo root. It does not call an LLM. Leave `comment` off unless they set it. Same-job `if: failure()` needs `log-path`; a finished run uses `workflow_run` and `run-id`.
 
 ## When not to use this skill
 

@@ -1,0 +1,38 @@
+name: action
+
+"on":
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture:
+    name: action on a fixture
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Classify the lockfile fixture
+        id: doctor
+        uses: ./
+        with:
+          fixture: npm-ci-lockfile-drift
+
+      - name: Require a deps report
+        run: |
+          test "${{ steps.doctor.outputs.category }}" = "deps"
+          test -n "${{ steps.doctor.outputs.confidence }}"
+          test "${{ steps.doctor.outputs.advisory }}" = "true"
+
+      - name: Classify a saved log
+        id: file
+        uses: ./
+        with:
+          log-path: fixtures/gha/npm-test-assertion/log.txt
+
+      - name: Require a test report
+        run: test "${{ steps.file.outputs.category }}" = "test"
