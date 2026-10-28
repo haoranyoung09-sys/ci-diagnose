@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker run example-org/example-app:1.2.3
+##[endgroup]
+The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64)
+exec format error
+##[error]Process completed with exit code 1.

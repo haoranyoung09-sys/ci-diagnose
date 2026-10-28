@@ -1,0 +1,8 @@
+{
+  "id": "node-engine-mismatch-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "npm refused because the runner Node is 18 and the package requires >=20. Change the matrix or setup-node version. Not a lockfile drift."
+}

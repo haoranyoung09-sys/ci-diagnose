@@ -1,0 +1,9 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[warning]continue-on-error is set. This step is allowed to fail.
+Suspected flake: the modal was not ready.
+##[endgroup]
+##[group]Run npm ci
+##[endgroup]
+npm ERR! `npm ci` can only install packages when your package.json and package-lock.json are in sync.
+##[error]Process completed with exit code 1.

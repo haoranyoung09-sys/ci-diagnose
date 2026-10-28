@@ -1,0 +1,8 @@
+{
+  "id": "registry-rate-and-auth-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The pull log has toomanyrequests and pull access denied. Tie between flake and permissions. Do not retag the image and mint a login in one attempt."
+}

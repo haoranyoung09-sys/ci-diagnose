@@ -1,0 +1,8 @@
+{
+  "id": "windows-filename-too-long-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Checkout died with Filename too long on a Windows runner. A filesystem limit, not a line-ending warning and not an assertion."
+}

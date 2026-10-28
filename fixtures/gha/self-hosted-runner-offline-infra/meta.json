@@ -1,0 +1,8 @@
+{
+  "id": "self-hosted-runner-offline-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The self-hosted runner lost communication with the server. The machine or its network is down. Not a workflow permission and not a test."
+}

@@ -98,5 +98,19 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `dns-name-resolution-infra` | infra | `getaddrinfo` temporary failure in name resolution. |
 | `actions-cache-restore-corrupt` | infra | Cache restore failed; lockfile noise is downstream. |
 | `cache-eacces-and-lockfile-unknown` | unknown | Tie: cache `EACCES` and a lockfile mismatch. |
+| `kernel-oom-killed-infra` | infra | Kernel `Killed` and exit 137. No heap line. |
+| `node-engine-mismatch-env` | env | Runner Node 18, package requires `>=20`. |
+| `setup-python-version-missing-env` | env | Python 3.8 x64 is not on this image. |
+| `pnpm-lock-not-up-to-date-deps` | deps | `pnpm-lock.yaml` is not up to date. |
+| `docker-pull-rate-limit-flake` | flake | Bare `toomanyrequests`. No auth line. |
+| `registry-rate-and-auth-unknown` | unknown | Tie: pull rate limit and `pull access denied`. |
+| `cypress-retry-timeout-flake` | flake | Cypress timed out retrying after 4000ms. |
+| `continue-on-error-lockfile-deps` | deps | Flake noise in continue-on-error; lockfile is the failure. |
+| `composite-action-path-missing-env` | env | `action.yml` is not at the `uses` path. |
+| `self-hosted-runner-offline-infra` | infra | Self-hosted runner lost communication. |
+| `windows-filename-too-long-infra` | infra | Checkout `Filename too long`. |
+| `runner-arch-mismatch-infra` | infra | arm64 image on an amd64 host. |
+| `docker-layer-cache-missing-infra` | infra | BuildKit cache key; layer does not exist. |
+| `git-lfs-rate-limit-flake` | flake | Git LFS smudge rate limit. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

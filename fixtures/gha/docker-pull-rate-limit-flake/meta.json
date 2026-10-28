@@ -1,0 +1,8 @@
+{
+  "id": "docker-pull-rate-limit-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "docker pull returned toomanyrequests and nothing else. Rate limit, not an auth denial and not a lockfile. One rerun or a login is the check, not a new image tag."
+}

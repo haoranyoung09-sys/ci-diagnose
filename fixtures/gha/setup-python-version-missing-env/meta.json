@@ -1,0 +1,8 @@
+{
+  "id": "setup-python-version-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "setup-python could not find Python 3.8 for x64 on this Ubuntu image. The workflow asked for a runtime the runner does not have."
+}

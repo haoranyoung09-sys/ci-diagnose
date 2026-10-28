@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull ghcr.io/example-org/example-app:1.2.3
+##[endgroup]
+Error response from daemon: toomanyrequests: Too Many Requests.
+Error response from daemon: pull access denied for ghcr.io/example-org/example-app, repository does not exist or may require docker login
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "kernel-oom-killed-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The kernel printed Killed and the step exited 137. No V8 heap line. Still infra. Do not edit the test."
+}

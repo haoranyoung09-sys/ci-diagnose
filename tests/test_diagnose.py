@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 73)
+        self.assertGreaterEqual(len(fixtures), 87)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -489,6 +489,11 @@ class CorpusFixturesTest(unittest.TestCase):
             "dns-name-resolution-infra": ("infra", [], None),
             "actions-cache-restore-corrupt": ("infra", [], None),
             "cache-eacces-and-lockfile-unknown": ("unknown", ["deps", "infra"], 0.42),
+            "registry-rate-and-auth-unknown": ("unknown", ["flake", "permissions"], 0.42),
+            "docker-pull-rate-limit-flake": ("flake", [], None),
+            "kernel-oom-killed-infra": ("infra", [], None),
+            "runner-arch-mismatch-infra": ("infra", [], None),
+            "node-engine-mismatch-env": ("env", [], None),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
@@ -573,6 +578,21 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(compose["category"], "env")
         self.assertNotIn("service health check timed out", compose["signals"])
+        layer = diagnose.classify(
+            "failed to compute cache key: layer does not exist\n"
+        )
+        self.assertEqual(layer.category, "infra")
+        self.assertNotIn("pytest FAILED line", layer.signals)
+        ignored = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "continue-on-error-lockfile-deps"
+            )
+        )
+        self.assertNotIn("suspected flake", ignored["signals"])
+        rate = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "docker-pull-rate-limit-flake")
+        )
+        self.assertEqual(rate["signals"], ["registry pull rate limit"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

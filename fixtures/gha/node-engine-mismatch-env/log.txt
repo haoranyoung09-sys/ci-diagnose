@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm ci
+##[endgroup]
+npm ERR! engine Unsupported engine
+npm ERR! notsup Not compatible with your version of node/npm: example-app@1.4.2
+npm ERR! notsup Required: {"node":">=20"}
+npm ERR! notsup Actual:   {"node":"18.20.4","npm":"10.7.0"}
+##[error]Process completed with exit code 1.

@@ -28,7 +28,7 @@ class EvalScriptTest(unittest.TestCase):
             text=True,
         )
         self.assertEqual(completed.returncode, 0, completed.stderr)
-        self.assertIn("accuracy: 73/73 (1.000)", completed.stdout)
+        self.assertIn("accuracy: 87/87 (1.000)", completed.stdout)
         self.assertIn("mismatches: 0", completed.stdout)
         self.assertIn("offline: true", completed.stdout)
         self.assertNotIn("gh run view", completed.stdout)

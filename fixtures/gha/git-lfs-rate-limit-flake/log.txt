@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+Error downloading object: smudge error: Git LFS rate limit exceeded
+##[error]Process completed with exit code 1.

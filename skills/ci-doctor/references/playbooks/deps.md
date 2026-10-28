@@ -19,6 +19,8 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | `poetry.lock` tied with `AssertionError` (`poetry-lock-and-assertion-unknown`) | Stay `unknown`. Do not update the lockfile and the test in one attempt. |
 | Cache `EACCES` and a lockfile line together (`cache-eacces-and-lockfile-unknown`) | Stay `unknown`. Do not chmod the cache and rewrite the lockfile in one attempt. |
 | `Failed to restore cache` above a lockfile complaint (`actions-cache-restore-corrupt`) | That is `infra`. Do not start with the lockfile. |
+| `pnpm-lock.yaml` is "not up to date" (`pnpm-lock-not-up-to-date-deps`) | Deps. Commit the lockfile. Do not drop `--frozen-lockfile`. |
+| "Suspected flake" only inside a `continue-on-error` step, then a lockfile error (`continue-on-error-lockfile-deps`) | Deps. Ignore that step. Do not chase the flake. |
 
 ## Recipe
 

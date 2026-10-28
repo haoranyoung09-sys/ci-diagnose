@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 — 2026-10-28
+
+More of the failures that used to land on `unknown`: a bare kernel `Killed` (exit 137), Node `engines` and missing setup-python/setup-node versions, a missing composite `action.yml`, a self-hosted runner that lost communication, `Filename too long`, an arm64 image on an amd64 host, a missing Docker build layer, bare `toomanyrequests`, Cypress "timed out retrying", and a Git LFS rate limit. `pnpm-lock.yaml` "not up to date" stays `deps`. A `continue-on-error` step no longer hides the later lockfile error. A pull rate limit tied with `pull access denied` stays `unknown`.
+
+87 fixtures. Eval 87/87. Taxonomy ids unchanged.
+
+The GitHub Action inputs, outputs, and branding from 0.7.0 are unchanged, so `@v1` stays compatible. Move the `v1` tag only when you publish this release. Notes: [docs/release-notes-v0.8.0.md](docs/release-notes-v0.8.0.md).
+
 ## 0.7.0 — 2026-10-28
 
 Composite GitHub Action at the repository root (`action.yml`). A workflow can classify a saved log, a shipped fixture, or a completed run's logs. The step writes `$GITHUB_STEP_SUMMARY` and outputs `category`, `confidence`, `confidence-level`, `advisory`, `next-step`, and `evidence`. No LLM.

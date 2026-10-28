@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+error: unable to create file docs/nested/example/very/long/path/name.txt: Filename too long
+##[error]Process completed with exit code 1.

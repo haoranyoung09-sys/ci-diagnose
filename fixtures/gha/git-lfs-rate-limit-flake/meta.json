@@ -1,0 +1,8 @@
+{
+  "id": "git-lfs-rate-limit-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "git-lfs smudge hit a rate limit while downloading an object. Not a missing git-lfs binary and not an auth 403. One rerun is the check."
+}

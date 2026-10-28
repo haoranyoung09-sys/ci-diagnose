@@ -16,6 +16,9 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | GitHub returned 403 or "Resource not accessible by integration" | `permissions`. The name exists; the grant does not. |
 | `ERESOLVE` or a lockfile out of date | `deps`. An empty `NODE_AUTH_TOKEN` is env only when that empty-name line is the winning signal, as in `missing-node-auth-token`. |
 | The log prints a value after `password=` or `Authorization:` | Do not repeat it. The CLI redacts common shapes. Quote the variable name only. |
+| npm "Unsupported engine" / "not compatible with your version of node" (`node-engine-mismatch-env`) | The runner Node does not match `engines`. Change `setup-node` or the matrix. Do not rewrite the lockfile. |
+| "version '…' with architecture '…' was not found" (`setup-python-version-missing-env`) | That runtime is not on this image. Pick a version the runner has. |
+| "Can't find 'action.yml'" (`composite-action-path-missing-env`) | The `uses:` path or ref is wrong. Fix that path. Do not rerun hoping the file appears. |
 
 ## Recipe
 
@@ -43,4 +46,4 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 
 ## 中文
 
-只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。
+Node 引擎不符（`node-engine-mismatch-env`）或镜像上没有该 Python/Node 版本（`setup-python-version-missing-env`）时改矩阵或 setup 的版本，不要改锁文件。找不到 `action.yml`（`composite-action-path-missing-env`）时改正 `uses` 路径。只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。
