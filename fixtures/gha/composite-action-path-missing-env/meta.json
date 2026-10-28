@@ -1,0 +1,8 @@
+{
+  "id": "composite-action-path-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job could not find action.yml at the uses path. Fix the path or the ref. Not a test failure and not a missing secret."
+}

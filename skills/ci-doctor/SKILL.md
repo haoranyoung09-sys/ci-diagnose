@@ -24,7 +24,7 @@ compatibility: >-
   Action is composite, runs python3 on the runner, and does not call an LLM.
 metadata:
   author: ci-doctor
-  version: "0.7.0"
+  version: "0.8.0"
   taxonomy: v0
 ---
 
@@ -43,6 +43,7 @@ If the user writes in Chinese, write the final report in Chinese. Keep category 
 - A service container or Helm health check timed out, and there is no assertion. If both are present, stay on `unknown`.
 - Bundler `Gemfile.lock`, `go.sum`, or `Cargo.lock` failed before the tests. `getaddrinfo` / name resolution with no auth line. `actions/cache` failed to restore, even if a lockfile line follows. Cache `EACCES` plus a lockfile line stays `unknown`.
 - A multi-job log where only one job failed. Run the CLI. Do not classify a phrase that appears only on a green job.
+- Node or Python on the runner does not match the workflow, a self-hosted runner is offline, a pull is rate-limited, the image arch does not match the host, or Git LFS hit a rate limit. A `continue-on-error` step is not the failure if a later lockfile line is.
 - The user wants the result in a GitHub Actions job summary. The composite action is `action.yml` at the repo root. It does not call an LLM. Leave `comment` off unless they set it. Same-job `if: failure()` needs `log-path`; a finished run uses `workflow_run` and `run-id`.
 
 ## When not to use this skill

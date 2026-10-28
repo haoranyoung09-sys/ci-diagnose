@@ -31,6 +31,11 @@ Also: `getaddrinfo` / "Temporary failure in name resolution" / "Could not resolv
 | `Failed to restore cache` or "Cache restore failed" even if `npm ci` then says the lockfile is out of sync (`actions-cache-restore-corrupt`) | Infra. Quote the cache key. Do not edit the lockfile in that attempt. |
 | Cache `EACCES` alone (`cache-eacces-unknown`) | Still under the threshold. Stay `unknown`. |
 | Cache `EACCES` and a lockfile line (`cache-eacces-and-lockfile-unknown`) | Stay `unknown`. |
+| A line that is only `Killed`, then exit 137 (`kernel-oom-killed-infra`) | Infra even without a V8 heap line. Do not edit the test. |
+| "self-hosted runner lost communication" (`self-hosted-runner-offline-infra`) | Infra. One check that the machine is online. Do not grant a token. |
+| "Filename too long" (`windows-filename-too-long-infra`) | Infra. Shorten the path or enable long paths. Not a CRLF warning. |
+| "exec format error" or the image platform does not match the host (`runner-arch-mismatch-infra`) | Infra. Pick the matching runner arch. Not a registry 403. |
+| "failed to compute cache key" / "layer does not exist" (`docker-layer-cache-missing-infra`) | Infra. Not a pytest line. Clear that cache or rerun the build once. |
 
 ## Recipe
 
@@ -61,4 +66,4 @@ Also: `getaddrinfo` / "Temporary failure in name resolution" / "Could not resolv
 
 ## 中文
 
-引用宿主那一行，不要改断言去吞掉它。磁盘满包括 Docker 构建（`docker-build-disk-full`）：减少产物或加大 runner，不要删 Dockerfile。连不上 Docker daemon（`docker-daemon-unavailable`）时只重跑一次作检查。MCR 或 GHCR 拉不动（`mcr-pull-egress-blocked`、`ghcr-pull-io-timeout`：`no such host`、`egress blocked`、TLS handshake timeout、`i/o timeout`）是网络路径，不要改镜像标签，也不要粘贴 registry token。`pull access denied` 或 `unauthorized: authentication required` 且没有 egress 行是 `permissions`（`registry-pull-auth-denied`）。两行同时在（`registry-auth-and-egress-unknown`）保持 `unknown`。`getaddrinfo` 或 “Temporary failure in name resolution”（`dns-name-resolution-infra`）是 DNS，不是 403。`Failed to restore cache`（`actions-cache-restore-corrupt`）先看缓存，不要先改锁文件。单独的缓存 `EACCES` 仍低于阈值。`EACCES` 加锁文件（`cache-eacces-and-lockfile-unknown`）保持 `unknown`。同一行再出现就停。Docker Hub `toomanyrequests` 且重跑已通过是 `flake`。checkout 证书校验失败是 `flake`，不是这类。`egress-and-permission-unknown` 与 `oom-and-permission-unknown` 都是打平，不要同时改网络和权限。只有 “runner process was killed” 时，无代码改动地重跑一次。第二次还是同一行宿主错误就停止。
+引用宿主那一行，不要改断言去吞掉它。磁盘满包括 Docker 构建（`docker-build-disk-full`）：减少产物或加大 runner，不要删 Dockerfile。连不上 Docker daemon（`docker-daemon-unavailable`）时只重跑一次作检查。MCR 或 GHCR 拉不动（`mcr-pull-egress-blocked`、`ghcr-pull-io-timeout`：`no such host`、`egress blocked`、TLS handshake timeout、`i/o timeout`）是网络路径，不要改镜像标签，也不要粘贴 registry token。`pull access denied` 或 `unauthorized: authentication required` 且没有 egress 行是 `permissions`（`registry-pull-auth-denied`）。两行同时在（`registry-auth-and-egress-unknown`）保持 `unknown`。`getaddrinfo` 或 “Temporary failure in name resolution”（`dns-name-resolution-infra`）是 DNS，不是 403。`Failed to restore cache`（`actions-cache-restore-corrupt`）先看缓存，不要先改锁文件。单独一行 `Killed` 且退出码 137（`kernel-oom-killed-infra`）仍是 infra。自托管 runner 失联（`self-hosted-runner-offline-infra`）不要改权限。`Filename too long`、arm64/amd64 不一致、BuildKit `layer does not exist` 都是 infra。单独的缓存 `EACCES` 仍低于阈值。`EACCES` 加锁文件（`cache-eacces-and-lockfile-unknown`）保持 `unknown`。同一行再出现就停。Docker Hub `toomanyrequests` 且重跑已通过是 `flake`。checkout 证书校验失败是 `flake`，不是这类。`egress-and-permission-unknown` 与 `oom-and-permission-unknown` 都是打平，不要同时改网络和权限。只有 “runner process was killed” 时，无代码改动地重跑一次。第二次还是同一行宿主错误就停止。

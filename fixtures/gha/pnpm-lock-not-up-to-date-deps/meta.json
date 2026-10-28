@@ -1,0 +1,8 @@
+{
+  "id": "pnpm-lock-not-up-to-date-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Frozen pnpm install says pnpm-lock.yaml is not up to date. Same family as an outdated lockfile. Do not drop --frozen-lockfile."
+}

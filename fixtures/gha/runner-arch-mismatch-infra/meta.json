@@ -1,0 +1,8 @@
+{
+  "id": "runner-arch-mismatch-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The image is linux/arm64 and the host is linux/amd64, then exec format error. Pick the matching runner or platform. Not a registry 403."
+}

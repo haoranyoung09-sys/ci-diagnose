@@ -126,6 +126,11 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | `getaddrinfo` / “Temporary failure in name resolution” | `infra` | `dns-name-resolution-infra` |
 | `actions/cache` 恢复失败，随后锁文件报错 | `infra` | `actions-cache-restore-corrupt` |
 | 缓存 `EACCES` 和锁文件行同时出现 | `unknown` | `cache-eacces-and-lockfile-unknown` |
+| 内核 `Killed` 且退出码 137、自托管 runner 失联、`Filename too long`、arm64 镜像跑在 amd64 上、Docker 层缺失 | `infra` | `kernel-oom-killed-infra`、`self-hosted-runner-offline-infra`、`windows-filename-too-long-infra`、`runner-arch-mismatch-infra`、`docker-layer-cache-missing-infra` |
+| Node `engines` 不符、镜像上没有要求的 Python/Node、找不到 `action.yml` | `env` | `node-engine-mismatch-env`、`setup-python-version-missing-env`、`composite-action-path-missing-env` |
+| 只有 `toomanyrequests`、Cypress “timed out retrying”、Git LFS 速率限制 | `flake` | `docker-pull-rate-limit-flake`、`cypress-retry-timeout-flake`、`git-lfs-rate-limit-flake` |
+| `pnpm-lock.yaml` 不是最新，或 `continue-on-error` 之后锁文件失败 | `deps` | `pnpm-lock-not-up-to-date-deps`、`continue-on-error-lockfile-deps` |
+| 拉取速率限制和 `pull access denied` 同时出现 | `unknown` | `registry-rate-and-auth-unknown` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

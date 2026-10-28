@@ -274,6 +274,24 @@ RULES: tuple[Rule, ...] = (
         r"secret .+ (?:not found|was not provided|is not set)",
         "secret was not provided",
     ),
+    Rule(
+        "env",
+        8,
+        r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
+        "Node engine does not match this runner",
+    ),
+    Rule(
+        "env",
+        8,
+        r"with architecture \S+ was not found|unable to find node version",
+        "requested runtime version is not on the runner",
+    ),
+    Rule(
+        "env",
+        8,
+        r"can't find 'action\.ya?ml'|unable to resolve action .+ unable to find version",
+        "composite action path or ref was not found",
+    ),
     Rule("deps", 9, r"\bERESOLVE\b", "ERESOLVE"),
     Rule(
         "deps",
@@ -304,7 +322,7 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "deps",
         9,
-        r"err_pnpm_outdated_lockfile|pnpm-lock\.yaml.+(?:out of date|outdated)",
+        r"err_pnpm_outdated_lockfile|pnpm-lock\.yaml.+(?:out of date|outdated|not up to date)",
         "pnpm lockfile is out of date",
     ),
     Rule(
@@ -375,6 +393,24 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"\btoomanyrequests\b|you have reached your pull rate limit",
+        "registry pull rate limit",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"timed out retrying after \d+",
+        "Cypress timed out retrying",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"git lfs.*rate limit|smudge error:.*rate limit|error downloading object:.*rate limit",
+        "Git LFS rate limit",
+    ),
+    Rule(
+        "flake",
+        8,
         r"ssl certificate problem|server certificate verification failed|unable to get local issuer certificate|tls connection was non-properly terminated",
         "checkout TLS certificate verification failed",
     ),
@@ -401,7 +437,12 @@ RULES: tuple[Rule, ...] = (
     Rule("test", 6, r"^\s*FAIL\s+\S", "FAIL path line"),
     Rule("test", 5, r"^\s*Expected:\s*\S", "expected vs received"),
     Rule("test", 5, r"^\s*Tests:\s+.*\bfailed\b", "Jest tests failed summary"),
-    Rule("test", 7, r"^\s*FAILED\s+(?!asserting\b)\S", "pytest FAILED line"),
+    Rule(
+        "test",
+        7,
+        r"^\s*FAILED\s+(?!asserting\b)(?!to\b)\S",
+        "pytest FAILED line",
+    ),
     Rule("test", 7, r"^\s*--- FAIL:", "Go test FAIL"),
     Rule("test", 5, r"\btest suites?:.*\bfailed\b", "test suite failed summary"),
     Rule("test", 7, r"failed asserting that", "PHPUnit assertion failed"),
@@ -453,6 +494,26 @@ RULES: tuple[Rule, ...] = (
         5,
         r"\bEACCES: permission denied\b",
         "cache path EACCES",
+    ),
+    Rule("infra", 7, r"^\s*killed\s*$", "kernel killed the process"),
+    Rule(
+        "infra",
+        8,
+        r"self-hosted runner lost communication|no runner matching (?:the )?(?:specified )?labels",
+        "self-hosted runner is offline or unlabeled",
+    ),
+    Rule("infra", 8, r"filename too long", "path exceeds the filesystem limit"),
+    Rule(
+        "infra",
+        8,
+        r"exec format error|no match for platform in manifest|does not match the detected host platform",
+        "runner architecture does not match the image",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"failed to compute cache key|layer does not exist",
+        "docker build cache layer is missing",
     ),
     Rule(
         "unknown",
@@ -714,6 +775,7 @@ def classify(text: str) -> Classification:
     prefix_stripped = False
     last_text = ""
     last_line = 0
+    ignore_continue = False
 
     for line_no, raw in enumerate(body.splitlines(), start=1):
         if failed_jobs is not None:
@@ -726,6 +788,15 @@ def classify(text: str) -> Classification:
         if not cleaned.strip():
             continue
         redacted_line = redact(cleaned)
+        lowered = redacted_line.lower()
+        # A continue-on-error step is noise. Resume scoring at the next group.
+        if "##[endgroup]" in lowered or lowered.startswith("##[group]"):
+            ignore_continue = False
+        elif ignore_continue:
+            continue
+        elif "continue-on-error" in lowered:
+            ignore_continue = True
+            continue
         last_text = redacted_line
         last_line = line_no
         for index, (rule, pattern) in enumerate(COMPILED):

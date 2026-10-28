@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./.github/actions/build
+##[endgroup]
+##[error]Can't find 'action.yml', 'action.yaml' or 'Dockerfile' under '/home/runner/work/example-app/example-app/.github/actions/build'.
+##[error]Process completed with exit code 1.

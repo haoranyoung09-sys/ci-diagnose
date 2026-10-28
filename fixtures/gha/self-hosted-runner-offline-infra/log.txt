@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Wait for runner
+##[endgroup]
+##[error]The self-hosted runner lost communication with the server. Verify the machine is running and has a network connection.
+##[error]Process completed with exit code 1.

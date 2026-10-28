@@ -126,6 +126,11 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | `getaddrinfo` / "Temporary failure in name resolution" | `infra` | `dns-name-resolution-infra` |
 | `actions/cache` failed to restore, then the lockfile complains | `infra` | `actions-cache-restore-corrupt` |
 | Cache `EACCES` and a lockfile line together | `unknown` | `cache-eacces-and-lockfile-unknown` |
+| Kernel `Killed` and exit 137, self-hosted runner offline, `Filename too long`, arm64 image on amd64, missing Docker layer | `infra` | `kernel-oom-killed-infra`, `self-hosted-runner-offline-infra`, `windows-filename-too-long-infra`, `runner-arch-mismatch-infra`, `docker-layer-cache-missing-infra` |
+| Node `engines` mismatch, missing Python/Node on the image, missing `action.yml` | `env` | `node-engine-mismatch-env`, `setup-python-version-missing-env`, `composite-action-path-missing-env` |
+| Bare `toomanyrequests`, Cypress "timed out retrying", Git LFS rate limit | `flake` | `docker-pull-rate-limit-flake`, `cypress-retry-timeout-flake`, `git-lfs-rate-limit-flake` |
+| `pnpm-lock.yaml` is not up to date, or the lockfile fails after a `continue-on-error` step | `deps` | `pnpm-lock-not-up-to-date-deps`, `continue-on-error-lockfile-deps` |
+| Pull rate limit and `pull access denied` together | `unknown` | `registry-rate-and-auth-unknown` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

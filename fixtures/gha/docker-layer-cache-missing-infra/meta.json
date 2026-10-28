@@ -1,0 +1,8 @@
+{
+  "id": "docker-layer-cache-missing-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "BuildKit failed to compute a cache key because a layer does not exist. Not a pytest failure and not a rate limit. Clear that cache or rerun the build once."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "continue-on-error-lockfile-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A continue-on-error step mentioned a flake. The job actually failed because package.json and package-lock.json disagree. Score the lockfile, not the ignored step."
+}

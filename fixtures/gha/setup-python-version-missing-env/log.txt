@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/setup-python@v5
+##[endgroup]
+Error: The version '3.8' with architecture 'x64' was not found for Ubuntu 24.04.
+##[error]Process completed with exit code 1.

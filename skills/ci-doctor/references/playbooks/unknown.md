@@ -29,6 +29,7 @@ Corpus:
 | `multi-job-green-noise-unknown` | The only taxonomy phrase is on a job that succeeded. The failed job has no signal. |
 | `healthcheck-and-assertion-unknown` | Tie: service health check timed out and `AssertionError`. Alternates `flake` and `test`. |
 | `cache-eacces-and-lockfile-unknown` | Tie: cache `EACCES` and a lockfile mismatch. Alternates `deps` and `infra`. |
+| `registry-rate-and-auth-unknown` | Tie: `toomanyrequests` and `pull access denied`. Alternates `flake` and `permissions`. |
 
 ## Near misses
 
