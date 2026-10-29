@@ -1,0 +1,8 @@
+{
+  "id": "terraform-credentials-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The AWS provider found no valid credential sources. Configure the existing secret name. Do not print a key and do not call this a state lock."
+}

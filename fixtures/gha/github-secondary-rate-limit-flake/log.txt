@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run gh api repos/example-org/example-app
+##[endgroup]
+You have exceeded a secondary rate limit. Please wait a few minutes before you try again.
+##[error]Process completed with exit code 1.

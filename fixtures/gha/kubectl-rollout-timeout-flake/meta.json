@@ -1,0 +1,8 @@
+{
+  "id": "kubectl-rollout-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "kubectl timed out waiting for the deployment condition. No RBAC denial. One rerun is the check. Do not widen the role in that attempt."
+}

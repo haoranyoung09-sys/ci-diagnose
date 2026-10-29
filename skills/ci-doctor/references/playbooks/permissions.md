@@ -24,6 +24,8 @@ Corpus: `gha-token-integration-403`, `git-push-permission-denied`, `id-token-per
 | `pull access denied` or `unauthorized: authentication required` (`registry-pull-auth-denied`) | Permissions. Quote the registry host. Do not retag the image and do not paste a registry password. |
 | That auth line tied with `egress blocked` or `no such host` (`registry-auth-and-egress-unknown`) | Stay `unknown`. |
 | `no such host`, `egress blocked`, or `i/o timeout` with no auth line | `infra`, not this playbook. |
+| "Bad credentials" (`github-bad-credentials-permissions`) | The token was rejected. Do not print it. Not a secondary rate limit. |
+| "is forbidden" / "cannot patch resource" (`kubectl-rbac-forbidden-permissions`) | Name the verb and resource. Do not grant cluster-admin. |
 
 ## Recipe
 
@@ -51,4 +53,4 @@ Corpus: `gha-token-integration-403`, `git-push-permission-denied`, `id-token-per
 
 ## 中文
 
-引用 API、ref 或云角色 ARN，以及日志里点名的最窄 scope。镜像仓库 `pull access denied` 或 `unauthorized: authentication required`（`registry-pull-auth-denied`）是权限，不是 egress。和 `egress blocked` 打平（`registry-auth-and-egress-unknown`）保持 `unknown`。OIDC（`oidc-assume-role-denied`）要的是 `id-token: write` 和信任策略，不是长期密钥，也不要打印 web identity token。`oidc-role-and-empty-arn-unknown` 与 `empty-token-and-permission-unknown` 都是打平。只有一行 `HttpError: 403` 时先问 API。禁止 force-push，不要授予 `write-all`。两次 403 或组织策略改不了，就停止。
+`Bad credentials`（`github-bad-credentials-permissions`）是凭证被拒绝，不是 secondary rate limit。kubectl `is forbidden`（`kubectl-rbac-forbidden-permissions`）指出动词和资源，不要给 cluster-admin。引用 API、ref 或云角色 ARN，以及日志里点名的最窄 scope。镜像仓库 `pull access denied` 或 `unauthorized: authentication required`（`registry-pull-auth-denied`）是权限，不是 egress。和 `egress blocked` 打平（`registry-auth-and-egress-unknown`）保持 `unknown`。OIDC（`oidc-assume-role-denied`）要的是 `id-token: write` 和信任策略，不是长期密钥，也不要打印 web identity token。`oidc-role-and-empty-arn-unknown` 与 `empty-token-and-permission-unknown` 都是打平。只有一行 `HttpError: 403` 时先问 API。禁止 force-push，不要授予 `write-all`。两次 403 或组织策略改不了，就停止。

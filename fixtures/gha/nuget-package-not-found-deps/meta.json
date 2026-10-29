@@ -1,0 +1,8 @@
+{
+  "id": "nuget-package-not-found-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "NuGet restore reported NU1102 and could not find Example.Lib at the requested version. Not an auth failure and not a test."
+}

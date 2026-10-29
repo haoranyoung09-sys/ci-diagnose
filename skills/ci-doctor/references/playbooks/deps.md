@@ -21,6 +21,9 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | `Failed to restore cache` above a lockfile complaint (`actions-cache-restore-corrupt`) | That is `infra`. Do not start with the lockfile. |
 | `pnpm-lock.yaml` is "not up to date" (`pnpm-lock-not-up-to-date-deps`) | Deps. Commit the lockfile. Do not drop `--frozen-lockfile`. |
 | "Suspected flake" only inside a `continue-on-error` step, then a lockfile error (`continue-on-error-lockfile-deps`) | Deps. Ignore that step. Do not chase the flake. |
+| Maven "Could not resolve dependencies for project" (`maven-dependencies-unresolved-deps`) | Deps. Quote the missing artifact. Do not skip tests. |
+| SwiftPM "Could not resolve package dependencies" or CocoaPods "compatible versions for pod" (`swiftpm-package-unresolved-deps`, `cocoapods-pod-conflict-deps`) | Deps. Align that one requirement. |
+| NuGet `NU1102` (`nuget-package-not-found-deps`) | Deps. The version is not in the feed named in the log. |
 
 ## Recipe
 
@@ -55,4 +58,4 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 
 ## 中文
 
-只引用冲突的两侧，或 pip / Gradle / Bundler / Cargo 找不到的那一个模块。`poetry.lock`、`uv.lock`、`Gemfile.lock`、`Cargo.lock` 不同步就提交更新后的锁文件，不要在 CI 里关掉冻结安装。`go.sum` 缺条目或校验和不匹配时提交补齐后的 `go.sum`，不要在 CI 里用 `-mod=mod` 跳过。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。缓存 `EACCES` 加锁文件（`cache-eacces-and-lockfile-unknown`）也是打平。`Failed to restore cache`（`actions-cache-restore-corrupt`）是 `infra`，不要先改锁文件。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。一次不要顺手升级无关包。第二次仍是新的约束对就停止。
+只引用冲突的两侧，或 pip / Gradle / Bundler / Cargo 找不到的那一个模块。`poetry.lock`、`uv.lock`、`Gemfile.lock`、`Cargo.lock` 不同步就提交更新后的锁文件，不要在 CI 里关掉冻结安装。`go.sum` 缺条目或校验和不匹配时提交补齐后的 `go.sum`，不要在 CI 里用 `-mod=mod` 跳过。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。缓存 `EACCES` 加锁文件（`cache-eacces-and-lockfile-unknown`）也是打平。`Failed to restore cache`（`actions-cache-restore-corrupt`）是 `infra`，不要先改锁文件。Maven、SwiftPM、CocoaPods、NuGet 解析失败是 deps，引用缺的那一个模块。`poetry-lock-and-assertion-unknown` 是打平，不要同时改锁文件和测试。一次不要顺手升级无关包。第二次仍是新的约束对就停止。

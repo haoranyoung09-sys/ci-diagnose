@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cargo fetch
+##[endgroup]
+error: failed to get `example-lib` as a dependency
+Caused by: unable to update registry `crates-io`
+Caused by: spurious network error: download of config.json failed
+##[error]Process completed with exit code 101.

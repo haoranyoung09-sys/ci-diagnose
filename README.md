@@ -131,6 +131,13 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | Bare `toomanyrequests`, Cypress "timed out retrying", Git LFS rate limit | `flake` | `docker-pull-rate-limit-flake`, `cypress-retry-timeout-flake`, `git-lfs-rate-limit-flake` |
 | `pnpm-lock.yaml` is not up to date, or the lockfile fails after a `continue-on-error` step | `deps` | `pnpm-lock-not-up-to-date-deps`, `continue-on-error-lockfile-deps` |
 | Pull rate limit and `pull access denied` together | `unknown` | `registry-rate-and-auth-unknown` |
+| Maven, SwiftPM, CocoaPods, or NuGet could not resolve a package | `deps` | `maven-dependencies-unresolved-deps`, `swiftpm-package-unresolved-deps`, `cocoapods-pod-conflict-deps`, `nuget-package-not-found-deps` |
+| Cargo could not reach crates-io; rustc rejected the crate | `flake` / `test` | `cargo-registry-network-flake`, `cargo-type-mismatch-test` |
+| Terraform state lock, or no cloud credentials | `flake` / `env` | `terraform-state-lock-flake`, `terraform-credentials-missing-env` |
+| kubectl rollout timeout, or RBAC forbidden | `flake` / `permissions` | `kubectl-rollout-timeout-flake`, `kubectl-rbac-forbidden-permissions` |
+| GitHub secondary rate limit, or Bad credentials | `flake` / `permissions` | `github-secondary-rate-limit-flake`, `github-bad-credentials-permissions` |
+| Java `OutOfMemoryError` or Python `MemoryError` | `infra` | `java-heap-oom-infra`, `python-memory-error-infra` |
+| App Store Connect key name missing | `env` | `app-store-connect-key-missing-env` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

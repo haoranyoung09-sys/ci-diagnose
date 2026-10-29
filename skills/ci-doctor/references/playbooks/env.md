@@ -19,6 +19,8 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | npm "Unsupported engine" / "not compatible with your version of node" (`node-engine-mismatch-env`) | The runner Node does not match `engines`. Change `setup-node` or the matrix. Do not rewrite the lockfile. |
 | "version '…' with architecture '…' was not found" (`setup-python-version-missing-env`) | That runtime is not on this image. Pick a version the runner has. |
 | "Can't find 'action.yml'" (`composite-action-path-missing-env`) | The `uses:` path or ref is wrong. Fix that path. Do not rerun hoping the file appears. |
+| "no valid credential sources" (`terraform-credentials-missing-env`) | The provider has no credentials configured. Supply the existing name. Do not print a key. This is not a state lock. |
+| "Missing required environment variable NAME" (`app-store-connect-key-missing-env`) | Quote the name only. |
 
 ## Recipe
 

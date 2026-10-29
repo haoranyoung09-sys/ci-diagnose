@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run pod install
+##[endgroup]
+[!] CocoaPods could not find compatible versions for pod "ExampleLib"
+##[error]Process completed with exit code 1.

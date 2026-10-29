@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run mvn -B test
+##[endgroup]
+java.lang.OutOfMemoryError: Java heap space
+Dumping heap to java_pid123.hprof ...
+##[error]Process completed with exit code 1.

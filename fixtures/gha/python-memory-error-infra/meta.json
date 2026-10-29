@@ -1,0 +1,8 @@
+{
+  "id": "python-memory-error-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Python raised MemoryError and the process stopped. Not an assertion. Do not catch it to force a green job."
+}

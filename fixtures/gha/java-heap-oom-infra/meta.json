@@ -1,0 +1,8 @@
+{
+  "id": "java-heap-oom-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The JVM threw OutOfMemoryError and started a heap dump. Do not edit the test to absorb it. One resource change only."
+}

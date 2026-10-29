@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run mvn -B verify
+##[endgroup]
+[ERROR] Failed to execute goal on project app: Could not resolve dependencies for project com.example:app:jar:1.0
+[ERROR] dependency: com.example:example-lib:jar:9.9.9 (compile)
+##[error]Process completed with exit code 1.

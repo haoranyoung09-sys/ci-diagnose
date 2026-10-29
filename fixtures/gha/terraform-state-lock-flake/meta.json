@@ -1,0 +1,8 @@
+{
+  "id": "terraform-state-lock-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Terraform could not acquire the state lock. Another run may hold it. One rerun after it clears. Do not force-unlock in that attempt."
+}

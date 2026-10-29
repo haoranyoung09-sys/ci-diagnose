@@ -1,0 +1,8 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run terraform apply -auto-approve
+##[endgroup]
+Error: Error acquiring the state lock
+Lock Info:
+  ID:        11111111-2222-3333-4444-555555555555
+  Path:      terraform.tfstate
+##[error]Process completed with exit code 1.

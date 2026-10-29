@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 — 2026-10-29
+
+Maven, SwiftPM, CocoaPods, and NuGet resolution failures are `deps`. Cargo registry network errors are `flake`; a rustc type error that cargo could not compile is `test`. Terraform state lock is `flake`; missing cloud credentials are `env`. kubectl rollout timeout is `flake`; RBAC `is forbidden` is `permissions`. A GitHub secondary rate limit is `flake`; Bad credentials are `permissions`. `java.lang.OutOfMemoryError` and Python `MemoryError` are `infra`. `Missing required environment variable NAME` is `env`.
+
+102 fixtures. Eval 102/102. Taxonomy ids unchanged.
+
+Action inputs, outputs, and branding are unchanged from 0.7.0, so `@v1` stays compatible. Notes: [docs/release-notes-v0.9.0.md](docs/release-notes-v0.9.0.md).
+
 ## 0.8.0 — 2026-10-28
 
 More of the failures that used to land on `unknown`: a bare kernel `Killed` (exit 137), Node `engines` and missing setup-python/setup-node versions, a missing composite `action.yml`, a self-hosted runner that lost communication, `Filename too long`, an arm64 image on an amd64 host, a missing Docker build layer, bare `toomanyrequests`, Cypress "timed out retrying", and a Git LFS rate limit. `pnpm-lock.yaml` "not up to date" stays `deps`. A `continue-on-error` step no longer hides the later lockfile error. A pull rate limit tied with `pull access denied` stays `unknown`.

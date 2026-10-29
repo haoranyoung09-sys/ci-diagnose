@@ -1,0 +1,8 @@
+{
+  "id": "swiftpm-package-unresolved-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "SwiftPM could not resolve package dependencies. No version of example-lib matched. Not a compile error and not a test failure."
+}

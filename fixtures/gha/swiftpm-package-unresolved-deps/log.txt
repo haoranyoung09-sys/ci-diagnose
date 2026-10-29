@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run swift build
+##[endgroup]
+error: Could not resolve package dependencies:
+  because no versions of example-lib match the requirement 9.9.9
+##[error]Process completed with exit code 1.

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run kubectl apply -f deploy.yaml
+##[endgroup]
+Error from server (Forbidden): deployments.apps is forbidden: User "system:serviceaccount:ci:deploy" cannot patch resource "deployments" in API group "apps"
+##[error]Process completed with exit code 1.

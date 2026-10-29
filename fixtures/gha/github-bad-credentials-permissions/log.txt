@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run gh api repos/example-org/example-app
+##[endgroup]
+HTTP 401: Bad credentials (https://api.github.com/repos/example-org/example-app)
+##[error]Process completed with exit code 1.

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run fastlane pilot upload
+##[endgroup]
+Error: Missing required environment variable APP_STORE_CONNECT_API_KEY_ID
+##[error]Process completed with exit code 1.

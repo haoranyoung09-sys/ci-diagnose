@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run dotnet restore
+##[endgroup]
+error: NU1102: Unable to find package Example.Lib with version (>= 9.9.9)
+  - Found 3 version(s) in nuget.org
+##[error]Process completed with exit code 1.
