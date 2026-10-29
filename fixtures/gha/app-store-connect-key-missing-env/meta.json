@@ -1,0 +1,8 @@
+{
+  "id": "app-store-connect-key-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The log names APP_STORE_CONNECT_API_KEY_ID as a missing required environment variable. No key material is present. Supply the name, do not print a value."
+}

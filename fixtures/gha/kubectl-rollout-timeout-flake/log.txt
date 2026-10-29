@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run kubectl rollout status deployment/example
+##[endgroup]
+error: timed out waiting for the condition on deployments/example
+##[error]Process completed with exit code 1.

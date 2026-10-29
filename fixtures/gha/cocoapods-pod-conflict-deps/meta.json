@@ -1,0 +1,8 @@
+{
+  "id": "cocoapods-pod-conflict-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "CocoaPods could not find compatible versions for pod ExampleLib. Not a missing signing certificate and not a test assertion."
+}

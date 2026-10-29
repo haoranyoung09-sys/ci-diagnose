@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 87)
+        self.assertGreaterEqual(len(fixtures), 102)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -593,6 +593,24 @@ class CorpusFixturesTest(unittest.TestCase):
             diagnose.load_fixture(ROOT / "fixtures" / "gha" / "docker-pull-rate-limit-flake")
         )
         self.assertEqual(rate["signals"], ["registry pull rate limit"])
+        maven = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "maven-dependencies-unresolved-deps"
+            )
+        )
+        self.assertEqual(
+            maven["signals"], ["Maven could not resolve project dependencies"]
+        )
+        cargo_net = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "cargo-registry-network-flake")
+        )
+        self.assertEqual(cargo_net["category"], "flake")
+        self.assertNotIn("Cargo lockfile could not select a version", cargo_net["signals"])
+        compile_fail = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "cargo-type-mismatch-test")
+        )
+        self.assertIn("compiler rejected the crate", compile_fail["signals"])
+        self.assertEqual(compile_fail["category"], "test")
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

@@ -1,0 +1,8 @@
+{
+  "id": "maven-dependencies-unresolved-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Maven could not resolve dependencies for the project. The test suite did not start. Not a Surefire assertion."
+}

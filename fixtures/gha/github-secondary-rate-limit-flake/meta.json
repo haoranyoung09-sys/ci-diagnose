@@ -1,0 +1,8 @@
+{
+  "id": "github-secondary-rate-limit-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The GitHub API returned a secondary rate limit. Wait and rerun once. Not a bad credential and not a 403 scope error."
+}

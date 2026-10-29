@@ -97,6 +97,20 @@ Improvement: Bare OOM kills, runtime version misses, self-hosted runner loss, pa
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Move the public `v1` tag only when this commit is on the mirror.
 
+## 2026-10-29
+
+Date: 2026-10-29
+
+Fixtures: 102
+
+Eval: 102/102 (1.000)
+
+Version: 0.9.0
+
+Improvement: Maven, SwiftPM, CocoaPods, NuGet, Cargo network versus compile, Terraform lock versus credentials, kubectl timeout versus RBAC, GitHub secondary rate limit versus bad credentials, and Java or Python out-of-memory lines now classify. Action inputs and outputs are unchanged.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Move the public `v1` tag only when this commit is on the mirror.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

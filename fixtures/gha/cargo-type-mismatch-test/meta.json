@@ -1,0 +1,8 @@
+{
+  "id": "cargo-type-mismatch-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "rustc rejected example-app with a type mismatch and cargo could not compile it. The lockfile was not the error."
+}

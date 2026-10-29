@@ -16,6 +16,7 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 | Timeout or "passed on the previous run" outranks the assertion | Follow `flake`. A deterministic assertion that never moves is not flake. |
 | `ERESOLVE` or lockfile drift, and the suite never printed a test summary | Follow `deps`. A stray `FAIL` line under a heap OOM is `infra` when infra leads, as in the heap fixture. |
 | Confidence is medium because `alternates` contains `infra` | Quote both lines. If the runner was killed, do not edit the assertion to absorb it. |
+| `error: could not compile` after a rustc type error (`cargo-type-mismatch-test`) | Fix the type the compiler named. Do not edit `Cargo.lock` for that line. |
 
 ## Recipe
 
@@ -43,4 +44,4 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 
 ## 中文
 
-引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。
+`could not compile` 加上 rustc 类型错误（`cargo-type-mismatch-test`）改编译器指出的类型，不要改 `Cargo.lock`。引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。

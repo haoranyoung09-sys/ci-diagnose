@@ -131,6 +131,13 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | 只有 `toomanyrequests`、Cypress “timed out retrying”、Git LFS 速率限制 | `flake` | `docker-pull-rate-limit-flake`、`cypress-retry-timeout-flake`、`git-lfs-rate-limit-flake` |
 | `pnpm-lock.yaml` 不是最新，或 `continue-on-error` 之后锁文件失败 | `deps` | `pnpm-lock-not-up-to-date-deps`、`continue-on-error-lockfile-deps` |
 | 拉取速率限制和 `pull access denied` 同时出现 | `unknown` | `registry-rate-and-auth-unknown` |
+| Maven、SwiftPM、CocoaPods 或 NuGet 解析不到包 | `deps` | `maven-dependencies-unresolved-deps`、`swiftpm-package-unresolved-deps`、`cocoapods-pod-conflict-deps`、`nuget-package-not-found-deps` |
+| Cargo 连不上 crates-io；rustc 拒绝编译 | `flake` / `test` | `cargo-registry-network-flake`、`cargo-type-mismatch-test` |
+| Terraform 拿不到 state lock，或没有云凭证 | `flake` / `env` | `terraform-state-lock-flake`、`terraform-credentials-missing-env` |
+| kubectl 等待超时，或 RBAC 拒绝 | `flake` / `permissions` | `kubectl-rollout-timeout-flake`、`kubectl-rbac-forbidden-permissions` |
+| GitHub secondary rate limit，或 Bad credentials | `flake` / `permissions` | `github-secondary-rate-limit-flake`、`github-bad-credentials-permissions` |
+| Java `OutOfMemoryError` 或 Python `MemoryError` | `infra` | `java-heap-oom-infra`、`python-memory-error-infra` |
+| 缺少 App Store Connect 的密钥名字 | `env` | `app-store-connect-key-missing-env` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

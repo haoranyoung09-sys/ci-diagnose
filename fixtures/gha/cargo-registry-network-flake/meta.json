@@ -1,0 +1,8 @@
+{
+  "id": "cargo-registry-network-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Cargo could not update crates-io because of a spurious network error. Not a Cargo.lock selection failure and not a compile error."
+}

@@ -112,5 +112,20 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `runner-arch-mismatch-infra` | infra | arm64 image on an amd64 host. |
 | `docker-layer-cache-missing-infra` | infra | BuildKit cache key; layer does not exist. |
 | `git-lfs-rate-limit-flake` | flake | Git LFS smudge rate limit. |
+| `maven-dependencies-unresolved-deps` | deps | Maven could not resolve project dependencies. |
+| `swiftpm-package-unresolved-deps` | deps | SwiftPM could not resolve package dependencies. |
+| `cocoapods-pod-conflict-deps` | deps | CocoaPods could not satisfy pod ExampleLib. |
+| `cargo-registry-network-flake` | flake | crates-io spurious network error. |
+| `cargo-type-mismatch-test` | test | rustc type mismatch; cargo could not compile. |
+| `nuget-package-not-found-deps` | deps | NuGet NU1102, package version not found. |
+| `terraform-state-lock-flake` | flake | Terraform could not acquire the state lock. |
+| `terraform-credentials-missing-env` | env | AWS provider found no credential sources. |
+| `kubectl-rollout-timeout-flake` | flake | kubectl timed out waiting for the condition. |
+| `kubectl-rbac-forbidden-permissions` | permissions | API server forbade the service account. |
+| `github-secondary-rate-limit-flake` | flake | GitHub secondary rate limit. |
+| `github-bad-credentials-permissions` | permissions | API returned Bad credentials. |
+| `java-heap-oom-infra` | infra | `java.lang.OutOfMemoryError` and a heap dump. |
+| `python-memory-error-infra` | infra | Python `MemoryError`. |
+| `app-store-connect-key-missing-env` | env | `APP_STORE_CONNECT_API_KEY_ID` was not set. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

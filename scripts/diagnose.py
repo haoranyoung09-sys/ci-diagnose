@@ -239,6 +239,18 @@ RULES: tuple[Rule, ...] = (
     ),
     Rule(
         "permissions",
+        8,
+        r"\bbad credentials\b",
+        "GitHub rejected the credentials",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"\bis forbidden:|cannot (?:get|list|watch|create|update|patch|delete) resource",
+        "cluster RBAC denied the call",
+    ),
+    Rule(
+        "permissions",
         5,
         r"refusing to (?:force-push|allow)",
         "token refused a force-push or broader grant",
@@ -273,6 +285,18 @@ RULES: tuple[Rule, ...] = (
         6,
         r"secret .+ (?:not found|was not provided|is not set)",
         "secret was not provided",
+    ),
+    Rule(
+        "env",
+        8,
+        r"missing required environment variable \S+",
+        "required environment variable is unset",
+    ),
+    Rule(
+        "env",
+        8,
+        r"no valid credential sources",
+        "cloud credentials were not configured",
     ),
     Rule(
         "env",
@@ -373,6 +397,30 @@ RULES: tuple[Rule, ...] = (
         r"cargo\.lock needs to be updated|failed to select a version for the requirement",
         "Cargo lockfile could not select a version",
     ),
+    Rule(
+        "deps",
+        8,
+        r"could not resolve dependencies for project",
+        "Maven could not resolve project dependencies",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"could not resolve package dependencies",
+        "Swift package dependencies could not be resolved",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"could not find compatible versions for pod",
+        "CocoaPods could not satisfy a pod",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"\bNU1102\b|unable to find package \S+ with version",
+        "NuGet could not find a package",
+    ),
     Rule("flake", 9, r"suspected flake", "suspected flake"),
     Rule("flake", 8, r"exceeded timeout of \d+", "test exceeded its timeout"),
     Rule(
@@ -407,6 +455,30 @@ RULES: tuple[Rule, ...] = (
         8,
         r"git lfs.*rate limit|smudge error:.*rate limit|error downloading object:.*rate limit",
         "Git LFS rate limit",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"unable to update registry|spurious network error",
+        "Cargo registry could not be reached",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"error acquiring the state lock",
+        "state lock is held",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"timed out waiting for the condition",
+        "rollout timed out waiting for the condition",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"exceeded a secondary rate limit",
+        "GitHub secondary rate limit",
     ),
     Rule(
         "flake",
@@ -448,6 +520,12 @@ RULES: tuple[Rule, ...] = (
     Rule("test", 7, r"failed asserting that", "PHPUnit assertion failed"),
     Rule("test", 7, r"^\s*Failure/Error:", "RSpec failure"),
     Rule("test", 7, r"test result:\s*FAILED", "cargo test result FAILED"),
+    Rule(
+        "test",
+        8,
+        r"error: could not compile `\S+",
+        "compiler rejected the crate",
+    ),
     Rule(
         "infra",
         9,
@@ -514,6 +592,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"failed to compute cache key|layer does not exist",
         "docker build cache layer is missing",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"java\.lang\.OutOfMemoryError",
+        "Java heap out of memory",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"\bMemoryError\b",
+        "Python ran out of memory",
     ),
     Rule(
         "unknown",

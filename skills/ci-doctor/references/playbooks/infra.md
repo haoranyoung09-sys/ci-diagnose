@@ -36,6 +36,7 @@ Also: `getaddrinfo` / "Temporary failure in name resolution" / "Could not resolv
 | "Filename too long" (`windows-filename-too-long-infra`) | Infra. Shorten the path or enable long paths. Not a CRLF warning. |
 | "exec format error" or the image platform does not match the host (`runner-arch-mismatch-infra`) | Infra. Pick the matching runner arch. Not a registry 403. |
 | "failed to compute cache key" / "layer does not exist" (`docker-layer-cache-missing-infra`) | Infra. Not a pytest line. Clear that cache or rerun the build once. |
+| `java.lang.OutOfMemoryError` or Python `MemoryError` (`java-heap-oom-infra`, `python-memory-error-infra`) | Infra. Quote that line. Do not edit the assertion. |
 
 ## Recipe
 

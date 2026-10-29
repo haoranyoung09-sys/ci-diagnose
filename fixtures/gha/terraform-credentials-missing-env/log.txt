@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run terraform plan
+##[endgroup]
+Error: error configuring Terraform AWS Provider: no valid credential sources for Terraform AWS Provider found.
+##[error]Process completed with exit code 1.
