@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 — 2026-10-30
+
+Bazel remote cache, Nix store hash mismatch, apt mirror 404, a Homebrew bottle download, and a Rust linker that cannot allocate are `infra`. A missing Nix flake output and a stale Deno lockfile are `deps` (the Nix word flake is not a rerun). apt `NO_PUBKEY`, missing Google ADC, a Composer PHP platform requirement, and a reusable workflow secret that was not passed are `env`. An invalid AWS security token is `permissions`. A Go module proxy 502 and a bare `ECONNRESET` are `flake`. `ECONNRESET` tied with `AssertionError` stays `unknown`. Linker OOM outranks `could not compile`.
+
+117 fixtures. Eval 117/117. Taxonomy ids unchanged.
+
+Action inputs, outputs, and branding are unchanged, so `@v1` stays compatible. Notes: [docs/release-notes-v0.10.0.md](docs/release-notes-v0.10.0.md).
+
 ## 0.9.0 — 2026-10-29
 
 Maven, SwiftPM, CocoaPods, and NuGet resolution failures are `deps`. Cargo registry network errors are `flake`; a rustc type error that cargo could not compile is `test`. Terraform state lock is `flake`; missing cloud credentials are `env`. kubectl rollout timeout is `flake`; RBAC `is forbidden` is `permissions`. A GitHub secondary rate limit is `flake`; Bad credentials are `permissions`. `java.lang.OutOfMemoryError` and Python `MemoryError` are `infra`. `Missing required environment variable NAME` is `env`.

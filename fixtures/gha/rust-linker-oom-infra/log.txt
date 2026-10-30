@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cargo build --release
+##[endgroup]
+rust-lld: error: failed to allocate 2147483648 bytes
+ld terminated with signal 9
+error: could not compile `example-app` due to previous error
+##[error]Process completed with exit code 101.

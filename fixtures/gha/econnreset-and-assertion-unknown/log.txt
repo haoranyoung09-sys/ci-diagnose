@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+Error: read ECONNRESET
+AssertionError: expected 200 received 503
+##[error]Process completed with exit code 1.

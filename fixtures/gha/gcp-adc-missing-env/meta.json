@@ -1,0 +1,8 @@
+{
+  "id": "gcp-adc-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Google ADC could not load default credentials. Configure the existing identity. Do not print a key file."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run go mod download
+##[endgroup]
+go: example.com/example-lib@v1.2.3: reading https://proxy.golang.org/example.com/example-lib/@v/v1.2.3.info: 502 Bad Gateway
+##[error]Process completed with exit code 1.

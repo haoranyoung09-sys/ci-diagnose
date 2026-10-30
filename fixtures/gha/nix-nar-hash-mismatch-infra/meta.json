@@ -1,0 +1,8 @@
+{
+  "id": "nix-nar-hash-mismatch-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Nix store rejected a downloaded path because the NAR hash did not match. Store corruption, not a missing flake attribute."
+}

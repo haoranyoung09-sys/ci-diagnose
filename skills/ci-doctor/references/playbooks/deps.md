@@ -24,6 +24,8 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | Maven "Could not resolve dependencies for project" (`maven-dependencies-unresolved-deps`) | Deps. Quote the missing artifact. Do not skip tests. |
 | SwiftPM "Could not resolve package dependencies" or CocoaPods "compatible versions for pod" (`swiftpm-package-unresolved-deps`, `cocoapods-pod-conflict-deps`) | Deps. Align that one requirement. |
 | NuGet `NU1102` (`nuget-package-not-found-deps`) | Deps. The version is not in the feed named in the log. |
+| Deno "The lockfile is out of date" (`deno-lockfile-out-of-date-deps`) | Deps. Commit the lockfile. Do not drop `--frozen`. |
+| Nix "does not provide attribute" (`nix-flake-output-missing-deps`) | Deps. The word flake is the Nix feature. Fix the attribute. Do not rerun. |
 
 ## Recipe
 

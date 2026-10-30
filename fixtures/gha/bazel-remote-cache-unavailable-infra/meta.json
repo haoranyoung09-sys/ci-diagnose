@@ -1,0 +1,8 @@
+{
+  "id": "bazel-remote-cache-unavailable-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Bazel could not query the remote cache because the connection was unavailable. Not an analysis error in the BUILD file and not a test assertion."
+}

@@ -138,6 +138,12 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | GitHub secondary rate limit, or Bad credentials | `flake` / `permissions` | `github-secondary-rate-limit-flake`, `github-bad-credentials-permissions` |
 | Java `OutOfMemoryError` or Python `MemoryError` | `infra` | `java-heap-oom-infra`, `python-memory-error-infra` |
 | App Store Connect key name missing | `env` | `app-store-connect-key-missing-env` |
+| Bazel remote cache down; Nix store hash mismatch; apt mirror 404; Homebrew bottle download; Rust linker OOM | `infra` | `bazel-remote-cache-unavailable-infra`, `nix-nar-hash-mismatch-infra`, `apt-mirror-404-infra`, `homebrew-bottle-download-infra`, `rust-linker-oom-infra` |
+| Nix flake output missing; Deno lockfile stale | `deps` | `nix-flake-output-missing-deps`, `deno-lockfile-out-of-date-deps` |
+| apt `NO_PUBKEY`, Google ADC missing, Composer PHP too old, reusable workflow secret not passed | `env` | `apt-pubkey-missing-env`, `gcp-adc-missing-env`, `composer-php-platform-env`, `workflow-secret-not-passed-env` |
+| AWS rejected the security token | `permissions` | `aws-invalid-token-permissions` |
+| Go module proxy 502, or `ECONNRESET` with no assertion | `flake` | `go-proxy-502-flake`, `econnreset-flake` |
+| `ECONNRESET` tied with `AssertionError` | `unknown` | `econnreset-and-assertion-unknown` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

@@ -24,7 +24,7 @@ compatibility: >-
   Action is composite, runs python3 on the runner, and does not call an LLM.
 metadata:
   author: ci-doctor
-  version: "0.9.0"
+  version: "0.10.0"
   taxonomy: v0
 ---
 
@@ -45,6 +45,7 @@ If the user writes in Chinese, write the final report in Chinese. Keep category 
 - A multi-job log where only one job failed. Run the CLI. Do not classify a phrase that appears only on a green job.
 - Node or Python on the runner does not match the workflow, a self-hosted runner is offline, a pull is rate-limited, the image arch does not match the host, or Git LFS hit a rate limit. A `continue-on-error` step is not the failure if a later lockfile line is.
 - Maven, SwiftPM, CocoaPods, or NuGet could not resolve a package. Cargo could not reach crates-io, or rustc rejected the crate. Terraform holds a state lock or has no credentials. kubectl timed out or RBAC forbade the call. GitHub returned a secondary rate limit or Bad credentials. The JVM or Python ran out of memory.
+- A Nix flake output is missing (that word is not a rerun), the Nix store hash mismatches, apt has no pubkey or the mirror 404s, ADC or an AWS token is missing, Deno's lockfile is stale, the Go proxy returns 502, the Rust linker runs out of memory, Composer wants another PHP, or a connection reset is tied with an assertion. A reusable workflow secret that was not passed is `env`.
 - The user wants the result in a GitHub Actions job summary. The composite action is `action.yml` at the repo root. It does not call an LLM. Leave `comment` off unless they set it. Same-job `if: failure()` needs `log-path`; a finished run uses `workflow_run` and `run-id`.
 
 ## When not to use this skill

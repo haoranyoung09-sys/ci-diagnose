@@ -111,6 +111,20 @@ Improvement: Maven, SwiftPM, CocoaPods, NuGet, Cargo network versus compile, Ter
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Move the public `v1` tag only when this commit is on the mirror.
 
+## 2026-10-30
+
+Date: 2026-10-30
+
+Fixtures: 117
+
+Eval: 117/117 (1.000)
+
+Version: 0.10.0
+
+Improvement: Bazel cache, Nix, apt, Homebrew, Deno, Go proxy, Rust linker OOM, Composer PHP, Google ADC, AWS token rejection, connection reset, and a reusable workflow secret that was not passed now classify. The Nix word flake is not a rerun. Action inputs and outputs are unchanged.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Move the public `v1` tag only when this commit is on the mirror.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

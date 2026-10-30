@@ -35,6 +35,8 @@ Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeou
 | "Error acquiring the state lock" (`terraform-state-lock-flake`) | Flake. One rerun after the holder finishes. Do not force-unlock in that attempt. |
 | "timed out waiting for the condition" (`kubectl-rollout-timeout-flake`) | Flake. One rerun. Do not widen RBAC in that attempt. |
 | "exceeded a secondary rate limit" (`github-secondary-rate-limit-flake`) | Flake. Wait and rerun once. Not a new token. |
+| `proxy.golang.org` returned 502 (`go-proxy-502-flake`) | Flake. One rerun. Do not edit `go.sum` for a 502. |
+| `read ECONNRESET` and no assertion (`econnreset-flake`) | Flake. One rerun. If `AssertionError` is also present (`econnreset-and-assertion-unknown`), stay `unknown`. |
 
 ## Recipe
 

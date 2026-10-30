@@ -246,6 +246,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"security token included in the request is invalid",
+        "cloud token was rejected",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"\bis forbidden:|cannot (?:get|list|watch|create|update|patch|delete) resource",
         "cluster RBAC denied the call",
     ),
@@ -283,7 +289,7 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         6,
-        r"secret .+ (?:not found|was not provided|is not set)",
+        r"secret .+ (?:not found|was not provided|is not set|is required, but not provided)",
         "secret was not provided",
     ),
     Rule(
@@ -297,6 +303,24 @@ RULES: tuple[Rule, ...] = (
         8,
         r"no valid credential sources",
         "cloud credentials were not configured",
+    ),
+    Rule(
+        "env",
+        8,
+        r"could not load the default credentials",
+        "cloud credentials were not configured",
+    ),
+    Rule(
+        "env",
+        8,
+        r"NO_PUBKEY\b",
+        "package index signing key is missing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"require a PHP version",
+        "PHP platform version does not match Composer",
     ),
     Rule(
         "env",
@@ -421,6 +445,18 @@ RULES: tuple[Rule, ...] = (
         r"\bNU1102\b|unable to find package \S+ with version",
         "NuGet could not find a package",
     ),
+    Rule(
+        "deps",
+        8,
+        r"error: the lockfile is out of date",
+        "Deno lockfile is out of date",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"does not provide attribute",
+        "Nix flake output is missing",
+    ),
     Rule("flake", 9, r"suspected flake", "suspected flake"),
     Rule("flake", 8, r"exceeded timeout of \d+", "test exceeded its timeout"),
     Rule(
@@ -437,7 +473,12 @@ RULES: tuple[Rule, ...] = (
     ),
     Rule("flake", 6, r"\bintermittent\b", "intermittent failure"),
     Rule("flake", 5, r"retry \d+ of \d+", "failed on a numbered retry"),
-    Rule("flake", 6, r"\bflak(?:e|y|iness)\b", "flake or flaky wording"),
+    Rule(
+        "flake",
+        6,
+        r"(?<!nix )(?<!error: )\bflak(?:e|y|iness)\b",
+        "flake or flaky wording",
+    ),
     Rule(
         "flake",
         8,
@@ -479,6 +520,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"exceeded a secondary rate limit",
         "GitHub secondary rate limit",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"\bread ECONNRESET\b|\bECONNRESET\b",
+        "connection reset before a response",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"proxy\.golang\.org/.+: 502",
+        "Go module proxy returned 502",
     ),
     Rule(
         "flake",
@@ -604,6 +657,36 @@ RULES: tuple[Rule, ...] = (
         8,
         r"\bMemoryError\b",
         "Python ran out of memory",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"failed to query remote cache",
+        "remote build cache is unavailable",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"NAR hash mismatch",
+        "Nix store path hash does not match",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"failed to download resource",
+        "Homebrew bottle download failed",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"E: Failed to fetch https?://\S+\s+404\b",
+        "package mirror returned 404",
+    ),
+    Rule(
+        "infra",
+        9,
+        r"failed to allocate \d+ bytes|ld terminated with signal 9",
+        "linker ran out of memory",
     ),
     Rule(
         "unknown",

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run nix build .#default
+##[endgroup]
+error: NAR hash mismatch in downloaded path '/nix/store/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-example'
+##[error]Process completed with exit code 1.

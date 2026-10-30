@@ -1,0 +1,8 @@
+{
+  "id": "homebrew-bottle-download-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Homebrew failed to download the bottle resource. Not a formula version conflict and not an app assertion."
+}

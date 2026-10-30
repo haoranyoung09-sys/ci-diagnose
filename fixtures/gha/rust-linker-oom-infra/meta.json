@@ -1,0 +1,8 @@
+{
+  "id": "rust-linker-oom-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The linker was killed after it failed to allocate, and cargo also said it could not compile. The host ran out of memory. Do not edit the type error in that attempt."
+}

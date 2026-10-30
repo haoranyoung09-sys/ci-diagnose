@@ -127,5 +127,20 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `java-heap-oom-infra` | infra | `java.lang.OutOfMemoryError` and a heap dump. |
 | `python-memory-error-infra` | infra | Python `MemoryError`. |
 | `app-store-connect-key-missing-env` | env | `APP_STORE_CONNECT_API_KEY_ID` was not set. |
+| `bazel-remote-cache-unavailable-infra` | infra | Bazel could not query the remote cache. |
+| `nix-flake-output-missing-deps` | deps | Nix flake attribute is missing. The word flake is not a rerun. |
+| `nix-nar-hash-mismatch-infra` | infra | Nix store NAR hash mismatch. |
+| `homebrew-bottle-download-infra` | infra | Homebrew failed to download a bottle. |
+| `apt-pubkey-missing-env` | env | apt `NO_PUBKEY`. |
+| `apt-mirror-404-infra` | infra | apt mirror returned 404. |
+| `gcp-adc-missing-env` | env | Google ADC found no default credentials. |
+| `aws-invalid-token-permissions` | permissions | AWS rejected the security token. |
+| `deno-lockfile-out-of-date-deps` | deps | Deno frozen lockfile is out of date. |
+| `go-proxy-502-flake` | flake | `proxy.golang.org` returned 502. |
+| `rust-linker-oom-infra` | infra | Linker OOM outranks `could not compile`. |
+| `composer-php-platform-env` | env | Composer requires a newer PHP than the runner. |
+| `econnreset-flake` | flake | `read ECONNRESET` with no assertion. |
+| `econnreset-and-assertion-unknown` | unknown | Tie: `ECONNRESET` and `AssertionError`. |
+| `workflow-secret-not-passed-env` | env | Reusable workflow secret was not passed. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

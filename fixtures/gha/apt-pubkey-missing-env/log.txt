@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run sudo apt-get update
+##[endgroup]
+The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 1111111111111111
+##[error]Process completed with exit code 100.

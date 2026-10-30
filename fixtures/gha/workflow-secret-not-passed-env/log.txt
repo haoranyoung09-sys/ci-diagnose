@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./.github/workflows/deploy.yml
+##[endgroup]
+Error: Secret WORKFLOW_TOKEN is required, but not provided while calling.
+##[error]Process completed with exit code 1.

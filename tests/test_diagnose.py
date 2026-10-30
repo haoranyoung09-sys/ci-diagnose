@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 102)
+        self.assertGreaterEqual(len(fixtures), 117)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -494,6 +494,7 @@ class CorpusFixturesTest(unittest.TestCase):
             "kernel-oom-killed-infra": ("infra", [], None),
             "runner-arch-mismatch-infra": ("infra", [], None),
             "node-engine-mismatch-env": ("env", [], None),
+            "econnreset-and-assertion-unknown": ("unknown", ["flake", "test"], 0.42),
         }
         for fixture_id, (category, alternates, confidence) in expected.items():
             fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
@@ -611,6 +612,17 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertIn("compiler rejected the crate", compile_fail["signals"])
         self.assertEqual(compile_fail["category"], "test")
+        nix = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "nix-flake-output-missing-deps")
+        )
+        self.assertEqual(nix["category"], "deps")
+        self.assertNotIn("flake or flaky wording", nix["signals"])
+        linker = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "rust-linker-oom-infra")
+        )
+        self.assertEqual(linker["category"], "infra")
+        self.assertIn("test", linker["alternates"])
+        self.assertIn("linker ran out of memory", linker["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

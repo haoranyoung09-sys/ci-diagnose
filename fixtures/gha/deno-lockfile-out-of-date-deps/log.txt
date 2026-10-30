@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run deno install --frozen
+##[endgroup]
+error: The lockfile is out of date.
+##[error]Process completed with exit code 1.
