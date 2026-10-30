@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bazel build //app:bin
+##[endgroup]
+ERROR: Failed to query remote cache: UNAVAILABLE: connection reset
+##[error]Process completed with exit code 1.

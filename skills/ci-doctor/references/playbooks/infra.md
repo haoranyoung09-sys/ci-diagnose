@@ -37,6 +37,11 @@ Also: `getaddrinfo` / "Temporary failure in name resolution" / "Could not resolv
 | "exec format error" or the image platform does not match the host (`runner-arch-mismatch-infra`) | Infra. Pick the matching runner arch. Not a registry 403. |
 | "failed to compute cache key" / "layer does not exist" (`docker-layer-cache-missing-infra`) | Infra. Not a pytest line. Clear that cache or rerun the build once. |
 | `java.lang.OutOfMemoryError` or Python `MemoryError` (`java-heap-oom-infra`, `python-memory-error-infra`) | Infra. Quote that line. Do not edit the assertion. |
+| "Failed to query remote cache" (`bazel-remote-cache-unavailable-infra`) | Infra. One rerun checks the cache. Do not edit the BUILD file for that line. |
+| "NAR hash mismatch" (`nix-nar-hash-mismatch-infra`) | Infra. Not a missing flake attribute. |
+| "Failed to download resource" (`homebrew-bottle-download-infra`) | Infra. Do not change the formula version in that attempt. |
+| `E: Failed to fetch … 404` (`apt-mirror-404-infra`) | Infra. Not a missing `NO_PUBKEY`. |
+| Linker "failed to allocate" or "ld terminated with signal 9" (`rust-linker-oom-infra`) | Infra, even if cargo also says it could not compile. Do not edit the type error in that attempt. |
 
 ## Recipe
 

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run nix build .#default
+##[endgroup]
+error: flake 'git+https://example.invalid/lib' does not provide attribute 'packages.x86_64-linux.default'
+##[error]Process completed with exit code 1.

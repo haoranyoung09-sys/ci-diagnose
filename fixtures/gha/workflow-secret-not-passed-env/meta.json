@@ -1,0 +1,8 @@
+{
+  "id": "workflow-secret-not-passed-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "A reusable workflow said Secret WORKFLOW_TOKEN is required but was not provided by the caller. Pass the secret. Do not print a value."
+}

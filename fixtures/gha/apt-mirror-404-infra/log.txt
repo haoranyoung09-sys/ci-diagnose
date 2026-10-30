@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run sudo apt-get install -y example
+##[endgroup]
+E: Failed to fetch http://archive.ubuntu.com/ubuntu/pool/main/e/example/example.deb  404  Not Found
+##[error]Process completed with exit code 100.

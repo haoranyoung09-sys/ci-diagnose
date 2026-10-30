@@ -1,0 +1,8 @@
+{
+  "id": "nix-flake-output-missing-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Nix flake does not provide the attribute the job asked for. The word flake here is the Nix feature, not an intermittent test. Do not rerun hoping the output appears."
+}

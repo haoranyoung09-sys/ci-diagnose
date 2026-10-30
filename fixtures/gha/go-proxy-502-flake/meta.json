@@ -1,0 +1,8 @@
+{
+  "id": "go-proxy-502-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "proxy.golang.org returned 502 while reading a module. Not a go.sum checksum mismatch. One rerun is the check."
+}

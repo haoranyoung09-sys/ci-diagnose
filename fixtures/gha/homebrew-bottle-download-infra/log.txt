@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run brew install example
+##[endgroup]
+Error: Failed to download resource "example"
+##[error]Process completed with exit code 1.

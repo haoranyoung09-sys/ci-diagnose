@@ -1,0 +1,8 @@
+{
+  "id": "apt-mirror-404-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "apt failed to fetch a deb and the mirror returned 404. Not a missing GPG key and not a test failure."
+}

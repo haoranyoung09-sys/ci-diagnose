@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run composer install --no-dev
+##[endgroup]
+Your Composer dependencies require a PHP version ">= 8.3". You are running 8.2.12.
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "econnreset-and-assertion-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The log has read ECONNRESET and an AssertionError at the same score. Tie between flake and test. Do not pick the reset or the assertion yet."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "deno-lockfile-out-of-date-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "deno install --frozen refused because the lockfile is out of date. Commit the updated lockfile. Do not drop --frozen in CI."
+}

@@ -21,6 +21,10 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | "Can't find 'action.yml'" (`composite-action-path-missing-env`) | The `uses:` path or ref is wrong. Fix that path. Do not rerun hoping the file appears. |
 | "no valid credential sources" (`terraform-credentials-missing-env`) | The provider has no credentials configured. Supply the existing name. Do not print a key. This is not a state lock. |
 | "Missing required environment variable NAME" (`app-store-connect-key-missing-env`) | Quote the name only. |
+| apt `NO_PUBKEY` (`apt-pubkey-missing-env`) | Import that key. A mirror 404 is `infra`, not this. |
+| "Could not load the default credentials" (`gcp-adc-missing-env`) | ADC is not configured. Do not print a key file. |
+| "require a PHP version" (`composer-php-platform-env`) | The runner PHP is older than Composer requires. Change setup-php. |
+| "Secret NAME is required, but not provided" (`workflow-secret-not-passed-env`) | The caller did not pass that secret into the reusable workflow. Quote the name only. |
 
 ## Recipe
 

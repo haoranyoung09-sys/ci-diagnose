@@ -1,0 +1,8 @@
+{
+  "id": "aws-invalid-token-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "AWS rejected the security token as invalid. Not an unset AWS_REGION. Do not print the token."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run aws sts get-caller-identity
+##[endgroup]
+Error: The security token included in the request is invalid.
+##[error]Process completed with exit code 254.

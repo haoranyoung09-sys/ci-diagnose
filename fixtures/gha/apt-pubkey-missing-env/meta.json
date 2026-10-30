@@ -1,0 +1,8 @@
+{
+  "id": "apt-pubkey-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "apt could not verify signatures because NO_PUBKEY. Import that key. Not a mirror 404 and not a package version pin."
+}

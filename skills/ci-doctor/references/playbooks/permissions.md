@@ -26,6 +26,7 @@ Corpus: `gha-token-integration-403`, `git-push-permission-denied`, `id-token-per
 | `no such host`, `egress blocked`, or `i/o timeout` with no auth line | `infra`, not this playbook. |
 | "Bad credentials" (`github-bad-credentials-permissions`) | The token was rejected. Do not print it. Not a secondary rate limit. |
 | "is forbidden" / "cannot patch resource" (`kubectl-rbac-forbidden-permissions`) | Name the verb and resource. Do not grant cluster-admin. |
+| "security token included in the request is invalid" (`aws-invalid-token-permissions`) | The token was rejected. Not an unset `AWS_REGION`. Do not print it. |
 
 ## Recipe
 

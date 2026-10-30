@@ -138,6 +138,12 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | GitHub secondary rate limit，或 Bad credentials | `flake` / `permissions` | `github-secondary-rate-limit-flake`、`github-bad-credentials-permissions` |
 | Java `OutOfMemoryError` 或 Python `MemoryError` | `infra` | `java-heap-oom-infra`、`python-memory-error-infra` |
 | 缺少 App Store Connect 的密钥名字 | `env` | `app-store-connect-key-missing-env` |
+| Bazel 远程缓存不可用、Nix store 哈希不符、apt 镜像 404、Homebrew bottle 下载失败、Rust 链接器内存耗尽 | `infra` | `bazel-remote-cache-unavailable-infra`、`nix-nar-hash-mismatch-infra`、`apt-mirror-404-infra`、`homebrew-bottle-download-infra`、`rust-linker-oom-infra` |
+| Nix flake 没有对应输出、Deno 锁文件过期 | `deps` | `nix-flake-output-missing-deps`、`deno-lockfile-out-of-date-deps` |
+| apt 缺少 `NO_PUBKEY`、Google ADC 没有凭证、Composer 要求更高 PHP、可复用工作流没传入 secret | `env` | `apt-pubkey-missing-env`、`gcp-adc-missing-env`、`composer-php-platform-env`、`workflow-secret-not-passed-env` |
+| AWS 拒绝了 security token | `permissions` | `aws-invalid-token-permissions` |
+| Go module proxy 返回 502，或只有 `ECONNRESET` | `flake` | `go-proxy-502-flake`、`econnreset-flake` |
+| `ECONNRESET` 和 `AssertionError` 打平 | `unknown` | `econnreset-and-assertion-unknown` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 
