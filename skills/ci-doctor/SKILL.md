@@ -24,7 +24,7 @@ compatibility: >-
   Action is composite, runs python3 on the runner, and does not call an LLM.
 metadata:
   author: ci-doctor
-  version: "0.12.0"
+  version: "0.12.1"
   taxonomy: v0
 ---
 

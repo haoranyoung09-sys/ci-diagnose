@@ -6,14 +6,14 @@
 # From a checkout:
 #   bash scripts/install.sh --user --cli
 #   bash scripts/install.sh --project
-# After tag v0.12.0 is on GitHub:
-#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
-# Pin another ref with CI_DIAGNOSE_REF (default v0.12.0). The Action stays uses: ...@v1.
+# After tag v0.12.1 is on GitHub:
+#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.1/scripts/install.sh | bash
+# Pin another ref with CI_DIAGNOSE_REF (default v0.12.1). The Action stays uses: ...@v1.
 
 set -euo pipefail
 
-REF="${CI_DIAGNOSE_REF:-v0.12.0}"
-REPO_URL="https://github.com/haoranyoung09-sys/ci-diagnose"
+REF="${CI_DIAGNOSE_REF:-v0.12.1}"
+REPO_URL="https://github.com/haoranyoung09-sys/ci-fail-classify"
 MODE="user"
 WITH_CLI=0
 FORCE=0
@@ -33,7 +33,7 @@ Usage: install.sh [--user | --project] [--cli] [--claude] [--force]
 
 From a git checkout the script links that checkout. Piped from curl, it
 downloads the public tag archive into ~/.local/share/ci-diagnose.
-Set CI_DIAGNOSE_REF to choose the tag (default v0.12.0).
+Set CI_DIAGNOSE_REF to choose the tag (default v0.12.1).
 EOF
 }
 
@@ -100,7 +100,7 @@ fetch_release() {
   fi
   tar -xzf "$archive" -C "$tmp"
   local extracted
-  extracted="$(find "$tmp" -mindepth 1 -maxdepth 1 -type d -name 'ci-diagnose-*' | head -n 1)"
+  extracted="$(find "$tmp" -mindepth 1 -maxdepth 1 -type d -name 'ci-fail-classify-*' | head -n 1)"
   if [[ -z "$extracted" || ! -f "$extracted/scripts/diagnose.py" ]]; then
     echo "ci-diagnose: the archive did not contain scripts/diagnose.py" >&2
     rm -rf "$tmp"

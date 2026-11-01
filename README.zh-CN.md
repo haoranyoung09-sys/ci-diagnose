@@ -24,7 +24,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: haoranyoung09-sys/ci-diagnose@v1
+      - uses: haoranyoung09-sys/ci-fail-classify@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
 ```
@@ -32,7 +32,7 @@ jobs:
 同一个 job、并且你已经把日志存下来时用下面这段。`if: failure()` 拉不到当前这次运行的日志，因为 job 还没结束。
 
 ```yaml
-- uses: haoranyoung09-sys/ci-diagnose@v1
+- uses: haoranyoung09-sys/ci-fail-classify@v1
   if: failure()
   with:
     log-path: ci.log
@@ -56,10 +56,10 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.0` 之后：
+上面的 Action 保持 `uses: haoranyoung09-sys/ci-fail-classify@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.1` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.1/scripts/install.sh | bash
 ```
 
 下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
@@ -69,8 +69,8 @@ curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12
 Python 3.9 或更高。不安装依赖，不需要 token，也不访问网络。
 
 ```bash
-git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
-cd ci-diagnose
+git clone https://github.com/haoranyoung09-sys/ci-fail-classify.git
+cd ci-fail-classify
 python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```

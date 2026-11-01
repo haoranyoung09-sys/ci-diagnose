@@ -1,6 +1,6 @@
 # ci-diagnose 0.10.0
 
-Same Action contract as 0.7.0 through 0.9.0. `action.yml` inputs, outputs, and branding are unchanged. `uses: haoranyoung09-sys/ci-diagnose@v1` keeps working after you move the `v1` tag to this commit.
+Same Action contract as 0.7.0 through 0.9.0. `action.yml` inputs, outputs, and branding are unchanged. `uses: haoranyoung09-sys/ci-fail-classify@v1` keeps working after you move the `v1` tag to this commit.
 
 ## What changed
 

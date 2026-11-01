@@ -1,8 +1,16 @@
 # Changelog
 
+## 0.12.1 — 2026-11-01
+
+The public repository is `haoranyoung09-sys/ci-fail-classify`. GitHub redirects `haoranyoung09-sys/ci-diagnose`, including `uses: …@v1` and raw install URLs. Action inputs and outputs are unchanged, so `@v1` stays compatible. The install one-liner pins `v0.12.1`. The tag archive root is `ci-fail-classify-*`.
+
+146 fixtures. Eval 146/146. Taxonomy ids unchanged. Skill metadata 0.12.1.
+
+Notes: [docs/release-notes-v0.12.1.md](docs/release-notes-v0.12.1.md).
+
 ## 0.12.0 — 2026-11-01
 
-The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-diagnose@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.
+The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-fail-classify@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.
 
 Apple signing material missing or expired, match git username or decrypt failure, a missing Android keystore or SDK, and a bundletool JDK mismatch are `env`. An unauthorized adb device and Apple notarization 401 are `permissions`. No adb device, and a simulator that will not boot, are `infra`. A notarization timeout is `flake`. A fastlane expected/got line and a Metro syntax error are `test`.
 

@@ -24,7 +24,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: haoranyoung09-sys/ci-diagnose@v1
+      - uses: haoranyoung09-sys/ci-fail-classify@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
 ```
@@ -32,7 +32,7 @@ jobs:
 Same job, when you already saved the log. `if: failure()` cannot download the current run: the job is still in progress.
 
 ```yaml
-- uses: haoranyoung09-sys/ci-diagnose@v1
+- uses: haoranyoung09-sys/ci-fail-classify@v1
   if: failure()
   with:
     log-path: ci.log
@@ -56,10 +56,10 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.12.0` is on the public mirror:
+The Action above stays `uses: haoranyoung09-sys/ci-fail-classify@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.12.1` is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.1/scripts/install.sh | bash
 ```
 
 That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
@@ -69,8 +69,8 @@ That download uses the tag archive. It does not send a token. If the tag is miss
 Python 3.9+. No packages, no token, no network.
 
 ```bash
-git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
-cd ci-diagnose
+git clone https://github.com/haoranyoung09-sys/ci-fail-classify.git
+cd ci-fail-classify
 python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
