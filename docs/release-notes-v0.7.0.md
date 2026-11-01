@@ -20,7 +20,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: haoranyoung09-sys/ci-diagnose@v1
+      - uses: haoranyoung09-sys/ci-fail-classify@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
 ```
@@ -28,7 +28,7 @@ jobs:
 Same job, when the failing command was saved:
 
 ```yaml
-- uses: haoranyoung09-sys/ci-diagnose@v1
+- uses: haoranyoung09-sys/ci-fail-classify@v1
   if: failure()
   with:
     log-path: ci.log
@@ -43,7 +43,7 @@ Pull request comments are off. Set `comment: true` and grant `pull-requests: wri
 ## Tags
 
 - `v0.7.0` — this release. Do not move it.
-- `v1` — moving tag. Point it at this commit so `uses: haoranyoung09-sys/ci-diagnose@v1` installs this Action. Move `v1` again only when a later release stays compatible with these inputs.
+- `v1` — moving tag. Point it at this commit so `uses: haoranyoung09-sys/ci-fail-classify@v1` installs this Action. Move `v1` again only when a later release stays compatible with these inputs.
 
 ## Publish
 

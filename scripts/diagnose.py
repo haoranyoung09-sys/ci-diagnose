@@ -632,7 +632,7 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
-        r"\bread ECONNRESET\b|\bECONNRESET\b",
+        r"\bECONNRESET\b",
         "connection reset before a response",
     ),
     Rule(

@@ -153,6 +153,20 @@ Improvement: The install one-liner pins v0.12.0 while the Action stays @v1. Appl
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Publish tag v0.12.0 on the public mirror before using the curl one-liner. Move @v1 only with this commit.
 
+## 2026-11-01 — 0.12.1
+
+Date: 2026-11-01
+
+Fixtures: 146
+
+Eval: 146/146 (1.000)
+
+Version: 0.12.1
+
+Improvement: The public name is ci-fail-classify. READMEs, install, and Action examples use that GitHub path. The skill directory stays ci-doctor. Action inputs and outputs are unchanged. The READMEs say how this differs from other triage tools and from a CI platform, without star counts.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Rename the public GitHub repo so the old ci-diagnose URL redirects. Publish tag v0.12.1 and point @v1 at this commit.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

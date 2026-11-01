@@ -1,7 +1,7 @@
 # Opt-in comment. Default is off. One comment is created and later updated.
 # Needs pull-requests: write. Fork pull requests may not have that grant.
 
-name: CI Doctor
+name: CI Fail Classify
 
 "on":
   workflow_run:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Classify and comment
-        uses: haoranyoung09-sys/ci-diagnose@v1
+        uses: haoranyoung09-sys/ci-fail-classify@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
           comment: true
