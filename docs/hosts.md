@@ -8,6 +8,24 @@ What it classifies, when to skip it, and how playbooks map to checkout TLS, regi
 
 Frontmatter follows the Agent Skills spec: `name` is `ci-doctor` (it matches the directory), and `description` says what the skill does and when to use it, including “CI failed”, “GitHub Actions is red”, and “fix the build”.
 
+## One command
+
+From a checkout of this repo:
+
+```bash
+bash scripts/install.sh --user --cli
+```
+
+`--user` is the default. It symlinks `~/.agents/skills/ci-doctor` at this checkout's `skills/ci-doctor` and prints both paths. `--cli` adds `~/.local/bin/diagnose`, a wrapper that runs `python3 scripts/diagnose.py`. `--project` links `./.agents/skills/ci-doctor` in the current directory. An existing link or directory is left alone unless you pass `--force`. Python older than 3.9 stops the script.
+
+After `v0.11.0` is published on the public mirror:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.11.0/scripts/install.sh | bash
+```
+
+That form downloads the tag archive into `~/.local/share/ci-diagnose`. It does not send a token. `--claude` also links `~/.claude/skills/ci-doctor`. Leave that off when Cursor is installed, or the skill loads twice.
+
 ## Cursor
 
 Loaded from `.agents/skills/`, `.cursor/skills/`, `~/.agents/skills/`, and `~/.cursor/skills/`. For compatibility, Cursor also loads `.claude/skills/`, `.codex/skills/`, and the matching home directories. Install once.

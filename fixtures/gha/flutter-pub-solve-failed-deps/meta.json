@@ -1,0 +1,8 @@
+{
+  "id": "flutter-pub-solve-failed-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "pub get version solving failed because example_lib 9.9.9 matches no versions. Not an Android SDK license prompt and not a test."
+}

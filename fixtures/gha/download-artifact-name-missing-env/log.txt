@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/download-artifact@v4
+##[endgroup]
+Error: Unable to download artifact(s): Artifact not found for name: example-dist
+##[error]Process completed with exit code 1.

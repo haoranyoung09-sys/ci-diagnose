@@ -252,6 +252,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"failed to authorize:",
+        "image pull was not authorized",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"\bis forbidden:|cannot (?:get|list|watch|create|update|patch|delete) resource",
         "cluster RBAC denied the call",
     ),
@@ -321,6 +327,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"require a PHP version",
         "PHP platform version does not match Composer",
+    ),
+    Rule(
+        "env",
+        8,
+        r"supported Python range .+ is not compatible with the Python version|required Python version .+ does not match the Python version",
+        "project Python range does not match the runner",
+    ),
+    Rule(
+        "env",
+        8,
+        r"no files were found with the provided path:|artifact not found for name:",
+        "artifact path or name matched nothing",
     ),
     Rule(
         "env",
@@ -457,6 +475,48 @@ RULES: tuple[Rule, ...] = (
         r"does not provide attribute",
         "Nix flake output is missing",
     ),
+    Rule(
+        "deps",
+        8,
+        r"lockfile would have been modified by this install, which is explicitly forbidden",
+        "Yarn refused to change a frozen lockfile",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"doesn't seem to be part of the project declared in .+\.pnp\.cjs",
+        "Yarn PnP root does not match the install",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"do not match the hashes from the requirements file",
+        "pip requirements hash does not match",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"coursier\.ResolutionException",
+        "Coursier could not resolve a module",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"version solving failed",
+        "pub could not solve a version",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"lockfile had changes, but lockfile is frozen",
+        "Bun lockfile is frozen and out of date",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"failed to resolve reference:.+: not found",
+        "container image tag was not found",
+    ),
     Rule("flake", 9, r"suspected flake", "suspected flake"),
     Rule("flake", 8, r"exceeded timeout of \d+", "test exceeded its timeout"),
     Rule(
@@ -536,6 +596,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"503 Server Error|503 Service Unavailable",
+        "package index returned 503",
+    ),
+    Rule(
+        "flake",
+        8,
         r"ssl certificate problem|server certificate verification failed|unable to get local issuer certificate|tls connection was non-properly terminated",
         "checkout TLS certificate verification failed",
     ),
@@ -573,6 +639,12 @@ RULES: tuple[Rule, ...] = (
     Rule("test", 7, r"failed asserting that", "PHPUnit assertion failed"),
     Rule("test", 7, r"^\s*Failure/Error:", "RSpec failure"),
     Rule("test", 7, r"test result:\s*FAILED", "cargo test result FAILED"),
+    Rule(
+        "test",
+        8,
+        r"Failed to parse \S+:\d+:\d+:",
+        "linter rejected the source",
+    ),
     Rule(
         "test",
         8,

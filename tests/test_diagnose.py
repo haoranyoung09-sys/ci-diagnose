@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 117)
+        self.assertGreaterEqual(len(fixtures), 131)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -623,6 +623,17 @@ class CorpusFixturesTest(unittest.TestCase):
         self.assertEqual(linker["category"], "infra")
         self.assertIn("test", linker["alternates"])
         self.assertIn("linker ran out of memory", linker["signals"])
+        yarn = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "yarn-berry-immutable-deps")
+        )
+        self.assertEqual(yarn["category"], "deps")
+        pull = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "image-pull-unauthorized-permissions"
+            )
+        )
+        self.assertEqual(pull["category"], "permissions")
+        self.assertNotIn("container image tag was not found", pull["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

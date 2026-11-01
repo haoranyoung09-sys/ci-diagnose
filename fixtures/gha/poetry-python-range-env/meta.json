@@ -1,0 +1,8 @@
+{
+  "id": "poetry-python-range-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Poetry's supported Python range is >=3.12 and the runner has 3.11.9. Change setup-python. Not a poetry.lock drift."
+}

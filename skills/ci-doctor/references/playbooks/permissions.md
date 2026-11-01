@@ -27,6 +27,7 @@ Corpus: `gha-token-integration-403`, `git-push-permission-denied`, `id-token-per
 | "Bad credentials" (`github-bad-credentials-permissions`) | The token was rejected. Do not print it. Not a secondary rate limit. |
 | "is forbidden" / "cannot patch resource" (`kubectl-rbac-forbidden-permissions`) | Name the verb and resource. Do not grant cluster-admin. |
 | "security token included in the request is invalid" (`aws-invalid-token-permissions`) | The token was rejected. Not an unset `AWS_REGION`. Do not print it. |
+| "failed to authorize" on an image pull (`image-pull-unauthorized-permissions`) | Permissions. A missing tag (`: not found`) is `deps`. Do not print a registry password. |
 
 ## Recipe
 

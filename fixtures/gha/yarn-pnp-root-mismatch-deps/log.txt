@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run yarn test
+##[endgroup]
+Usage Error: The nearest package directory doesn't seem to be part of the project declared in /home/runner/work/example-app/.pnp.cjs.
+##[error]Process completed with exit code 1.

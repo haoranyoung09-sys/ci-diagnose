@@ -44,6 +44,24 @@ jobs:
 
 ![同一份报告的 job summary 字段](docs/demo-summary.svg)
 
+## 安装 skill 和命令行
+
+从检出目录执行一条命令。它给 Cursor 和 Codex 链接 skill。已经存在的目录或链接不会被悄悄覆盖，除非加上 `--force`。需要 Python 3.9 或更高。
+
+```bash
+bash scripts/install.sh --user --cli
+```
+
+它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
+
+公开镜像上有标签 `v0.11.0` 之后，可以先取脚本再执行。它不发送 token。
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.11.0/scripts/install.sh | bash
+```
+
+标签还不在 GitHub 上时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。
+
 ## 30 秒演示
 
 Python 3.9 或更高。不安装依赖，不需要 token，也不访问网络。
@@ -144,6 +162,11 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | AWS 拒绝了 security token | `permissions` | `aws-invalid-token-permissions` |
 | Go module proxy 返回 502，或只有 `ECONNRESET` | `flake` | `go-proxy-502-flake`、`econnreset-flake` |
 | `ECONNRESET` 和 `AssertionError` 打平 | `unknown` | `econnreset-and-assertion-unknown` |
+| Yarn Berry 不可变安装、Yarn PnP 根目录、pip 哈希、Coursier、pub 求解、Bun 冻结锁、镜像标签不存在 | `deps` | `yarn-berry-immutable-deps`、`yarn-pnp-root-mismatch-deps`、`pip-hash-mismatch-deps`、`coursier-resolve-failed-deps`、`flutter-pub-solve-failed-deps`、`bun-lockfile-frozen-deps`、`image-pull-not-found-deps` |
+| Poetry 或 uv 的 Python 范围不符、产物路径或名字对不上 | `env` | `poetry-python-range-env`、`uv-python-mismatch-env`、`upload-artifact-path-missing-env`、`download-artifact-name-missing-env` |
+| PyPI 只返回 503 | `flake` | `pypi-503-flake` |
+| 拉镜像得到 401 | `permissions` | `image-pull-unauthorized-permissions` |
+| Ruff 解析源文件失败 | `test` | `ruff-parse-failed-test` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

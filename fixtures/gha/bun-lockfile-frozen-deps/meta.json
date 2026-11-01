@@ -1,0 +1,8 @@
+{
+  "id": "bun-lockfile-frozen-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "bun install --frozen-lockfile saw lockfile changes. Commit the updated lockfile. Do not drop the frozen flag in CI."
+}

@@ -125,6 +125,20 @@ Improvement: Bazel cache, Nix, apt, Homebrew, Deno, Go proxy, Rust linker OOM, C
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Move the public `v1` tag only when this commit is on the mirror.
 
+## 2026-11-01
+
+Date: 2026-11-01
+
+Fixtures: 131
+
+Eval: 131/131 (1.000)
+
+Version: 0.11.0
+
+Improvement: `bash scripts/install.sh --user --cli` installs the skill and an optional diagnose wrapper without overwriting an existing install. Yarn Berry, PnP, pip hashes, Coursier, pub, Bun, image tags, artifact paths, PyPI 503, image-pull auth, and Ruff parse errors now classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Publish tag v0.11.0 on the public mirror before using the curl one-liner.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

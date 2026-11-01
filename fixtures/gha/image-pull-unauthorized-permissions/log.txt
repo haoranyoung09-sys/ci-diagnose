@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run kubectl rollout status deployment/example
+##[endgroup]
+Failed to pull image "ghcr.io/example-org/example-app:1.2.3": failed to authorize: failed to fetch anonymous token: unexpected status: 401 Unauthorized
+##[error]Process completed with exit code 1.
