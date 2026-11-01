@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run xcrun simctl boot "iPhone 16"
+##[endgroup]
+Unable to boot device because it was stuck in a creation state.
+##[error]Process completed with exit code 60.

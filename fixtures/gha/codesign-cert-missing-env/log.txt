@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run xcodebuild -exportArchive
+##[endgroup]
+error: No signing certificate "iOS Distribution" found: No "iOS Distribution" signing certificate matching team ID "ABCDE12345" with a private key was found.
+##[error]Process completed with exit code 70.

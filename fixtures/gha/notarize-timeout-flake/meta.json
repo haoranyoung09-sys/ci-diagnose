@@ -1,0 +1,8 @@
+{
+  "id": "notarize-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The notarization request timed out. No 401. One rerun is the check. Do not rotate the Apple credential for this line."
+}

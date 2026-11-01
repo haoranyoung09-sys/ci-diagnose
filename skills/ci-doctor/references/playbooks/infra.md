@@ -42,6 +42,8 @@ Also: `getaddrinfo` / "Temporary failure in name resolution" / "Could not resolv
 | "Failed to download resource" (`homebrew-bottle-download-infra`) | Infra. Do not change the formula version in that attempt. |
 | `E: Failed to fetch … 404` (`apt-mirror-404-infra`) | Infra. Not a missing `NO_PUBKEY`. |
 | Linker "failed to allocate" or "ld terminated with signal 9" (`rust-linker-oom-infra`) | Infra, even if cargo also says it could not compile. Do not edit the type error in that attempt. |
+| "no devices/emulators found" (`adb-no-devices-infra`) | The emulator never attached. An unauthorized device is `permissions`. |
+| "Unable to boot device" (`simctl-boot-failed-infra`) | One simulator reboot. Do not change the signing identity for that line. |
 
 ## Recipe
 

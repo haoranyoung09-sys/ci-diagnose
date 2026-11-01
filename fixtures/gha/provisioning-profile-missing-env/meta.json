@@ -1,0 +1,8 @@
+{
+  "id": "provisioning-profile-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Xcode found no provisioning profile for com.example.app. Not an expired profile. Install the profile the export options name."
+}

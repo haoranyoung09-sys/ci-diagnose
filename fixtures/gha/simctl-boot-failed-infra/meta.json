@@ -1,0 +1,8 @@
+{
+  "id": "simctl-boot-failed-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "simctl could not boot the simulator because it was stuck creating. One rerun of the simulator boot. Not a signing error."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundle exec fastlane match appstore
+##[endgroup]
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+##[error]Process completed with exit code 1.

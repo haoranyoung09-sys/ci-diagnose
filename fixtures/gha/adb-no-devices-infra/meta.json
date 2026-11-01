@@ -1,0 +1,8 @@
+{
+  "id": "adb-no-devices-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "adb found no devices or emulators. The emulator never came up. Not an unauthorized device and not a test assertion."
+}

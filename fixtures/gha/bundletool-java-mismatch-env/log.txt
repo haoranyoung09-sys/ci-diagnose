@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundletool build-apks
+##[endgroup]
+java.lang.UnsupportedClassVersionError: com/android/tools/build/bundletool/BundleToolMain has been compiled by a more recent version of the Java Runtime
+##[error]Process completed with exit code 1.

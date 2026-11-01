@@ -1,0 +1,8 @@
+{
+  "id": "android-sdk-location-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Capacitor could not add the Android platform because the Android SDK location was not found. Set the SDK path the job expects. Not a signing error."
+}

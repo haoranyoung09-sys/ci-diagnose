@@ -1,0 +1,8 @@
+{
+  "id": "match-decrypt-failed-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "fastlane match could not decrypt the certificates repo. The passphrase name is wrong or unset. Do not print the passphrase."
+}

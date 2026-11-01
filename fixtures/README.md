@@ -156,5 +156,20 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `uv-python-mismatch-env` | env | uv Python requirement does not match the runner. |
 | `bun-lockfile-frozen-deps` | deps | Bun frozen lockfile has changes. |
 | `ruff-parse-failed-test` | test | Ruff failed to parse a source file. |
+| `codesign-cert-missing-env` | env | No iOS Distribution certificate. |
+| `provisioning-profile-expired-env` | env | Provisioning profile expired. |
+| `provisioning-profile-missing-env` | env | No profile for the bundle id. |
+| `match-git-username-env` | env | match could not read a git username. |
+| `match-decrypt-failed-env` | env | match could not decrypt the repo. |
+| `fastlane-lane-expected-got-test` | test | Lane expected CFBundleVersion 42, got 41. |
+| `android-keystore-missing-env` | env | Release keystore file was not found. |
+| `adb-device-unauthorized-permissions` | permissions | adb device is unauthorized. |
+| `adb-no-devices-infra` | infra | adb found no devices or emulators. |
+| `bundletool-java-mismatch-env` | env | bundletool needs a newer JDK. |
+| `notarize-auth-failed-permissions` | permissions | Notarization 401. |
+| `notarize-timeout-flake` | flake | Notarization request timed out. |
+| `simctl-boot-failed-infra` | infra | Simulator stuck while booting. |
+| `metro-syntax-error-test` | test | Metro SyntaxError. |
+| `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

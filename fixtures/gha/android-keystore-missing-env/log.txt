@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./gradlew :app:packageRelease
+##[endgroup]
+Keystore file '/home/runner/work/example-app/keystore.jks' not found for signing config 'release'.
+##[error]Process completed with exit code 1.

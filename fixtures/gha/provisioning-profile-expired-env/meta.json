@@ -1,0 +1,8 @@
+{
+  "id": "provisioning-profile-expired-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The named provisioning profile expired on 2026-01-01. Regenerate it. Not a missing certificate name and not a GitHub permission."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundle exec fastlane match appstore
+##[endgroup]
+[!] Could not decrypt the repo, please make sure you entered the right password
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "codesign-cert-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "xcodebuild found no iOS Distribution certificate for the team. Install or match the cert. Not an expired profile and not a test assertion."
+}

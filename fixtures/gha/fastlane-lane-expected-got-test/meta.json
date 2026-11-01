@@ -1,0 +1,8 @@
+{
+  "id": "fastlane-lane-expected-got-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The lane compared CFBundleVersion and got 41 instead of 42. Fix the version the lane names. Not a signing or match failure."
+}

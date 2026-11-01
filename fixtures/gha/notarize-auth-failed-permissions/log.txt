@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run xcrun notarytool submit Example.ipa
+##[endgroup]
+Error: Failed to notarize. Unable to authenticate (401).
+##[error]Process completed with exit code 1.

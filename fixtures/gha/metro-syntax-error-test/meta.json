@@ -1,0 +1,8 @@
+{
+  "id": "metro-syntax-error-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Metro reported a SyntaxError in App.tsx. Fix that token. Not a JavaScript heap out of memory."
+}

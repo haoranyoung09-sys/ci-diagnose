@@ -18,6 +18,7 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 | Confidence is medium because `alternates` contains `infra` | Quote both lines. If the runner was killed, do not edit the assertion to absorb it. |
 | `error: could not compile` after a rustc type error (`cargo-type-mismatch-test`) | Fix the type the compiler named. Do not edit `Cargo.lock` for that line. |
 | "Failed to parse path:line:col" (`ruff-parse-failed-test`) | The source does not parse. Fix that line. Not a lockfile. |
+| "Expected NAME N, got M" (`fastlane-lane-expected-got-test`) or `SyntaxError:` (`metro-syntax-error-test`) | Fix the value or token the log names. A heap OOM is `infra`. |
 
 ## Recipe
 

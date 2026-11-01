@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bundle exec fastlane ios beta
+##[endgroup]
+Expected CFBundleVersion 42, got 41.
+##[error]Process completed with exit code 1.
