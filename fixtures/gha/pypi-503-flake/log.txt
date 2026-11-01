@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run pip install example-lib
+##[endgroup]
+WARNING: Retrying (Retry(total=0)) after connection broken by 'NewConnectionError': 503 Server Error
+##[error]Process completed with exit code 1.

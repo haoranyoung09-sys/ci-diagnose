@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.0 — 2026-11-01
+
+`bash scripts/install.sh --user --cli` links the skill for Cursor and Codex and can install a `diagnose` wrapper. It does not replace an existing install unless `--force` is set. The curl one-liner uses tag `v0.11.0` on the public mirror and does not send a token.
+
+Yarn Berry's immutable install, Yarn PnP, pip hash mismatch, Coursier, pub version solving, a frozen Bun lockfile, and a missing image tag are `deps`. Poetry or uv asking for another Python, and an artifact path or name that matches nothing, are `env`. A bare PyPI 503 is `flake`. An image pull 401 is `permissions`. Ruff failing to parse a file is `test`.
+
+131 fixtures. Eval 131/131. Taxonomy ids unchanged.
+
+Action inputs, outputs, and branding are unchanged, so `@v1` stays compatible. Notes: [docs/release-notes-v0.11.0.md](docs/release-notes-v0.11.0.md).
+
 ## 0.10.0 — 2026-10-30
 
 Bazel remote cache, Nix store hash mismatch, apt mirror 404, a Homebrew bottle download, and a Rust linker that cannot allocate are `infra`. A missing Nix flake output and a stale Deno lockfile are `deps` (the Nix word flake is not a rerun). apt `NO_PUBKEY`, missing Google ADC, a Composer PHP platform requirement, and a reusable workflow secret that was not passed are `env`. An invalid AWS security token is `permissions`. A Go module proxy 502 and a bare `ECONNRESET` are `flake`. `ECONNRESET` tied with `AssertionError` stays `unknown`. Linker OOM outranks `could not compile`.

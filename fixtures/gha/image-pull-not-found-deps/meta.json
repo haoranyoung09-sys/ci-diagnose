@@ -1,0 +1,8 @@
+{
+  "id": "image-pull-not-found-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The image reference resolved and the tag was not found. Not a 401 and not an auth denial. Fix the tag that the manifest names."
+}

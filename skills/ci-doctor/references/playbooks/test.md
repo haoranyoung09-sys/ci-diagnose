@@ -17,6 +17,7 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 | `ERESOLVE` or lockfile drift, and the suite never printed a test summary | Follow `deps`. A stray `FAIL` line under a heap OOM is `infra` when infra leads, as in the heap fixture. |
 | Confidence is medium because `alternates` contains `infra` | Quote both lines. If the runner was killed, do not edit the assertion to absorb it. |
 | `error: could not compile` after a rustc type error (`cargo-type-mismatch-test`) | Fix the type the compiler named. Do not edit `Cargo.lock` for that line. |
+| "Failed to parse path:line:col" (`ruff-parse-failed-test`) | The source does not parse. Fix that line. Not a lockfile. |
 
 ## Recipe
 

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run poetry install --no-root
+##[endgroup]
+The current project's supported Python range (>=3.12) is not compatible with the Python version (3.11.9).
+##[error]Process completed with exit code 1.

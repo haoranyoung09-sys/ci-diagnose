@@ -1,0 +1,8 @@
+{
+  "id": "image-pull-unauthorized-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The cluster failed to authorize an image pull and got 401. Not a missing tag. Do not print a registry password."
+}

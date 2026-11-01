@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run yarn install --immutable
+##[endgroup]
+Usage Error: The lockfile would have been modified by this install, which is explicitly forbidden.
+##[error]Process completed with exit code 1.

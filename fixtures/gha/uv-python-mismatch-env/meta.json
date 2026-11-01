@@ -1,0 +1,8 @@
+{
+  "id": "uv-python-mismatch-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "uv requires Python >=3.12 and the runner provides 3.11.9. Not a uv.lock update. Change the toolchain."
+}

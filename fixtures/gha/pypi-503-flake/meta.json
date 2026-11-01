@@ -1,0 +1,8 @@
+{
+  "id": "pypi-503-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "PyPI returned 503 Server Error and pip stopped retrying. No hash mismatch and no unsatisfied version. One rerun is the check."
+}

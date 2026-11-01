@@ -1,0 +1,8 @@
+{
+  "id": "pip-hash-mismatch-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "pip says the downloaded example-lib does not match the hash in the requirements file. Not a PyPI 503 and not an unset index URL."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "upload-artifact-path-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "actions/upload-artifact found no files at dist. The path in the workflow does not match the build output. Not a token 403."
+}

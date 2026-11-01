@@ -1,0 +1,8 @@
+{
+  "id": "yarn-pnp-root-mismatch-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Yarn PnP says this directory is not part of the project declared in .pnp.cjs. Regenerate the install from the project root. Not a network timeout."
+}

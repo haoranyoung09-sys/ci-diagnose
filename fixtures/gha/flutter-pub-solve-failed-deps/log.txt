@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run flutter pub get
+##[endgroup]
+Because example_app depends on example_lib 9.9.9 which doesn't match any versions, version solving failed.
+##[error]Process completed with exit code 1.

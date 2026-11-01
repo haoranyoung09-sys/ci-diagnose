@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run uv sync --frozen
+##[endgroup]
+error: Required Python version `>=3.12` does not match the Python version provided by the environment (3.11.9)
+##[error]Process completed with exit code 1.

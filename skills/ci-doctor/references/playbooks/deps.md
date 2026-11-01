@@ -26,6 +26,11 @@ Corpus: `npm-peer-eresolve`, `npm-ci-lockfile-drift`, `pnpm-outdated-lockfile`, 
 | NuGet `NU1102` (`nuget-package-not-found-deps`) | Deps. The version is not in the feed named in the log. |
 | Deno "The lockfile is out of date" (`deno-lockfile-out-of-date-deps`) | Deps. Commit the lockfile. Do not drop `--frozen`. |
 | Nix "does not provide attribute" (`nix-flake-output-missing-deps`) | Deps. The word flake is the Nix feature. Fix the attribute. Do not rerun. |
+| Yarn "lockfile would have been modified" or PnP root mismatch (`yarn-berry-immutable-deps`, `yarn-pnp-root-mismatch-deps`) | Deps. Commit the lockfile or run from the PnP root. |
+| pip "DO NOT MATCH THE HASHES" (`pip-hash-mismatch-deps`) | Deps. A 503 with no hash line is `flake`. |
+| `coursier.ResolutionException` or pub "version solving failed" (`coursier-resolve-failed-deps`, `flutter-pub-solve-failed-deps`) | Deps. Quote the one module. |
+| Bun "lockfile is frozen" (`bun-lockfile-frozen-deps`) | Deps. Commit the lockfile. |
+| Image "failed to resolve reference … not found" (`image-pull-not-found-deps`) | Deps. A 401 on the same pull is `permissions`. |
 
 ## Recipe
 

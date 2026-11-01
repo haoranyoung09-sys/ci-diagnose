@@ -1,0 +1,8 @@
+{
+  "id": "ruff-parse-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Ruff failed to parse src/app.py at line 3. The source is invalid. Not a lockfile miss and not an out-of-memory error."
+}

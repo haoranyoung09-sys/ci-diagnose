@@ -25,6 +25,8 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | "Could not load the default credentials" (`gcp-adc-missing-env`) | ADC is not configured. Do not print a key file. |
 | "require a PHP version" (`composer-php-platform-env`) | The runner PHP is older than Composer requires. Change setup-php. |
 | "Secret NAME is required, but not provided" (`workflow-secret-not-passed-env`) | The caller did not pass that secret into the reusable workflow. Quote the name only. |
+| Poetry or uv Python range does not match (`poetry-python-range-env`, `uv-python-mismatch-env`) | Change the runner Python. Do not rewrite the lockfile. |
+| "No files were found with the provided path" or "Artifact not found for name" (`upload-artifact-path-missing-env`, `download-artifact-name-missing-env`) | The path or name is wrong. A "resource not accessible by integration" line is `permissions`. |
 
 ## Recipe
 

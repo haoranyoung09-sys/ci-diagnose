@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ruff check src
+##[endgroup]
+error: Failed to parse src/app.py:3:1: Simple statements must be separated by newlines or semicolons
+##[error]Process completed with exit code 1.

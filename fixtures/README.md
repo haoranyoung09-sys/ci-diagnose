@@ -142,5 +142,19 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `econnreset-flake` | flake | `read ECONNRESET` with no assertion. |
 | `econnreset-and-assertion-unknown` | unknown | Tie: `ECONNRESET` and `AssertionError`. |
 | `workflow-secret-not-passed-env` | env | Reusable workflow secret was not passed. |
+| `yarn-berry-immutable-deps` | deps | Yarn Berry immutable install would change the lockfile. |
+| `yarn-pnp-root-mismatch-deps` | deps | Yarn PnP root does not match `.pnp.cjs`. |
+| `poetry-python-range-env` | env | Poetry Python range is newer than the runner. |
+| `pip-hash-mismatch-deps` | deps | pip hash check failed. |
+| `pypi-503-flake` | flake | PyPI 503 with no hash or version line. |
+| `coursier-resolve-failed-deps` | deps | Coursier `ResolutionException`. |
+| `flutter-pub-solve-failed-deps` | deps | `pub get` version solving failed. |
+| `image-pull-unauthorized-permissions` | permissions | Image pull was not authorized (401). |
+| `image-pull-not-found-deps` | deps | Image tag was not found. |
+| `upload-artifact-path-missing-env` | env | Upload path matched no files. |
+| `download-artifact-name-missing-env` | env | Download name was not uploaded. No 403. |
+| `uv-python-mismatch-env` | env | uv Python requirement does not match the runner. |
+| `bun-lockfile-frozen-deps` | deps | Bun frozen lockfile has changes. |
+| `ruff-parse-failed-test` | test | Ruff failed to parse a source file. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

@@ -1,0 +1,8 @@
+{
+  "id": "coursier-resolve-failed-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "sbt failed in coursier with ResolutionException for example-lib 9.9.9. The test suite did not start. Not a daemon OOM."
+}

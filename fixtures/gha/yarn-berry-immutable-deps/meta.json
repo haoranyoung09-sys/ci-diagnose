@@ -1,0 +1,8 @@
+{
+  "id": "yarn-berry-immutable-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Yarn Berry refused an immutable install because the lockfile would change. Commit the updated yarn.lock. Not a registry DNS failure."
+}
