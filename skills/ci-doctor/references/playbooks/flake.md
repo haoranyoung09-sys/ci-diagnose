@@ -38,6 +38,7 @@ Corpus: `jest-timeout-flake`, `registry-timeout-rerun-flake`, `playwright-timeou
 | `proxy.golang.org` returned 502 (`go-proxy-502-flake`) | Flake. One rerun. Do not edit `go.sum` for a 502. |
 | `read ECONNRESET` and no assertion (`econnreset-flake`) | Flake. One rerun. If `AssertionError` is also present (`econnreset-and-assertion-unknown`), stay `unknown`. |
 | PyPI `503 Server Error` with no hash line and no unsatisfied version (`pypi-503-flake`) | Flake. One rerun. A hash mismatch is `deps`. |
+| "notarization request failed: The request timed out" (`notarize-timeout-flake`) | Flake. One rerun. A 401 is `permissions`. Do not rotate the Apple credential for the timeout. |
 
 ## Recipe
 

@@ -1,0 +1,8 @@
+{
+  "id": "match-git-username-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "fastlane match could not read a Username for the certificates repo. Pass the existing git credential name. Do not print a password."
+}

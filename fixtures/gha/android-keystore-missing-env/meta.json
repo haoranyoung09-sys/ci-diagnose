@@ -1,0 +1,8 @@
+{
+  "id": "android-keystore-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Gradle release signing could not find keystore.jks. Point signingConfig at the file the job is supposed to have. Do not commit the keystore."
+}

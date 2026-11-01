@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.12.0 — 2026-11-01
+
+The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-diagnose@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.
+
+Apple signing material missing or expired, match git username or decrypt failure, a missing Android keystore or SDK, and a bundletool JDK mismatch are `env`. An unauthorized adb device and Apple notarization 401 are `permissions`. No adb device, and a simulator that will not boot, are `infra`. A notarization timeout is `flake`. A fastlane expected/got line and a Metro syntax error are `test`.
+
+146 fixtures. Eval 146/146. Taxonomy ids unchanged.
+
+Action inputs, outputs, and branding are unchanged. Notes: [docs/release-notes-v0.12.0.md](docs/release-notes-v0.12.0.md).
+
 ## 0.11.0 — 2026-11-01
 
 `bash scripts/install.sh --user --cli` links the skill for Cursor and Codex and can install a `diagnose` wrapper. It does not replace an existing install unless `--force` is set. The curl one-liner uses tag `v0.11.0` on the public mirror and does not send a token.

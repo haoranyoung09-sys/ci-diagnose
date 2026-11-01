@@ -1,0 +1,8 @@
+{
+  "id": "bundletool-java-mismatch-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "bundletool was compiled by a newer Java than the runner provides. Use a newer JDK. Not a missing keystore."
+}

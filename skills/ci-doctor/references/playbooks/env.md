@@ -27,6 +27,9 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | "Secret NAME is required, but not provided" (`workflow-secret-not-passed-env`) | The caller did not pass that secret into the reusable workflow. Quote the name only. |
 | Poetry or uv Python range does not match (`poetry-python-range-env`, `uv-python-mismatch-env`) | Change the runner Python. Do not rewrite the lockfile. |
 | "No files were found with the provided path" or "Artifact not found for name" (`upload-artifact-path-missing-env`, `download-artifact-name-missing-env`) | The path or name is wrong. A "resource not accessible by integration" line is `permissions`. |
+| No signing certificate, no profile, or an expired profile (`codesign-cert-missing-env`, `provisioning-profile-missing-env`, `provisioning-profile-expired-env`) | Refresh that one piece of signing material. Do not grant a GitHub scope. |
+| match could not read a Username, or could not decrypt the repo (`match-git-username-env`, `match-decrypt-failed-env`) | The git credential or passphrase name is missing. Do not print it. |
+| Keystore file not found, Android SDK location not found, or `UnsupportedClassVersionError` (`android-keystore-missing-env`, `android-sdk-location-missing-env`, `bundletool-java-mismatch-env`) | Point at the file or JDK the job expects. Do not commit a keystore. |
 
 ## Recipe
 

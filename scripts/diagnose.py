@@ -258,6 +258,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"device unauthorized|unable to authenticate \(401\)",
+        "device or Apple service rejected the identity",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"\bis forbidden:|cannot (?:get|list|watch|create|update|patch|delete) resource",
         "cluster RBAC denied the call",
     ),
@@ -339,6 +345,48 @@ RULES: tuple[Rule, ...] = (
         8,
         r"no files were found with the provided path:|artifact not found for name:",
         "artifact path or name matched nothing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"no signing certificate|no profiles for",
+        "Apple signing material is missing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"provisioning profile .+ expired",
+        "provisioning profile is expired",
+    ),
+    Rule(
+        "env",
+        8,
+        r"could not read Username for",
+        "non-interactive git clone had no username",
+    ),
+    Rule(
+        "env",
+        8,
+        r"could not decrypt the repo",
+        "match repo could not be decrypted",
+    ),
+    Rule(
+        "env",
+        8,
+        r"keystore file .+ not found for signing config",
+        "Android keystore is missing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"UnsupportedClassVersionError",
+        "Java runtime is older than the tool",
+    ),
+    Rule(
+        "env",
+        8,
+        r"Android SDK location not found",
+        "Android SDK location is not set",
     ),
     Rule(
         "env",
@@ -602,6 +650,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"notarization request failed: the request timed out",
+        "Apple notarization request timed out",
+    ),
+    Rule(
+        "flake",
+        8,
         r"ssl certificate problem|server certificate verification failed|unable to get local issuer certificate|tls connection was non-properly terminated",
         "checkout TLS certificate verification failed",
     ),
@@ -644,6 +698,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"Failed to parse \S+:\d+:\d+:",
         "linter rejected the source",
+    ),
+    Rule(
+        "test",
+        8,
+        r"expected \S+ \d+, got \d+",
+        "expected versus got",
+    ),
+    Rule(
+        "test",
+        8,
+        r"\bSyntaxError:",
+        "syntax error in source",
     ),
     Rule(
         "test",
@@ -759,6 +825,18 @@ RULES: tuple[Rule, ...] = (
         9,
         r"failed to allocate \d+ bytes|ld terminated with signal 9",
         "linker ran out of memory",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"no devices/emulators found",
+        "no Android device or emulator is attached",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"unable to boot device",
+        "iOS simulator failed to boot",
     ),
     Rule(
         "unknown",

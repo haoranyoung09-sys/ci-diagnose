@@ -4,6 +4,8 @@
 
 CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
+这不是 CI 服务器。它不替你构建、签名或托管应用。两条路：下面的 Action，或一条命令安装 skill 和命令行。
+
 ## 快速开始：加到工作流
 
 不用安装，也不调用 LLM。名为 `CI` 的工作流变红并结束后，这个 job 拉取该次运行的日志（`actions: read`），把类别写进 job summary。
@@ -54,13 +56,13 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-公开镜像上有标签 `v0.11.0` 之后，可以先取脚本再执行。它不发送 token。
+上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.0` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.11.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
 ```
 
-标签还不在 GitHub 上时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。
+下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
 
 ## 30 秒演示
 
@@ -167,6 +169,11 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | PyPI 只返回 503 | `flake` | `pypi-503-flake` |
 | 拉镜像得到 401 | `permissions` | `image-pull-unauthorized-permissions` |
 | Ruff 解析源文件失败 | `test` | `ruff-parse-failed-test` |
+| Apple 签名材料缺失或过期、match 的 git 或口令、Android keystore 或 SDK、bundletool 的 JDK | `env` | `codesign-cert-missing-env`、`provisioning-profile-expired-env`、`provisioning-profile-missing-env`、`match-git-username-env`、`match-decrypt-failed-env`、`android-keystore-missing-env`、`android-sdk-location-missing-env`、`bundletool-java-mismatch-env` |
+| adb 设备未授权；Apple 公证 401 | `permissions` | `adb-device-unauthorized-permissions`、`notarize-auth-failed-permissions` |
+| 没有 adb 设备；模拟器启动失败 | `infra` | `adb-no-devices-infra`、`simctl-boot-failed-infra` |
+| 公证请求超时 | `flake` | `notarize-timeout-flake` |
+| fastlane 的 expected/got，或 Metro 语法错误 | `test` | `fastlane-lane-expected-got-test`、`metro-syntax-error-test` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 131)
+        self.assertGreaterEqual(len(fixtures), 146)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -634,6 +634,17 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(pull["category"], "permissions")
         self.assertNotIn("container image tag was not found", pull["signals"])
+        signing = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "codesign-cert-missing-env")
+        )
+        self.assertEqual(signing["category"], "env")
+        expired = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "provisioning-profile-expired-env"
+            )
+        )
+        self.assertIn("provisioning profile is expired", expired["signals"])
+        self.assertNotIn("Apple signing material is missing", expired["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

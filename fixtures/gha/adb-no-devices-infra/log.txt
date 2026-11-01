@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run adb wait-for-device
+##[endgroup]
+adb: no devices/emulators found
+##[error]Process completed with exit code 1.
