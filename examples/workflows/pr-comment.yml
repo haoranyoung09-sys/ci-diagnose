@@ -1,7 +1,7 @@
 # Opt-in comment. Default is off. One comment is created and later updated.
 # Needs pull-requests: write. Fork pull requests may not have that grant.
 
-name: CI Doctor
+name: CI Fail Classify
 
 "on":
   workflow_run:

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.1 — 2026-11-01
+
+The Action display name is `ci-fail-classify`. Clone URLs, `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. Inputs and outputs are unchanged, so `@v1` stays the same contract. The skill directory remains `ci-doctor`.
+
+The READMEs say how this differs from other failure-triage tools and from a full CI platform: a scored seven-class taxonomy, an offline fixture oracle, an agent skill, bilingual playbooks, and an advisory report. It does not build or host the app.
+
+146 fixtures. Eval 146/146. Notes: [docs/release-notes-v0.12.1.md](docs/release-notes-v0.12.1.md).
+
 ## 0.12.0 — 2026-11-01
 
 The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-diagnose@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.

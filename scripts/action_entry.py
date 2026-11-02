@@ -284,7 +284,7 @@ def _auth_headers(token: str) -> dict[str, str]:
     return {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
-        "User-Agent": "ci-diagnose",
+        "User-Agent": "ci-fail-classify",
         "X-GitHub-Api-Version": "2022-11-28",
     }
 

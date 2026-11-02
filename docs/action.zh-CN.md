@@ -32,7 +32,7 @@
 
 这个仓库自己不会把 Action 发到 Marketplace。
 
-- 把这个 commit 同步到公开镜像。
+- 公开镜像仍是 `haoranyoung09-sys/ci-diagnose`。Action 的显示名是 `ci-fail-classify`。
 - 给该 commit 打不可移动的标签 `v0.7.0`，并把移动标签 `v1` 指到同一 commit。`uses: haoranyoung09-sys/ci-diagnose@v1` 跟随 `v1`。
 - 为 `v0.7.0` 建一个 GitHub Release。Marketplace 的勾选在那个发布表单上。正文用 [release-notes-v0.7.0.md](release-notes-v0.7.0.md)。
 - 示例工作流自己写了 `permissions`。仓库默认 token 若是只读，请保留这些块。拉日志要 `actions: read`。发评论要 `pull-requests: write`。

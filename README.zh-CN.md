@@ -1,17 +1,23 @@
-# CI Doctor
+# CI Fail Classify
 
 [English](README.md)
 
 CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
-这不是 CI 服务器。它不替你构建、签名或托管应用。两条路：下面的 Action，或一条命令安装 skill 和命令行。
+Action 的显示名是 `ci-fail-classify`。GitHub 仓库仍是 `haoranyoung09-sys/ci-diagnose`。agent skill 的目录仍是 `ci-doctor`。这不是 CI 服务器。它不替你构建、签名或托管应用。两条路并列：下面的 Action，或一条命令安装 skill 和命令行。
+
+## 和别的工具差在哪
+
+**其他失败分诊工具**（faultline、patchrail、failsift、ci-failure-explainer、ci-medic）也看变红的检查。这个仓库停在一个可以打分的分类器上。七个类别：`flake`、`env`、`test`、`deps`、`permissions`、`infra`、`unknown`。`make eval` 离线核对每一条合成 fixture，并打印混淆矩阵。agent skill 先跑分类器，再跟一份 playbook。playbook 是英文，每份有一段简短中文。报告只供参考，不是合并结论，也不会自己开一个补丁。
+
+**完整的 CI 平台**会跑作业、存产物，有时还负责签名。这里都不做。把 Action 加到你已有的工作流上，或把 skill 装到你已有的 agent 旁边。
 
 ## 快速开始：加到工作流
 
 不用安装，也不调用 LLM。名为 `CI` 的工作流变红并结束后，这个 job 拉取该次运行的日志（`actions: read`），把类别写进 job summary。
 
 ```yaml
-name: CI Doctor
+name: CI Fail Classify
 "on":
   workflow_run:
     workflows: ["CI"]
@@ -56,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.0` 之后：
+上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.1` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
 ```
 
 下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。

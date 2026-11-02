@@ -1,17 +1,23 @@
-# CI Doctor
+# CI Fail Classify
 
 [中文](README.zh-CN.md)
 
 CI failed, or GitHub Actions is red? Classify the log, quote redacted evidence, propose one minimal fix, and say how to verify it. Advisory only. Not a merge decision.
 
-This is not a CI server. It does not build, sign, or host your app. Two ways in: the Action below, or one install command for the skill and CLI.
+The Action display name is `ci-fail-classify`. The GitHub repository stays `haoranyoung09-sys/ci-diagnose`. The agent skill directory stays `ci-doctor`. This is not a CI server. It does not build, sign, or host your app. Two ways in, side by side: the Action below, or one install command for the skill and CLI.
+
+## How this differs
+
+**Other failure-triage tools** (faultline, patchrail, failsift, ci-failure-explainer, ci-medic) sit in the same neighborhood: they look at a red check. This one stays a classifier you can score. Seven categories: `flake`, `env`, `test`, `deps`, `permissions`, `infra`, `unknown`. `make eval` checks every synthetic fixture offline and prints a confusion matrix. An agent skill runs the classifier, then follows one playbook. The playbooks are English, each with a short 中文 note. The report is advisory. It is not a merge decision, and it does not open a patch by itself.
+
+**A full CI platform** runs the jobs, stores artifacts, and may sign the app. This does none of that. Add the Action to a workflow you already have, or install the skill next to the agent you already use.
 
 ## Quick start: add to your workflow
 
 No install step and no LLM. After the workflow named `CI` finishes red, this job downloads that run's logs (`actions: read`) and writes the category to the job summary.
 
 ```yaml
-name: CI Doctor
+name: CI Fail Classify
 "on":
   workflow_run:
     workflows: ["CI"]
@@ -56,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.12.0` is on the public mirror:
+The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.12.1` is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
 ```
 
 That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).

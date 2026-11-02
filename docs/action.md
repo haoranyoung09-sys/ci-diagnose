@@ -32,8 +32,8 @@ Fork pull requests often cannot grant `pull-requests: write` to `GITHUB_TOKEN`. 
 
 This repository does not publish the Action by itself.
 
-- Push this commit to the public mirror.
-- Tag that commit `v0.7.0` (immutable) and move the tag `v1` to the same commit. `uses: haoranyoung09-sys/ci-diagnose@v1` tracks `v1`.
+- The public mirror stays `haoranyoung09-sys/ci-diagnose`. The Action display name is `ci-fail-classify`.
+- Tag that commit `v0.7.0` (immutable) and move the tag `v1` to the same commit. `uses: haoranyoung09-sys/ci-diagnose@v1` tracks `v1`. The current release tag for the install script is `v0.12.1`.
 - Open a GitHub Release for `v0.7.0`. The Marketplace checkbox is on that release form. Paste [release-notes-v0.7.0.md](release-notes-v0.7.0.md).
 - The example workflows set `permissions` themselves. If the repository's default token is read-only, keep those blocks. Log download needs `actions: read`. Comments need `pull-requests: write`.
 

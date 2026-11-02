@@ -2,7 +2,7 @@
 # run's logs. Match `workflows` to the workflow `name:` you already have.
 # Needs actions: read. No pull request comment unless you opt in.
 
-name: CI Doctor
+name: CI Fail Classify
 
 "on":
   workflow_run:
