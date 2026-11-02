@@ -1,6 +1,6 @@
 # ci-diagnose 0.11.0
 
-Same Action contract as 0.7.0 through 0.10.0. `action.yml` inputs, outputs, and branding are unchanged. `uses: haoranyoung09-sys/ci-fail-classify@v1` keeps working after you move the `v1` tag to this commit.
+Same Action contract as 0.7.0 through 0.10.0. `action.yml` inputs, outputs, and branding are unchanged. `uses: haoranyoung09-sys/ci-diagnose@v1` keeps working after you move the `v1` tag to this commit.
 
 ## Install
 
@@ -15,7 +15,7 @@ The script prints where the skill and the `diagnose` wrapper went. It will not r
 After this tag is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.11.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.11.0/scripts/install.sh | bash
 ```
 
 That downloads the `v0.11.0` archive into `~/.local/share/ci-diagnose`. It does not send a token. `--project` links the skill into the current directory. `--claude` is only for Claude Code.

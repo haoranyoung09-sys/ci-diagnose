@@ -163,9 +163,9 @@ Eval: 146/146 (1.000)
 
 Version: 0.12.1
 
-Improvement: The public name is ci-fail-classify. READMEs, install, and Action examples use that GitHub path. The skill directory stays ci-doctor. Action inputs and outputs are unchanged. The READMEs say how this differs from other triage tools and from a CI platform, without star counts.
+Improvement: The Action display name is ci-fail-classify. Clone, uses, and install URLs stay on haoranyoung09-sys/ci-diagnose. The skill directory stays ci-doctor. Action inputs and outputs are unchanged. The READMEs say how this differs from other triage tools and from a CI platform, without star counts.
 
-Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Rename the public GitHub repo so the old ci-diagnose URL redirects. Publish tag v0.12.1 and point @v1 at this commit.
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Publish tag v0.12.1 and point @v1 at this commit. Do not rename the GitHub repository.
 
 ## 中文
 

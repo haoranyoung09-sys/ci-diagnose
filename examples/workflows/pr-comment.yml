@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Classify and comment
-        uses: haoranyoung09-sys/ci-fail-classify@v1
+        uses: haoranyoung09-sys/ci-diagnose@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
           comment: true

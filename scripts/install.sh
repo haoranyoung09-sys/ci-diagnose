@@ -7,13 +7,13 @@
 #   bash scripts/install.sh --user --cli
 #   bash scripts/install.sh --project
 # After tag v0.12.1 is on GitHub:
-#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.1/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
 # Pin another ref with CI_DIAGNOSE_REF (default v0.12.1). The Action stays uses: ...@v1.
 
 set -euo pipefail
 
 REF="${CI_DIAGNOSE_REF:-v0.12.1}"
-REPO_URL="https://github.com/haoranyoung09-sys/ci-fail-classify"
+REPO_URL="https://github.com/haoranyoung09-sys/ci-diagnose"
 MODE="user"
 WITH_CLI=0
 FORCE=0

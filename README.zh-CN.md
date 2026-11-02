@@ -4,7 +4,7 @@
 
 CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
-GitHub 项目和 Action 的名字是 `ci-fail-classify`（原名 `ci-diagnose`）。agent skill 的目录仍是 `ci-doctor`。这不是 CI 服务器。它不替你构建、签名或托管应用。两条路并列：下面的 Action，或一条命令安装 skill 和命令行。
+Action 的显示名是 `ci-fail-classify`。GitHub 仓库仍是 `haoranyoung09-sys/ci-diagnose`。agent skill 的目录仍是 `ci-doctor`。这不是 CI 服务器。它不替你构建、签名或托管应用。两条路并列：下面的 Action，或一条命令安装 skill 和命令行。
 
 ## 和别的工具差在哪
 
@@ -30,7 +30,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: haoranyoung09-sys/ci-fail-classify@v1
+      - uses: haoranyoung09-sys/ci-diagnose@v1
         with:
           run-id: ${{ github.event.workflow_run.id }}
 ```
@@ -38,7 +38,7 @@ jobs:
 同一个 job、并且你已经把日志存下来时用下面这段。`if: failure()` 拉不到当前这次运行的日志，因为 job 还没结束。
 
 ```yaml
-- uses: haoranyoung09-sys/ci-fail-classify@v1
+- uses: haoranyoung09-sys/ci-diagnose@v1
   if: failure()
   with:
     log-path: ci.log
@@ -62,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-上面的 Action 保持 `uses: haoranyoung09-sys/ci-fail-classify@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.1` 之后：
+上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.12.1` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.1/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
 ```
 
 下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
@@ -75,8 +75,8 @@ curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/
 Python 3.9 或更高。不安装依赖，不需要 token，也不访问网络。
 
 ```bash
-git clone https://github.com/haoranyoung09-sys/ci-fail-classify.git
-cd ci-fail-classify
+git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
+cd ci-diagnose
 python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```

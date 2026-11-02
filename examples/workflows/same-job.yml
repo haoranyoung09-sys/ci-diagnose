@@ -22,6 +22,6 @@ jobs:
 
       - name: Classify the saved log
         if: failure()
-        uses: haoranyoung09-sys/ci-fail-classify@v1
+        uses: haoranyoung09-sys/ci-diagnose@v1
         with:
           log-path: ci.log

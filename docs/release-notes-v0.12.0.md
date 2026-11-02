@@ -9,7 +9,7 @@ The Action and the skill install are both first-class. This project does not run
 Workflows keep moving with the Action tag:
 
 ```yaml
-- uses: haoranyoung09-sys/ci-fail-classify@v1
+- uses: haoranyoung09-sys/ci-diagnose@v1
   with:
     run-id: ${{ github.event.workflow_run.id }}
 ```
@@ -17,7 +17,7 @@ Workflows keep moving with the Action tag:
 The skill and CLI pin a release tag. For 0.12.0:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-fail-classify/v0.12.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.0/scripts/install.sh | bash
 ```
 
 From a checkout, `bash scripts/install.sh --user --cli` does the same without downloading. The script refuses to replace an existing install unless you pass `--force`. It does not send a token.

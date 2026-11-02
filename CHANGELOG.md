@@ -2,7 +2,7 @@
 
 ## 0.12.1 — 2026-11-01
 
-Public name is `ci-fail-classify` (formerly `ci-diagnose`). Clone URLs, Action `uses:` examples, and the install curl URL point at `https://github.com/haoranyoung09-sys/ci-fail-classify`. The Action marketplace name is `ci-fail-classify`. Inputs and outputs are unchanged, so `@v1` stays the same contract. The skill directory remains `ci-doctor`.
+The Action display name is `ci-fail-classify`. Clone URLs, `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. Inputs and outputs are unchanged, so `@v1` stays the same contract. The skill directory remains `ci-doctor`.
 
 The READMEs say how this differs from other failure-triage tools and from a full CI platform: a scored seven-class taxonomy, an offline fixture oracle, an agent skill, bilingual playbooks, and an advisory report. It does not build or host the app.
 
@@ -10,7 +10,7 @@ The READMEs say how this differs from other failure-triage tools and from a full
 
 ## 0.12.0 — 2026-11-01
 
-The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-fail-classify@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.
+The install one-liner now pins `v0.12.0`. The Action stays `uses: haoranyoung09-sys/ci-diagnose@v1`. [docs/architecture.md](docs/architecture.md) says what the Action, CLI, and skill each do. This is still diagnosis only.
 
 Apple signing material missing or expired, match git username or decrypt failure, a missing Android keystore or SDK, and a bundletool JDK mismatch are `env`. An unauthorized adb device and Apple notarization 401 are `permissions`. No adb device, and a simulator that will not boot, are `infra`. A notarization timeout is `flake`. A fastlane expected/got line and a Metro syntax error are `test`.
 
