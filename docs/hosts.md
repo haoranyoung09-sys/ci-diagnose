@@ -18,10 +18,10 @@ bash scripts/install.sh --user --cli
 
 `--user` is the default. It symlinks `~/.agents/skills/ci-doctor` at this checkout's `skills/ci-doctor` and prints both paths. `--cli` adds `~/.local/bin/diagnose`, a wrapper that runs `python3 scripts/diagnose.py`. `--project` links `./.agents/skills/ci-doctor` in the current directory. An existing link or directory is left alone unless you pass `--force`. Python older than 3.9 stops the script.
 
-The Action reference stays `uses: haoranyoung09-sys/ci-diagnose@v1`. The install script is pinned to the current release tag. After `v0.15.0` is published:
+The Action reference stays `uses: haoranyoung09-sys/ci-diagnose@v1`. The install script is pinned to the current release tag. After `v0.16.0` is published:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.15.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.16.0/scripts/install.sh | bash
 ```
 
 That form downloads the tag archive into `~/.local/share/ci-fail-classify`. It does not send a token. `--claude` also links `~/.claude/skills/ci-doctor`. Leave that off when Cursor is installed, or the skill loads twice.

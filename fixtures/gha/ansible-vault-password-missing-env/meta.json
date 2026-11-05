@@ -1,0 +1,8 @@
+{
+  "id": "ansible-vault-password-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Ansible could not find the vault password file. Set the name. Do not print the password and do not commit the vault secret."
+}

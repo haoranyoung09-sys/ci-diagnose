@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run python download.py
+##[endgroup]
+401 Client Error: Unauthorized. Access to model example/model is restricted and you are not in the authorized list.
+##[error]Process completed with exit code 1.

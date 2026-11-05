@@ -1,0 +1,8 @@
+{
+  "id": "maven-wrapper-checksum-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Maven could not validate the wrapper jar checksum. Not a dependency resolve line. Refresh the wrapper."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+fatal: No url found for submodule path 'vendor/example'
+##[error]Process completed with exit code 1.

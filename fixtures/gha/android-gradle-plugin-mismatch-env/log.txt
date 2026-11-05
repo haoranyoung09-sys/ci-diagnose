@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./gradlew assemble
+##[endgroup]
+The Android Gradle plugin version 8.2.0 is not compatible with Gradle 9.0.
+##[error]Process completed with exit code 1.

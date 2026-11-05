@@ -1,0 +1,8 @@
+{
+  "id": "kube-crashloop-backoff-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The container is in CrashLoopBackOff. It started and then exited. Read the previous container log. This is not an image pull."
+}

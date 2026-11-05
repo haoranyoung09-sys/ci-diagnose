@@ -1,0 +1,8 @@
+{
+  "id": "conda-package-not-found-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "conda could not find the package on the configured channels. Not a pixi line and not a timeout. Add the channel or the package."
+}

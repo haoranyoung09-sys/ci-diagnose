@@ -1,0 +1,8 @@
+{
+  "id": "bazel-fetch-failed-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Bazel failed while fetching a repository. Not an analysis failure and not a remote-cache query. One rerun is the check."
+}

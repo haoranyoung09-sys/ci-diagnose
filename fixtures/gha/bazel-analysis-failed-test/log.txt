@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run bazel build //example:lib
+##[endgroup]
+ERROR: Analysis of target //example:lib failed; build aborted
+##[error]Process completed with exit code 1.

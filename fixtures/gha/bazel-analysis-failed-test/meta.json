@@ -1,0 +1,8 @@
+{
+  "id": "bazel-analysis-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Bazel analysis of the target failed. Not a remote-cache miss and not a fetch error. Fix the target the log names."
+}

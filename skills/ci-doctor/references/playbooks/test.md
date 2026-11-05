@@ -20,6 +20,8 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 | "Failed to parse path:line:col" (`ruff-parse-failed-test`) | The source does not parse. Fix that line. Not a lockfile. |
 | "Expected NAME N, got M" (`fastlane-lane-expected-got-test`) or `SyntaxError:` (`metro-syntax-error-test`) | Fix the value or token the log names. A heap OOM is `infra`. |
 | "Conflicting paths returned from getStaticPaths" (`next-static-path-collision-test`) | Test. Change one route. A heap OOM on the same build is `infra`. |
+| `CrashLoopBackOff` (`kube-crashloop-backoff-test`) | Test. The container started and exited. Read that log. ImagePullBackOff is `infra`. |
+| "Analysis of target … failed" (`bazel-analysis-failed-test`) | Test. Fix that target. A repository fetch failure is `flake`. A remote-cache miss is `infra`. |
 
 ## Recipe
 
@@ -47,4 +49,4 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 
 ## 中文
 
-`getStaticPaths` 路径冲突（`next-static-path-collision-test`）改其中一条路由；同一构建的堆内存耗尽是 infra。`could not compile` 加上 rustc 类型错误（`cargo-type-mismatch-test`）改编译器指出的类型，不要改 `Cargo.lock`。引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。
+`getStaticPaths` 路径冲突（`next-static-path-collision-test`）改其中一条路由；同一构建的堆内存耗尽是 infra。`CrashLoopBackOff`（`kube-crashloop-backoff-test`）容器已经启动又退出，去看上一次日志；ImagePullBackOff 是 infra。Bazel analysis 失败（`bazel-analysis-failed-test`）改那个 target；仓库拉取失败是 flake。`could not compile` 加上 rustc 类型错误（`cargo-type-mismatch-test`）改编译器指出的类型，不要改 `Cargo.lock`。引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。

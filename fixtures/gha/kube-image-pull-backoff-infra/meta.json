@@ -1,0 +1,8 @@
+{
+  "id": "kube-image-pull-backoff-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The pod is in ImagePullBackOff. The log has no auth denial and no missing tag. Check the node pull path. Do not edit the app."
+}

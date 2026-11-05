@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 193)
+        self.assertGreaterEqual(len(fixtures), 209)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -776,6 +776,38 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(paths["category"], "test")
         self.assertIn("static export paths collide", paths["signals"])
+
+    def test_pod_and_database_limits_stay_apart(self) -> None:
+        pull = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "kube-image-pull-backoff-infra")
+        )
+        self.assertEqual(pull["category"], "infra")
+        self.assertNotIn("container is crash-looping", pull["signals"])
+        loop = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "kube-crashloop-backoff-test")
+        )
+        self.assertEqual(loop["category"], "test")
+        locked = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "sqlite-database-locked-flake")
+        )
+        self.assertEqual(locked["category"], "flake")
+        clients = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "postgres-too-many-clients-infra")
+        )
+        self.assertEqual(clients["category"], "infra")
+        self.assertNotIn("database file is locked", clients["signals"])
+        gated = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "huggingface-gated-model-permissions"
+            )
+        )
+        self.assertEqual(gated["category"], "permissions")
+        self.assertNotIn("model hub rate limit", gated["signals"])
+        state = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "terraform-state-lock-flake")
+        )
+        self.assertEqual(state["category"], "flake")
+        self.assertNotIn("Terraform provider lock is inconsistent", state["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

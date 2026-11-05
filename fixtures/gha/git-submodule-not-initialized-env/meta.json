@@ -1,0 +1,8 @@
+{
+  "id": "git-submodule-not-initialized-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Checkout found no URL for the submodule path. Initialize submodules. Not a missing username prompt."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ansible-playbook site.yml
+##[endgroup]
+ERROR! The vault password file /tmp/vault was not found
+##[error]Process completed with exit code 1.
