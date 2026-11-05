@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npx cypress install
+##[endgroup]
+The Cypress App could not be downloaded.
+URL: https://download.cypress.io/desktop/13.6.0?platform=linux
+Error: connect ETIMEDOUT
+##[error]Process completed with exit code 1.

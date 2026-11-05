@@ -1,0 +1,8 @@
+{
+  "id": "playwright-browser-download-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Playwright failed to download the Chromium browser and the connection timed out. Not a missing executable path. One rerun is the check."
+}

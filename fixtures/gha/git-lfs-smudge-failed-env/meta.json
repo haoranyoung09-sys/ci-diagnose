@@ -1,0 +1,8 @@
+{
+  "id": "git-lfs-smudge-failed-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The git-lfs smudge filter failed and the log does not mention a rate limit or a budget. Check that git-lfs is installed on the runner. Do not print credentials."
+}

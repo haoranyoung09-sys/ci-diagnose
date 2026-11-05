@@ -1,8 +1,16 @@
 # Changelog
 
+## 0.13.0 — 2026-11-05
+
+The GitHub rename stays deferred. Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+A job that exceeded its maximum execution time, a bare exit code 137, and "no runners available" are `infra`. A step that timed out after N minutes, and a Cypress or Playwright browser download failure, are `flake`. A missing Playwright browser, a Terraform provider lock mismatch, and `ERR_PNPM_TARBALL_INTEGRITY` are `deps`. An LFS budget refusal is `permissions`. A git-lfs smudge failure with no rate limit and no budget line is `env`. A job time limit tied with an assertion, and a matrix job canceled because a sibling failed, stay `unknown`.
+
+159 fixtures. Eval 159/159. Notes: [docs/release-notes-v0.13.0.md](docs/release-notes-v0.13.0.md).
+
 ## 0.12.1 — 2026-11-01
 
-The Action display name is `ci-fail-classify`. Clone URLs, `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. Inputs and outputs are unchanged, so `@v1` stays the same contract. The skill directory remains `ci-doctor`.
+Public name is `ci-fail-classify` (formerly `ci-diagnose`). Clone URLs, Action `uses:` examples, and the install curl URL point at `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action marketplace name is `ci-fail-classify`. Inputs and outputs are unchanged, so `@v1` stays the same contract. The skill directory remains `ci-doctor`.
 
 The READMEs say how this differs from other failure-triage tools and from a full CI platform: a scored seven-class taxonomy, an offline fixture oracle, an agent skill, bilingual playbooks, and an advisory report. It does not build or host the app.
 

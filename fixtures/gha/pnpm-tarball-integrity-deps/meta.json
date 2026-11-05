@@ -1,0 +1,8 @@
+{
+  "id": "pnpm-tarball-integrity-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "pnpm reported ERR_PNPM_TARBALL_INTEGRITY. The stored tarball hash does not match. Not an outdated lockfile line."
+}

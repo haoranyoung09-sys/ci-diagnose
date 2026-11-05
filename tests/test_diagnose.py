@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 146)
+        self.assertGreaterEqual(len(fixtures), 159)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -645,6 +645,59 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertIn("provisioning profile is expired", expired["signals"])
         self.assertNotIn("Apple signing material is missing", expired["signals"])
+
+    def test_job_limit_is_not_a_step_timeout(self) -> None:
+        cases = {
+            "job-max-execution-time-infra": ("infra", "job exceeded its execution limit"),
+            "step-timeout-minutes-flake": ("flake", "step timed out after its limit"),
+            "bare-exit-137-infra": ("infra", "process exited with code 137"),
+            "no-runners-available-infra": (
+                "infra",
+                "self-hosted runner is offline or unlabeled",
+            ),
+            "playwright-browser-missing-deps": (
+                "deps",
+                "Playwright browser is not installed",
+            ),
+            "playwright-browser-download-flake": ("flake", "browser download failed"),
+            "terraform-provider-lock-deps": (
+                "deps",
+                "Terraform provider lock is inconsistent",
+            ),
+            "pnpm-tarball-integrity-deps": (
+                "deps",
+                "pnpm tarball integrity check failed",
+            ),
+            "cypress-binary-download-flake": ("flake", "browser download failed"),
+            "git-lfs-budget-exceeded-permissions": (
+                "permissions",
+                "Git LFS budget was exceeded",
+            ),
+            "git-lfs-smudge-failed-env": ("env", "git-lfs smudge filter failed"),
+            "matrix-cancel-sibling-unknown": ("unknown", "no taxonomy signal"),
+        }
+        for fixture_id, (category, signal) in cases.items():
+            report = diagnose.diagnose_fixture(
+                diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
+            )
+            self.assertEqual(report["category"], category, fixture_id)
+            self.assertIn(signal, report["signals"], fixture_id)
+        tied = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "job-timeout-and-assertion-unknown"
+            )
+        )
+        self.assertEqual(tied["category"], "unknown")
+        self.assertEqual(tied["alternates"], ["infra", "test"])
+        kernel = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "kernel-oom-killed-infra")
+        )
+        self.assertNotIn("process exited with code 137", kernel["signals"])
+        state = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "terraform-state-lock-flake")
+        )
+        self.assertEqual(state["category"], "flake")
+        self.assertNotIn("Terraform provider lock is inconsistent", state["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

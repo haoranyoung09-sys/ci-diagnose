@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+##[error]The operation was canceled.
+Canceling workflow because 'test (node-20)' failed.

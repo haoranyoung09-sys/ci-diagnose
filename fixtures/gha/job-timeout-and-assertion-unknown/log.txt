@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+##[error]The job running on runner ubuntu-latest has exceeded the maximum execution time of 10 minutes.
+AssertionError: expected 200 received 503

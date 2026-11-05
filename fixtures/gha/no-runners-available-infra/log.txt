@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Wait for runner
+##[endgroup]
+Cancelled. no runners available matching labels: self-hosted, linux
+##[error]Process completed with exit code 1.

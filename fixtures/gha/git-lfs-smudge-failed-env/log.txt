@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+error: external filter 'git-lfs filter-process' failed
+fatal: example.bin: smudge filter lfs failed
+##[error]Process completed with exit code 128.

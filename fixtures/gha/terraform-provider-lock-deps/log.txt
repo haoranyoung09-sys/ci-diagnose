@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run terraform init
+##[endgroup]
+Error: Required plugins are not installed. The installed provider plugins are not consistent with the packages selected in the dependency lock file.
+there is no package for registry.terraform.io/hashicorp/aws 5.31.0 cached in .terraform/providers
+##[error]Process completed with exit code 1.

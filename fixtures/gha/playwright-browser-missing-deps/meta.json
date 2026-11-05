@@ -1,0 +1,8 @@
+{
+  "id": "playwright-browser-missing-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Playwright could not find the Chromium executable and says to run playwright install. Not a test timeout and not a download timeout."
+}

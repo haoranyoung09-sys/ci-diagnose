@@ -1,0 +1,8 @@
+{
+  "id": "job-max-execution-time-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The job hit its maximum execution time. That is the workflow ceiling, not a test flake and not exit 137. Raise timeout-minutes or shrink the job."
+}
