@@ -92,6 +92,10 @@ The log does not carry a v0 signal strong enough to pick a category, or two cate
 
 **Minimal next step:** ask for the failed step name and the lines above the exit. Do not refactor while you wait.
 
+## Added in 0.13.0
+
+A job line "exceeded the maximum execution time" is `infra` (`job-max-execution-time-infra`). A step line "has timed out after N minutes" is `flake` (`step-timeout-minutes-flake`). Those two tied with `AssertionError` stay `unknown` (`job-timeout-and-assertion-unknown`). Exit code 137 with no other host phrase is `infra` (`bare-exit-137-infra`). "no runners available" is `infra` (`no-runners-available-infra`). A missing Playwright browser executable is `deps` (`playwright-browser-missing-deps`); a failed browser download is `flake` (`playwright-browser-download-flake`, `cypress-binary-download-flake`). A Terraform provider lock mismatch is `deps` (`terraform-provider-lock-deps`), not a state lock. `ERR_PNPM_TARBALL_INTEGRITY` is `deps` (`pnpm-tarball-integrity-deps`). An LFS budget line is `permissions` (`git-lfs-budget-exceeded-permissions`). A git-lfs smudge failure with no rate limit and no budget line is `env` (`git-lfs-smudge-failed-env`). A matrix job canceled because a sibling failed, with no assertion, stays `unknown` (`matrix-cancel-sibling-unknown`).
+
 ## How to extend it
 
 Add a fixture first, then a signal, then a sentence in this file and in [`skills/ci-doctor/references/taxonomy.md`](../skills/ci-doctor/references/taxonomy.md). Renaming an id is a taxonomy version change, not a drive-by edit. See [CONTRIBUTING.md](../CONTRIBUTING.md).

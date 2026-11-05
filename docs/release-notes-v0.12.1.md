@@ -1,27 +1,43 @@
 # ci-fail-classify 0.12.1
 
-The Action display name is `ci-fail-classify`. The GitHub repository stays `haoranyoung09-sys/ci-diagnose`. Inputs and outputs are unchanged, so `@v1` is the same contract.
+The Action display name became `ci-fail-classify`. The skill directory stayed `ci-doctor`. This release did not add a category and did not change the Action inputs or outputs.
+
+0.13.0 defers the GitHub rename. Clone and `uses:` stay `haoranyoung09-sys/ci-diagnose`.
+
+Clone:
+
+```bash
+git clone https://github.com/haoranyoung09-sys/ci-diagnose.git
+cd ci-diagnose
+```
+
+Action (unchanged contract, new repository name):
 
 ```yaml
 - uses: haoranyoung09-sys/ci-diagnose@v1
+  with:
+    run-id: ${{ github.event.workflow_run.id }}
 ```
 
-Install pins this tag on that repository:
+Install, pinned to this tag:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
 ```
 
-146 fixtures. Eval 146/146. The skill directory stays `ci-doctor`. This does not build, sign, or host the app.
+From a checkout: `bash scripts/install.sh --user --cli`. The script still refuses to replace an existing install unless you pass `--force`.
 
-## 中文
+## What stayed the same
 
-Action 的显示名是 `ci-fail-classify`。GitHub 仓库仍是 `haoranyoung09-sys/ci-diagnose`。输入和输出没有变，`@v1` 仍是同一份契约。
+Seven categories. Offline `make eval` (146/146). Advisory only. English playbooks with a short 中文 note. No CI server: it does not build, sign, or host the app.
 
-安装钉在这个标签上：
+Compared with other failure-triage tools, this one is the scored classifier and the fixture oracle. Compared with a CI platform, it only classifies a log you already have.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
-```
+## Action
 
-146 条 fixture。Eval 146/146。skill 目录仍是 `ci-doctor`。它不构建、不签名、也不托管应用。
+`action.yml` name is `ci-fail-classify`. Inputs, outputs, and branding are the same as 0.7.0 through 0.12.0. Log-path and fixture stay offline. A completed run still needs `actions: read`. `comment` still defaults to false.
+
+## Tags
+
+- `v0.12.1` — this release. Do not move it. The curl install pins this tag.
+- `v1` — move this tag to this commit on `haoranyoung09-sys/ci-diagnose` when you want `@v1` to install 0.12.1. Do not move it before the public mirror contains the commit. 0.13.0 defers the GitHub rename.

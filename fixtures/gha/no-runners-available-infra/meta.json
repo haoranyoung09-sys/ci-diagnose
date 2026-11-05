@@ -1,0 +1,8 @@
+{
+  "id": "no-runners-available-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "No self-hosted runners were available for the labels. Not a lost-communication line and not a test. Check that a runner with those labels is online."
+}

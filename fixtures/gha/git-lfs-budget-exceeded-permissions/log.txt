@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+batch response: This repository exceeded its LFS budget. The account responsible for the budget should increase it to restore access.
+##[error]Process completed with exit code 1.

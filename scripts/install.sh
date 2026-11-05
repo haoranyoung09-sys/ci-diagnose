@@ -6,13 +6,13 @@
 # From a checkout:
 #   bash scripts/install.sh --user --cli
 #   bash scripts/install.sh --project
-# After tag v0.12.1 is on GitHub:
-#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
-# Pin another ref with CI_DIAGNOSE_REF (default v0.12.1). The Action stays uses: ...@v1.
+# After tag v0.13.0 is on GitHub:
+#   curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.13.0/scripts/install.sh | bash
+# Pin another ref with CI_DIAGNOSE_REF (default v0.13.0). The Action stays uses: ...@v1.
 
 set -euo pipefail
 
-REF="${CI_DIAGNOSE_REF:-v0.12.1}"
+REF="${CI_DIAGNOSE_REF:-v0.13.0}"
 REPO_URL="https://github.com/haoranyoung09-sys/ci-diagnose"
 MODE="user"
 WITH_CLI=0
@@ -33,7 +33,8 @@ Usage: install.sh [--user | --project] [--cli] [--claude] [--force]
 
 From a git checkout the script links that checkout. Piped from curl, it
 downloads the public tag archive into ~/.local/share/ci-fail-classify.
-Set CI_DIAGNOSE_REF to choose the tag (default v0.12.1).
+Set CI_DIAGNOSE_REF to choose the tag (default v0.13.0).
+Public checkout: https://github.com/haoranyoung09-sys/ci-diagnose
 EOF
 }
 

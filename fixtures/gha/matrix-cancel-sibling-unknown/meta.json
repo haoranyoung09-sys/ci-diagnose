@@ -1,0 +1,8 @@
+{
+  "id": "matrix-cancel-sibling-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "This job was canceled because another matrix cell failed. The log has no assertion, timeout, or host line. Stay unknown and read the cell that failed."
+}

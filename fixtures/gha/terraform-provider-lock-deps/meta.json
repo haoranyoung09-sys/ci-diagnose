@@ -1,0 +1,8 @@
+{
+  "id": "terraform-provider-lock-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Terraform provider cache does not match the dependency lock file. Not a state lock and not missing credentials. Update the lock or the provider cache."
+}

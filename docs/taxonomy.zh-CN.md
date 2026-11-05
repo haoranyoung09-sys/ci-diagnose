@@ -92,6 +92,10 @@ token、角色或 `permissions:` 拒绝了某个 API。常见形态是 HTTP 403�
 
 **最小下一步：** 要失败步骤的名字，以及退出码上面的那些行。在等到之前不要顺手重构。
 
+## 0.13.0 新增
+
+作业 “exceeded the maximum execution time” 是 `infra`（`job-max-execution-time-infra`）。步骤 “has timed out after N minutes” 是 `flake`（`step-timeout-minutes-flake`）。这两类和 `AssertionError` 打平仍是 `unknown`（`job-timeout-and-assertion-unknown`）。只有 exit code 137 是 `infra`（`bare-exit-137-infra`）。“no runners available” 是 `infra`（`no-runners-available-infra`）。Playwright 找不到浏览器可执行文件是 `deps`（`playwright-browser-missing-deps`）；浏览器下载失败是 `flake`（`playwright-browser-download-flake`、`cypress-binary-download-flake`）。Terraform provider lock 不一致是 `deps`（`terraform-provider-lock-deps`），不是 state lock。`ERR_PNPM_TARBALL_INTEGRITY` 是 `deps`（`pnpm-tarball-integrity-deps`）。LFS 配额是 `permissions`（`git-lfs-budget-exceeded-permissions`）。没有速率也没有配额的 git-lfs smudge 失败是 `env`（`git-lfs-smudge-failed-env`）。因为另一个 matrix 单元失败而被取消、且没有断言，保持 `unknown`（`matrix-cancel-sibling-unknown`）。
+
 ## 如何扩展
 
 先加 fixture，再加信号，然后改本文件和 [`skills/ci-doctor/references/taxonomy.md`](../skills/ci-doctor/references/taxonomy.md)。重命名 id 是分类版本变更，不是顺手一改。见 [CONTRIBUTING.md](../CONTRIBUTING.md)。

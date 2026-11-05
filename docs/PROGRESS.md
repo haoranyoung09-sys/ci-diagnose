@@ -163,9 +163,23 @@ Eval: 146/146 (1.000)
 
 Version: 0.12.1
 
-Improvement: The Action display name is ci-fail-classify. Clone, uses, and install URLs stay on haoranyoung09-sys/ci-diagnose. The skill directory stays ci-doctor. Action inputs and outputs are unchanged. The READMEs say how this differs from other triage tools and from a CI platform, without star counts.
+Improvement: The public name is ci-fail-classify. READMEs, install, and Action examples use that GitHub path. The skill directory stays ci-doctor. Action inputs and outputs are unchanged. The READMEs say how this differs from other triage tools and from a CI platform, without star counts.
 
-Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Publish tag v0.12.1 and point @v1 at this commit. Do not rename the GitHub repository.
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Rename the public GitHub repo so the old ci-diagnose URL redirects. Publish tag v0.12.1 and point @v1 at this commit.
+
+## 2026-11-05 — 0.13.0
+
+Date: 2026-11-05
+
+Fixtures: 159
+
+Eval: 159/159 (1.000)
+
+Version: 0.13.0
+
+Improvement: Thirteen fixtures cover a job execution limit versus a step timeout, bare exit 137, no runners available, a missing Playwright browser versus a download failure, a Terraform provider lock, pnpm tarball integrity, a Cypress binary download, an LFS budget versus a smudge filter, and a matrix sibling cancel. The GitHub rename is deferred: public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify. Inputs and outputs are unchanged.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo in this release. Publish tag v0.13.0 and point @v1 at this commit only after the public mirror has it.
 
 ## 中文
 

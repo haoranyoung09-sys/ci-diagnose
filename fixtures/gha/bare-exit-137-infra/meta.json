@@ -1,0 +1,8 @@
+{
+  "id": "bare-exit-137-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The only signal is exit code 137. No heap line and no job timeout sentence. Treat it as the host killing the process, not as a flake."
+}

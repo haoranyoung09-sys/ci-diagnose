@@ -170,6 +170,19 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `notarize-timeout-flake` | flake | Notarization request timed out. |
 | `simctl-boot-failed-infra` | infra | Simulator stuck while booting. |
 | `metro-syntax-error-test` | test | Metro SyntaxError. |
+| `job-max-execution-time-infra` | infra | Job exceeded its maximum execution time. |
+| `step-timeout-minutes-flake` | flake | Step timed out after N minutes. |
+| `bare-exit-137-infra` | infra | Only exit code 137. |
+| `job-timeout-and-assertion-unknown` | unknown | Job time limit tied with an assertion. |
+| `no-runners-available-infra` | infra | No runners available for the labels. |
+| `playwright-browser-missing-deps` | deps | Playwright executable is not installed. |
+| `playwright-browser-download-flake` | flake | Playwright browser download timed out. |
+| `terraform-provider-lock-deps` | deps | Provider cache does not match the lock file. |
+| `pnpm-tarball-integrity-deps` | deps | ERR_PNPM_TARBALL_INTEGRITY. |
+| `cypress-binary-download-flake` | flake | Cypress app could not be downloaded. |
+| `git-lfs-budget-exceeded-permissions` | permissions | Repository exceeded its LFS budget. |
+| `git-lfs-smudge-failed-env` | env | git-lfs smudge filter failed. |
+| `matrix-cancel-sibling-unknown` | unknown | Canceled because another matrix cell failed. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

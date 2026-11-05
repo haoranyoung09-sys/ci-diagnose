@@ -31,6 +31,8 @@ Corpus:
 | `cache-eacces-and-lockfile-unknown` | Tie: cache `EACCES` and a lockfile mismatch. Alternates `deps` and `infra`. |
 | `registry-rate-and-auth-unknown` | Tie: `toomanyrequests` and `pull access denied`. Alternates `flake` and `permissions`. |
 | `econnreset-and-assertion-unknown` | Tie: `ECONNRESET` and `AssertionError`. Alternates `flake` and `test`. |
+| `job-timeout-and-assertion-unknown` | Tie: job maximum execution time and `AssertionError`. Alternates `infra` and `test`. |
+| `matrix-cancel-sibling-unknown` | Another matrix cell failed and this job was canceled. No v0 signal. |
 
 ## Near misses
 

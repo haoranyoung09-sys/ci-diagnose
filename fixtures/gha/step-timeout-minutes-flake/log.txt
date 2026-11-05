@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+Error: The action 'Run tests' has timed out after 5 minutes.
+##[error]Process completed with exit code 1.

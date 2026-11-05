@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npx playwright test
+##[endgroup]
+Error: browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/chromium-1124/chrome-linux/chrome
+Please run npx playwright install
+##[error]Process completed with exit code 1.

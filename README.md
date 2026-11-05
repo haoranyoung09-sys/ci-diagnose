@@ -4,7 +4,7 @@
 
 CI failed, or GitHub Actions is red? Classify the log, quote redacted evidence, propose one minimal fix, and say how to verify it. Advisory only. Not a merge decision.
 
-The Action display name is `ci-fail-classify`. The GitHub repository stays `haoranyoung09-sys/ci-diagnose`. The agent skill directory stays `ci-doctor`. This is not a CI server. It does not build, sign, or host your app. Two ways in, side by side: the Action below, or one install command for the skill and CLI.
+The Action display name is `ci-fail-classify`. The public GitHub path is still `haoranyoung09-sys/ci-diagnose` until that rename lands. The agent skill directory stays `ci-doctor`. This is not a CI server. It does not build, sign, or host your app. Two ways in, side by side: the Action below, or one install command for the skill and CLI.
 
 ## How this differs
 
@@ -62,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.12.1` is on the public mirror:
+The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.13.0` is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.12.1/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.13.0/scripts/install.sh | bash
 ```
 
 That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
@@ -81,7 +81,7 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha`. It does not call `gh`.
+The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (159 fixtures). It does not call `gh`.
 
 Weekly notes: [docs/PROGRESS.md](docs/PROGRESS.md).
 
@@ -180,6 +180,9 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | No adb device; simulator will not boot | `infra` | `adb-no-devices-infra`, `simctl-boot-failed-infra` |
 | Notarization timed out | `flake` | `notarize-timeout-flake` |
 | Fastlane expected/got, or a Metro syntax error | `test` | `fastlane-lane-expected-got-test`, `metro-syntax-error-test` |
+| Job maximum execution time, or only exit code 137 | `infra` | `job-max-execution-time-infra`, `bare-exit-137-infra` |
+| Step "timed out after N minutes", or a browser binary download | `flake` | `step-timeout-minutes-flake`, `cypress-binary-download-flake` |
+| Playwright browser missing, Terraform provider lock, or pnpm tarball integrity | `deps` | `playwright-browser-missing-deps`, `terraform-provider-lock-deps`, `pnpm-tarball-integrity-deps` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

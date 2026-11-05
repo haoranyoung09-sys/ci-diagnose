@@ -252,6 +252,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"exceeded its LFS budget",
+        "Git LFS budget was exceeded",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"failed to authorize:",
         "image pull was not authorized",
     ),
@@ -391,6 +397,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         8,
+        r"smudge filter lfs failed|git-lfs filter-process' failed",
+        "git-lfs smudge filter failed",
+    ),
+    Rule(
+        "env",
+        8,
         r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
         "Node engine does not match this runner",
     ),
@@ -438,6 +450,24 @@ RULES: tuple[Rule, ...] = (
         9,
         r"err_pnpm_outdated_lockfile|pnpm-lock\.yaml.+(?:out of date|outdated|not up to date)",
         "pnpm lockfile is out of date",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"ERR_PNPM_TARBALL_INTEGRITY",
+        "pnpm tarball integrity check failed",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"not consistent with the packages selected in the dependency lock file|no package for registry\.terraform\.io",
+        "Terraform provider lock is inconsistent",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"executable doesn't exist at .+/ms-playwright/|please run npx playwright install",
+        "Playwright browser is not installed",
     ),
     Rule(
         "deps",
@@ -632,6 +662,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"has timed out after \d+ minutes",
+        "step timed out after its limit",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"Cypress App could not be downloaded|failed to download browser",
+        "browser download failed",
+    ),
+    Rule(
+        "flake",
+        8,
         r"\bECONNRESET\b",
         "connection reset before a response",
     ),
@@ -768,7 +810,7 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "infra",
         8,
-        r"self-hosted runner lost communication|no runner matching (?:the )?(?:specified )?labels",
+        r"self-hosted runner lost communication|no runners? matching (?:the )?(?:specified )?labels|no runners available",
         "self-hosted runner is offline or unlabeled",
     ),
     Rule("infra", 8, r"filename too long", "path exceeds the filesystem limit"),
@@ -837,6 +879,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"unable to boot device",
         "iOS simulator failed to boot",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"exceeded the maximum execution time",
+        "job exceeded its execution limit",
+    ),
+    Rule(
+        "infra",
+        7,
+        r"\bexit code 137\b",
+        "process exited with code 137",
     ),
     Rule(
         "unknown",
@@ -1083,6 +1137,30 @@ def _tie_cache_eacces_with_lockfile(
         scores["infra"] = scores["deps"]
 
 
+def _drop_exit_137_when_host_is_named(
+    scores: dict[str, int], matched: list[bool]
+) -> None:
+    """Exit 137 is the host signal only when the log names nothing stronger.
+
+    A heap line, a bare ``Killed``, or a runner shutdown already explains the
+    same death. Counting 137 again would raise confidence on those fixtures
+    without adding a new fact.
+    """
+    exit_index = None
+    named = False
+    for index, (rule, _pattern) in enumerate(COMPILED):
+        if not matched[index] or rule.category != "infra":
+            continue
+        if rule.signal == "process exited with code 137":
+            exit_index = index
+        elif rule.weight >= MIN_SCORE:
+            named = True
+    if exit_index is None or not named:
+        return
+    matched[exit_index] = False
+    scores["infra"] -= COMPILED[exit_index][0].weight
+
+
 def classify(text: str) -> Classification:
     """Classify log text. Does not read fixture labels.
 
@@ -1140,6 +1218,7 @@ def classify(text: str) -> Classification:
             )
 
     _tie_cache_eacces_with_lockfile(scores, matched)
+    _drop_exit_137_when_host_is_named(scores, matched)
     hits = [hit for pool in pools.values() for hit in pool]
     ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
     top_category, top_score = ranked[0]
