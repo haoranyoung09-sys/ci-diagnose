@@ -1,0 +1,8 @@
+{
+  "id": "gem-version-yanked-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The gem version has been yanked. Not a Rubygems 503 and not a stale Gemfile.lock. Pick a published version."
+}

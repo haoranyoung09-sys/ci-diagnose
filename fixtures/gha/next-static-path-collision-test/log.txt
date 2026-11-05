@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run next build
+##[endgroup]
+Error: Conflicting paths returned from getStaticPaths: /blog/example and /blog/example
+##[error]Process completed with exit code 1.

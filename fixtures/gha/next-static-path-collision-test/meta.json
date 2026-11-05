@@ -1,0 +1,8 @@
+{
+  "id": "next-static-path-collision-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "getStaticPaths returned two routes that export to the same path. Not a heap OOM. Change one route."
+}

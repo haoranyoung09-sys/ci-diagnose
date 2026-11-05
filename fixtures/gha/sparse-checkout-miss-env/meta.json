@@ -1,0 +1,8 @@
+{
+  "id": "sparse-checkout-miss-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "sparse-checkout did not include the path the job needs. Widen the sparse pattern. Not a missing secret."
+}

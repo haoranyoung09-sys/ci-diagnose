@@ -1,0 +1,8 @@
+{
+  "id": "selinux-avc-denied-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "SELinux avc denied the process on a self-hosted runner. Not a GitHub token 403. Adjust the host policy or the path."
+}

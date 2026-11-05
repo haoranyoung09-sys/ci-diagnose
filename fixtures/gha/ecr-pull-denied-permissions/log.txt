@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker pull
+##[endgroup]
+denied: User is not authorized to perform ecr:BatchGetImage on resource
+##[error]Process completed with exit code 1.

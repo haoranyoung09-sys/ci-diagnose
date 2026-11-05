@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run aws codeartifact get-package-version
+##[endgroup]
+Error: CodeArtifact returned 429 Too Many Requests while fetching example-lib
+##[error]Process completed with exit code 1.

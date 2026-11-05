@@ -264,6 +264,24 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"not authorized to perform|accessdeniedexception",
+        "cloud API denied the action",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"artifactory returned 403",
+        "artifact repository returned 403",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"run again with the --allow-(?:net|read|write|env|run|ffi)",
+        "Deno denied a runtime permission",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"exceeded its LFS budget",
         "Git LFS budget was exceeded",
     ),
@@ -427,6 +445,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         8,
+        r"sparse-checkout",
+        "sparse checkout missed a path",
+    ),
+    Rule(
+        "env",
+        8,
+        r"packagemanager field",
+        "packageManager field does not match the tool",
+    ),
+    Rule(
+        "env",
+        8,
         r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
         "Node engine does not match this runner",
     ),
@@ -546,6 +576,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"\bis yanked\b",
         "crate version is yanked",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"has been yanked",
+        "package version was yanked",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"go\.sum database checksum mismatch|sumdb checksum mismatch",
+        "sumdb checksum does not match",
     ),
     Rule(
         "deps",
@@ -810,6 +852,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "test",
         8,
+        r"conflicting paths returned from getstaticpaths",
+        "static export paths collide",
+    ),
+    Rule(
+        "test",
+        8,
         r"error: could not compile `\S+",
         "compiler rejected the crate",
     ),
@@ -912,6 +960,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "infra",
         8,
+        r"\bavc:\s*denied\b|apparmor=\"denied\"",
+        "mandatory access control denied the process",
+    ),
+    Rule(
+        "infra",
+        8,
         r"java\.lang\.OutOfMemoryError",
         "Java heap out of memory",
     ),
@@ -974,6 +1028,12 @@ RULES: tuple[Rule, ...] = (
         7,
         r"\bexit code 137\b",
         "process exited with code 137",
+    ),
+    Rule(
+        "unknown",
+        5,
+        r"higher priority waiting request|concurrency group \S+ dropped this run",
+        "concurrency group canceled the run",
     ),
     Rule(
         "unknown",

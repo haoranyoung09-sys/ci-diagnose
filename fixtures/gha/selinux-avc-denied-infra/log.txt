@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run node server.js
+##[endgroup]
+avc:  denied  { read } for pid=1 comm=node name=example
+##[error]Process completed with exit code 1.

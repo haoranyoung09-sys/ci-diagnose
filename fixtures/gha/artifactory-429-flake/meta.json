@@ -1,0 +1,8 @@
+{
+  "id": "artifactory-429-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "JFrog Artifactory returned 429 Too Many Requests. Not a 403. One rerun is the check."
+}

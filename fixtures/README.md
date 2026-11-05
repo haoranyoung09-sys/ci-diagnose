@@ -201,6 +201,22 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `macos-quarantine-blocked-permissions` | permissions | com.apple.quarantine blocked the tool. |
 | `macos-sip-blocked-infra` | infra | System Integrity Protection blocked a write. |
 | `dependabot-word-only-unknown` | unknown | Only the word Dependabot. No resolver line. |
+| `ecr-pull-denied-permissions` | permissions | ECR BatchGetImage was denied. |
+| `codeartifact-token-denied-permissions` | permissions | CodeArtifact GetAuthorizationToken was denied. |
+| `codeartifact-429-flake` | flake | CodeArtifact returned 429. |
+| `artifactory-403-permissions` | permissions | Artifactory returned 403. |
+| `artifactory-429-flake` | flake | Artifactory returned 429. |
+| `gosum-database-mismatch-deps` | deps | go.sum database checksum mismatch. |
+| `go-proxy-deadline-flake` | flake | Go proxy context deadline exceeded. |
+| `packagist-429-flake` | flake | Packagist returned 429. |
+| `gem-version-yanked-deps` | deps | Gem version has been yanked. |
+| `rubygems-503-flake` | flake | Rubygems returned 503. |
+| `deno-permission-prompt-permissions` | permissions | Deno asked for --allow-net. |
+| `sparse-checkout-miss-env` | env | sparse-checkout missed a path. |
+| `selinux-avc-denied-infra` | infra | SELinux avc denied. |
+| `apparmor-denied-infra` | infra | AppArmor denied an open. |
+| `corepack-packagemanager-mismatch-env` | env | packageManager field does not match corepack. |
+| `next-static-path-collision-test` | test | getStaticPaths paths collide. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

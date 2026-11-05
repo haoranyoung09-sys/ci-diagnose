@@ -1,0 +1,8 @@
+{
+  "id": "gosum-database-mismatch-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The go.sum database checksum does not match. Not a proxy 502 and not a timeout. Update go.sum from a trusted module."
+}

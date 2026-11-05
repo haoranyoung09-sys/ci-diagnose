@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run node server.js
+##[endgroup]
+apparmor="DENIED" operation="open" profile="docker-default" name="/etc/example"
+##[error]Process completed with exit code 1.

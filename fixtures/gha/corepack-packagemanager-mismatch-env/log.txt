@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run corepack pnpm install
+##[endgroup]
+Error: This project's packageManager field is pnpm@9.1.0, but corepack is using pnpm@8.15.0
+##[error]Process completed with exit code 1.
