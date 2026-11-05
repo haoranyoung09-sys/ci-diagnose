@@ -282,6 +282,12 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"access to model \S+ is restricted|not in the authorized list",
+        "model access was denied",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"exceeded its LFS budget",
         "Git LFS budget was exceeded",
     ),
@@ -457,6 +463,24 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         8,
+        r"android gradle plugin.+not compatible|minimum supported gradle version is",
+        "Android Gradle plugin does not match Gradle",
+    ),
+    Rule(
+        "env",
+        8,
+        r"vault password file .+ was not found|no vault secrets found",
+        "Ansible vault password was not provided",
+    ),
+    Rule(
+        "env",
+        8,
+        r"no url found for submodule|submodule not initialized",
+        "git submodule was not initialized",
+    ),
+    Rule(
+        "env",
+        8,
         r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
         "Node engine does not match this runner",
     ),
@@ -588,6 +612,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"go\.sum database checksum mismatch|sumdb checksum mismatch",
         "sumdb checksum does not match",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"distribution zip checksum does not match|could not validate the maven wrapper jar checksum",
+        "build tool wrapper checksum does not match",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"solvepackagenotfound|packagesnotfounderror",
+        "conda solver could not find a package",
     ),
     Rule(
         "deps",
@@ -788,6 +824,30 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"\bdatabase is locked\b",
+        "database file is locked",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"\berror code: 520\b|web server returned an unknown error",
+        "CDN returned 520 from the origin",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"too many requests for url: https://huggingface\.co",
+        "model hub rate limit",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"error fetching repository|error occurred during the fetch of repository",
+        "Bazel repository fetch failed",
+    ),
+    Rule(
+        "flake",
+        8,
         r"notarization request failed: the request timed out",
         "Apple notarization request timed out",
     ),
@@ -854,6 +914,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"conflicting paths returned from getstaticpaths",
         "static export paths collide",
+    ),
+    Rule(
+        "test",
+        8,
+        r"crashloopbackoff",
+        "container is crash-looping",
+    ),
+    Rule(
+        "test",
+        8,
+        r"analysis of target \S+ failed",
+        "Bazel analysis failed",
     ),
     Rule(
         "test",
@@ -962,6 +1034,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"\bavc:\s*denied\b|apparmor=\"denied\"",
         "mandatory access control denied the process",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"imagepullbackoff",
+        "container image pull is backing off",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"too many clients already|remaining connection slots are reserved",
+        "database connection limit was reached",
     ),
     Rule(
         "infra",

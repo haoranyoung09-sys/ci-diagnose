@@ -1,0 +1,8 @@
+{
+  "id": "sqlite-database-locked-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "SQLite reported database is locked. Another job may hold the file. One rerun is the check. Not a connection-slot limit."
+}

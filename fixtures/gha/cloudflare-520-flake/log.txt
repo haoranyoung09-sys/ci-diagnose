@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run curl https://example.invalid
+##[endgroup]
+HTTP 520
+error code: 520
+web server returned an unknown error from the origin
+##[error]Process completed with exit code 1.

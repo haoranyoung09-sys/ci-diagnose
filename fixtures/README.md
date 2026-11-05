@@ -217,6 +217,22 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `apparmor-denied-infra` | infra | AppArmor denied an open. |
 | `corepack-packagemanager-mismatch-env` | env | packageManager field does not match corepack. |
 | `next-static-path-collision-test` | test | getStaticPaths paths collide. |
+| `kube-image-pull-backoff-infra` | infra | Pod is in ImagePullBackOff. |
+| `kube-crashloop-backoff-test` | test | Container is in CrashLoopBackOff. |
+| `gradle-wrapper-checksum-deps` | deps | Gradle wrapper checksum does not match. |
+| `maven-wrapper-checksum-deps` | deps | Maven wrapper jar checksum failed. |
+| `sqlite-database-locked-flake` | flake | SQLite database is locked. |
+| `postgres-too-many-clients-infra` | infra | Postgres has too many clients. |
+| `android-gradle-plugin-mismatch-env` | env | AGP is not compatible with this Gradle. |
+| `ansible-vault-password-missing-env` | env | Ansible vault password file was not found. |
+| `cloudflare-520-flake` | flake | CDN returned 520. |
+| `git-submodule-not-initialized-env` | env | Submodule URL was not found. |
+| `huggingface-rate-limit-flake` | flake | Hugging Face hub returned 429. |
+| `huggingface-gated-model-permissions` | permissions | Gated model access was denied. |
+| `pixi-solve-not-found-deps` | deps | pixi SolvePackageNotFound. |
+| `conda-package-not-found-deps` | deps | conda PackagesNotFoundError. |
+| `bazel-analysis-failed-test` | test | Bazel analysis of the target failed. |
+| `bazel-fetch-failed-flake` | flake | Bazel repository fetch failed. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

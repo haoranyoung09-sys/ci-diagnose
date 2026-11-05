@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run ./gradlew test
+##[endgroup]
+Verification of Gradle distribution failed. The distribution zip checksum does not match the wrapper properties.
+##[error]Process completed with exit code 1.

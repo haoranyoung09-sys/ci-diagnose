@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run pixi install
+##[endgroup]
+Error: failed to solve the environment. SolvePackageNotFound: example-lib
+##[error]Process completed with exit code 1.

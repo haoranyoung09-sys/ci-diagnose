@@ -1,0 +1,8 @@
+{
+  "id": "gradle-wrapper-checksum-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Gradle distribution zip checksum does not match the wrapper properties. Not a test assertion. Refresh the wrapper checksum."
+}

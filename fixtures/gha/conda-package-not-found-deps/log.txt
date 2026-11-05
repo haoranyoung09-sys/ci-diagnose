@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run conda install example-lib
+##[endgroup]
+PackagesNotFoundError: The following packages are not available from current channels: example-lib
+##[error]Process completed with exit code 1.

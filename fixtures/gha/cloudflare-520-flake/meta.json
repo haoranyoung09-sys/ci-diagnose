@@ -1,0 +1,8 @@
+{
+  "id": "cloudflare-520-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Cloudflare returned error code 520 from the origin. One rerun is the check. Not a token 403."
+}

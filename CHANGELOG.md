@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.0 — 2026-11-05
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+`ImagePullBackOff` and Postgres `too many clients` are `infra`. `CrashLoopBackOff` and a Bazel analysis failure are `test`. A Gradle or Maven wrapper checksum, and a pixi or conda missing package, are `deps`. SQLite `database is locked`, a CDN 520, a Hugging Face 429, and a Bazel repository fetch are `flake`. An AGP mismatch, a missing Ansible vault password file, and an uninitialized submodule are `env`. A gated model is `permissions`. Terraform state lock was already `flake`.
+
+209 fixtures. Eval 209/209. Notes: [docs/release-notes-v0.16.0.md](docs/release-notes-v0.16.0.md).
+
 ## 0.15.0 — 2026-11-05
 
 Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

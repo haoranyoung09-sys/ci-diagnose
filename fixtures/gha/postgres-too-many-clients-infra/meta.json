@@ -1,0 +1,8 @@
+{
+  "id": "postgres-too-many-clients-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Postgres refused the connection because too many clients are already connected. Raise the service limit or shrink the pool. Not a lock on a file."
+}

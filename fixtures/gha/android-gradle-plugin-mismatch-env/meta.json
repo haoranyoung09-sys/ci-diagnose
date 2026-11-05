@@ -1,0 +1,8 @@
+{
+  "id": "android-gradle-plugin-mismatch-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Android Gradle plugin is not compatible with this Gradle. Align the two versions. Not a missing SDK path."
+}
