@@ -33,6 +33,7 @@ Corpus:
 | `econnreset-and-assertion-unknown` | Tie: `ECONNRESET` and `AssertionError`. Alternates `flake` and `test`. |
 | `job-timeout-and-assertion-unknown` | Tie: job maximum execution time and `AssertionError`. Alternates `infra` and `test`. |
 | `matrix-cancel-sibling-unknown` | Another matrix cell failed and this job was canceled. No v0 signal. |
+| `dependabot-word-only-unknown` | The log only names Dependabot. No resolver, timeout, or token line. |
 
 ## Near misses
 

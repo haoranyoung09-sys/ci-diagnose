@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 159)
+        self.assertGreaterEqual(len(fixtures), 177)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -698,6 +698,50 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(state["category"], "flake")
         self.assertNotIn("Terraform provider lock is inconsistent", state["signals"])
+
+    def test_feed_and_host_limits_stay_apart(self) -> None:
+        cases = {
+            "docker-build-context-too-large-infra": (
+                "infra",
+                "Docker build context is too large",
+            ),
+            "buildx-cache-export-failed-infra": ("infra", "BuildKit cache export failed"),
+            "helm-upgrade-deadline-flake": ("flake", "context deadline exceeded"),
+            "nuget-feed-503-flake": ("flake", "package index returned 503"),
+            "nuget-feed-unauthorized-permissions": (
+                "permissions",
+                "package feed or coverage token was rejected",
+            ),
+            "cargo-crates-io-rate-limit-flake": ("flake", "registry returned 429"),
+            "cargo-crate-yanked-deps": ("deps", "crate version is yanked"),
+            "codecov-token-missing-env": ("env", "coverage upload token is missing"),
+            "codecov-upload-timeout-flake": ("flake", "coverage upload timed out"),
+            "macos-quarantine-blocked-permissions": (
+                "permissions",
+                "downloaded tool is quarantined",
+            ),
+            "macos-sip-blocked-infra": (
+                "infra",
+                "System Integrity Protection blocked the write",
+            ),
+            "dependabot-word-only-unknown": ("unknown", "no taxonomy signal"),
+        }
+        for fixture_id, (category, signal) in cases.items():
+            report = diagnose.diagnose_fixture(
+                diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
+            )
+            self.assertEqual(report["category"], category, fixture_id)
+            self.assertIn(signal, report["signals"], fixture_id)
+        yanked = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "cargo-crate-yanked-deps")
+        )
+        self.assertNotIn("registry returned 429", yanked["signals"])
+        rate = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "cargo-crates-io-rate-limit-flake"
+            )
+        )
+        self.assertNotIn("crate version is yanked", rate["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

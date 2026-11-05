@@ -1,0 +1,8 @@
+{
+  "id": "cargo-crate-yanked-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The only candidate crate version is yanked. Not a 429 and not a network error. Pick a version that is still published."
+}

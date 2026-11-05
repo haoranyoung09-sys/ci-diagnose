@@ -1,0 +1,8 @@
+{
+  "id": "redis-loading-not-ready-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Redis answered LOADING while the dataset was still loading. Not a service-container health line. One rerun is the check."
+}

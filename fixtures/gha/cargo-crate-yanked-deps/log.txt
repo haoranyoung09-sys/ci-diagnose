@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cargo fetch
+##[endgroup]
+error: version 1.2.3 is yanked
+##[error]Process completed with exit code 1.

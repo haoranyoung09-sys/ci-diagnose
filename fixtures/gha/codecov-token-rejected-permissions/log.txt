@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run codecov upload
+##[endgroup]
+Error uploading to Codecov: HTTP 401 Invalid token
+##[error]Process completed with exit code 1.

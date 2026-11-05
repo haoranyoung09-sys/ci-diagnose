@@ -1,0 +1,8 @@
+{
+  "id": "xcode-derived-data-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Xcode could not open DerivedData. Not a codesign failure and not a package resolve error. Point the job at a writable DerivedData path."
+}

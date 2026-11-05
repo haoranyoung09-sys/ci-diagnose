@@ -181,6 +181,20 @@ Improvement: Thirteen fixtures cover a job execution limit versus a step timeout
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo in this release. Publish tag v0.13.0 and point @v1 at this commit only after the public mirror has it.
 
+## 2026-11-05 — 0.14.0
+
+Date: 2026-11-05
+
+Fixtures: 177
+
+Eval: 177/177 (1.000)
+
+Version: 0.14.0
+
+Improvement: Eighteen fixtures cover Docker context size versus BuildKit cache export, Helm and collector deadlines, NuGet 401 versus 503, crates.io 429 versus a yanked crate, missing DerivedData, Elasticsearch vm.max_map_count, Redis still loading, Codecov token missing versus rejected versus upload timeout, Windows PathTooLongException, macOS quarantine versus SIP, and a Dependabot line with no resolver. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.14.0 only after the public mirror has this commit.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

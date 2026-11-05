@@ -1,0 +1,8 @@
+{
+  "id": "buildx-cache-export-failed-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "BuildKit could not export the cache. Not a missing layer line and not a deadline. Clear that cache or rerun the export once."
+}

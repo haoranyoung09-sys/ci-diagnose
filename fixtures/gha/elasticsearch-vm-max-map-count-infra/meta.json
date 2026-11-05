@@ -1,0 +1,8 @@
+{
+  "id": "elasticsearch-vm-max-map-count-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Elasticsearch refused to start because vm.max_map_count is too low. Not a health-check timeout. Raise the host limit."
+}

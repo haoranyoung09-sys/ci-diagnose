@@ -1,0 +1,8 @@
+{
+  "id": "nuget-feed-unauthorized-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "NuGet restore got 401 Unauthorized from the feed. Not a missing package version and not a 503. Fix the feed credential. Do not print it."
+}

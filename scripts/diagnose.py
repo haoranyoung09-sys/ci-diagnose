@@ -252,6 +252,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"401 \(unauthorized\)|credential provider could not acquire credentials|401 invalid token",
+        "package feed or coverage token was rejected",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"com\.apple\.quarantine",
+        "downloaded tool is quarantined",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"exceeded its LFS budget",
         "Git LFS budget was exceeded",
     ),
@@ -403,6 +415,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         8,
+        r"deriveddata.{0,80}(?:does not exist|is not writable|no such file)",
+        "Xcode DerivedData is missing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"codecov token is missing|not valid tokenless",
+        "coverage upload token is missing",
+    ),
+    Rule(
+        "env",
+        8,
         r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
         "Node engine does not match this runner",
     ),
@@ -516,6 +540,12 @@ RULES: tuple[Rule, ...] = (
         8,
         r"cargo\.lock needs to be updated|failed to select a version for the requirement",
         "Cargo lockfile could not select a version",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"\bis yanked\b",
+        "crate version is yanked",
     ),
     Rule(
         "deps",
@@ -692,6 +722,30 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"\bcontext deadline exceeded\b",
+        "context deadline exceeded",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"\b429 too many requests\b",
+        "registry returned 429",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"redis is loading the dataset",
+        "Redis is still loading",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"failed to upload coverage",
+        "coverage upload timed out",
+    ),
+    Rule(
+        "flake",
+        8,
         r"notarization request failed: the request timed out",
         "Apple notarization request timed out",
     ),
@@ -813,7 +867,12 @@ RULES: tuple[Rule, ...] = (
         r"self-hosted runner lost communication|no runners? matching (?:the )?(?:specified )?labels|no runners available",
         "self-hosted runner is offline or unlabeled",
     ),
-    Rule("infra", 8, r"filename too long", "path exceeds the filesystem limit"),
+    Rule(
+        "infra",
+        8,
+        r"filename too long|filename or extension is too long|pathtoolongexception",
+        "path exceeds the filesystem limit",
+    ),
     Rule(
         "infra",
         8,
@@ -825,6 +884,30 @@ RULES: tuple[Rule, ...] = (
         8,
         r"failed to compute cache key|layer does not exist",
         "docker build cache layer is missing",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"build context is larger than|the build context is too large",
+        "Docker build context is too large",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"cache export failed",
+        "BuildKit cache export failed",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"vm\.max_map_count",
+        "host vm.max_map_count is too low",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"system integrity protection",
+        "System Integrity Protection blocked the write",
     ),
     Rule(
         "infra",

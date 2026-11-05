@@ -1,0 +1,8 @@
+{
+  "id": "otel-collector-scrape-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The collector scrape hit a context deadline. Not a missing token and not a test assertion. One rerun is the check."
+}

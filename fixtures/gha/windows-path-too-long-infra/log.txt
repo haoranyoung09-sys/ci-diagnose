@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run dotnet build
+##[endgroup]
+System.IO.PathTooLongException: The filename or extension is too long.
+##[error]Process completed with exit code 1.
