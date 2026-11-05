@@ -1,0 +1,8 @@
+{
+  "id": "testcontainers-port-conflict-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "WireMock failed to bind because the host port is already allocated. Free that port. Not a test assertion."
+}

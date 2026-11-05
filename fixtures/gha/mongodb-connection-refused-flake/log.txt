@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017
+##[error]Process completed with exit code 1.

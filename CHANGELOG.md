@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0 — 2026-11-05
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+A Podman socket miss, a taken host port, a corrupt mypy cache, an unreachable remote cache, and an Earthly or Dagger engine disconnect are `infra`. A Kafka broker that is not ready and a refused MongoDB connection are `flake`. MongoDB auth failure, a rejected Sonar token, required npm provenance, a GitHub Packages 403, and a rejected remote-cache token are `permissions`. An unpublished package version is `deps`. A quality gate failure and a Prettier check are `test`. A missing Sentry or Coveralls token is `env`.
+
+227 fixtures. Eval 227/227. Notes: [docs/release-notes-v0.17.0.md](docs/release-notes-v0.17.0.md).
+
 ## 0.16.0 — 2026-11-05
 
 Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

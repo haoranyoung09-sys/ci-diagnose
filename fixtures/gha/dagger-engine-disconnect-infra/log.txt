@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run dagger call build
+##[endgroup]
+Error: failed to connect to engine: connection refused
+##[error]Process completed with exit code 1.

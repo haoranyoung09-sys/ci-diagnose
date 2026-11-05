@@ -38,6 +38,8 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | Android Gradle plugin is not compatible (`android-gradle-plugin-mismatch-env`) | Env. Align AGP and Gradle. Not a missing SDK. |
 | Vault password file was not found (`ansible-vault-password-missing-env`) | Env. Set the name. Do not print the password. |
 | No URL for a submodule (`git-submodule-not-initialized-env`) | Env. Initialize submodules. A missing username is a different line. |
+| `SENTRY_AUTH_TOKEN` is unset (`sentry-token-missing-env`) | Env. Set the name. Do not print the value. |
+| Coveralls "Repo token was not provided" (`coveralls-token-missing-env`) | Env. Set the name. Do not print the value. |
 
 ## Recipe
 
@@ -65,4 +67,4 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 
 ## 中文
 
-Node 引擎不符（`node-engine-mismatch-env`）或镜像上没有该 Python/Node 版本（`setup-python-version-missing-env`）时改矩阵或 setup 的版本，不要改锁文件。git-lfs smudge 失败且没有速率或配额行（`git-lfs-smudge-failed-env`）先确认 runner 上装了 git-lfs，不要打印凭据。DerivedData 不存在（`xcode-derived-data-missing-env`）改路径，不是签名失败。Codecov token 缺失（`codecov-token-missing-env`）只补名字，不要打印值。sparse-checkout 漏路径（`sparse-checkout-miss-env`）加宽模式。`packageManager` 字段和 corepack 不一致（`corepack-packagemanager-mismatch-env`）对齐工具版本，不要为此改锁文件。Android Gradle plugin 和 Gradle 不兼容（`android-gradle-plugin-mismatch-env`）对齐版本。Ansible vault 密码文件找不到（`ansible-vault-password-missing-env`）只补名字，不要打印密码。子模块没有 URL（`git-submodule-not-initialized-env`）先初始化子模块。找不到 `action.yml`（`composite-action-path-missing-env`）时改正 `uses` 路径。只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。
+Node 引擎不符（`node-engine-mismatch-env`）或镜像上没有该 Python/Node 版本（`setup-python-version-missing-env`）时改矩阵或 setup 的版本，不要改锁文件。git-lfs smudge 失败且没有速率或配额行（`git-lfs-smudge-failed-env`）先确认 runner 上装了 git-lfs，不要打印凭据。DerivedData 不存在（`xcode-derived-data-missing-env`）改路径，不是签名失败。Codecov token 缺失（`codecov-token-missing-env`）只补名字，不要打印值。sparse-checkout 漏路径（`sparse-checkout-miss-env`）加宽模式。`packageManager` 字段和 corepack 不一致（`corepack-packagemanager-mismatch-env`）对齐工具版本，不要为此改锁文件。Android Gradle plugin 和 Gradle 不兼容（`android-gradle-plugin-mismatch-env`）对齐版本。Ansible vault 密码文件找不到（`ansible-vault-password-missing-env`）只补名字，不要打印密码。子模块没有 URL（`git-submodule-not-initialized-env`）先初始化子模块。`SENTRY_AUTH_TOKEN` 未设置（`sentry-token-missing-env`）和 Coveralls repo token 未提供（`coveralls-token-missing-env`）只补名字，不要打印值。找不到 `action.yml`（`composite-action-path-missing-env`）时改正 `uses` 路径。只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。

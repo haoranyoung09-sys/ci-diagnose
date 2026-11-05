@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run sentry-cli releases new
+##[endgroup]
+error: Auth token is required for this request. Please set SENTRY_AUTH_TOKEN.
+##[error]Process completed with exit code 1.

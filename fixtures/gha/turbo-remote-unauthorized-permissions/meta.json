@@ -1,0 +1,8 @@
+{
+  "id": "turbo-remote-unauthorized-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Turbo remote cache rejected the token. Not a cache miss. Fix the token name. Do not print it."
+}

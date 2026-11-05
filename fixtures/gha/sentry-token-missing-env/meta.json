@@ -1,0 +1,8 @@
+{
+  "id": "sentry-token-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Sentry CLI requires SENTRY_AUTH_TOKEN and the name is unset. Set the name. Do not print a value."
+}

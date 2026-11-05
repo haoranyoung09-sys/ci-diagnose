@@ -1,0 +1,8 @@
+{
+  "id": "nx-remote-cache-unreachable-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Nx could not reach the remote cache. Not an unauthorized token. One rerun checks the cache path."
+}

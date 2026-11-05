@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run mvn verify
+##[endgroup]
+Error: Bind for 0.0.0.0:8080 failed: port is already allocated
+##[error]Process completed with exit code 1.

@@ -1,0 +1,8 @@
+{
+  "id": "npm-provenance-required-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "npm refused the publish because provenance attestation is required. Not a missing package. Configure provenance. Do not print a token."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "sonar-quality-gate-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Sonar quality gate failed. Fix the issues the gate names. Not a scanner auth error."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run mypy src
+##[endgroup]
+error: Failed to load cache: cache is corrupt in .mypy_cache
+##[error]Process completed with exit code 1.

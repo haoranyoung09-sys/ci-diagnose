@@ -1,0 +1,8 @@
+{
+  "id": "dagger-engine-disconnect-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Dagger failed to connect to the engine. Not a Docker daemon line. Start the engine."
+}
