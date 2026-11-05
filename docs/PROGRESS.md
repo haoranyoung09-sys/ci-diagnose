@@ -195,6 +195,20 @@ Improvement: Eighteen fixtures cover Docker context size versus BuildKit cache e
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.14.0 only after the public mirror has this commit.
 
+## 2026-11-05 — 0.15.0
+
+Date: 2026-11-05
+
+Fixtures: 193
+
+Eval: 193/193 (1.000)
+
+Version: 0.15.0
+
+Improvement: Sixteen fixtures cover ECR and CodeArtifact deny versus 429, Artifactory 403 versus 429, a sumdb checksum versus a Go proxy deadline, Packagist 429, a yanked gem versus Rubygems 503, a Deno permission prompt, a sparse-checkout miss, SELinux and AppArmor, a packageManager mismatch, and a Next.js static path collision. A concurrency cancel stays unknown and is distinct from a matrix sibling cancel. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.15.0 only after the public mirror has this commit.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

@@ -34,6 +34,7 @@ Corpus:
 | `job-timeout-and-assertion-unknown` | Tie: job maximum execution time and `AssertionError`. Alternates `infra` and `test`. |
 | `matrix-cancel-sibling-unknown` | Another matrix cell failed and this job was canceled. No v0 signal. |
 | `dependabot-word-only-unknown` | The log only names Dependabot. No resolver, timeout, or token line. |
+| `concurrency-cancel-unknown` | A newer run in the concurrency group replaced this one. The signal stays under the threshold. Read that newer run. A matrix cancel because a sibling failed (`matrix-cancel-sibling-unknown`) has no signal. |
 
 ## Near misses
 

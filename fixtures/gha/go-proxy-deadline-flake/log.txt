@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run go mod download
+##[endgroup]
+go: downloading example.com/lib v1.2.3
+Get https://proxy.golang.org/example.com/lib/@v/v1.2.3.zip: context deadline exceeded
+##[error]Process completed with exit code 1.

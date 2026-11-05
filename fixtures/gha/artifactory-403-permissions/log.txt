@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run jfrog rt download
+##[endgroup]
+ERROR: Artifactory returned 403 Forbidden for repo example-local
+##[error]Process completed with exit code 1.

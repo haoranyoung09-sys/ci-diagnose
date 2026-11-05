@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run actions/checkout@v4
+##[endgroup]
+fatal: sparse-checkout: path packages/example is not present in the working tree
+##[error]Process completed with exit code 1.

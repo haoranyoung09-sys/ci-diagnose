@@ -1,0 +1,8 @@
+{
+  "id": "rubygems-503-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Rubygems returned 503 Service Unavailable. Not a yanked gem. One rerun is the check."
+}

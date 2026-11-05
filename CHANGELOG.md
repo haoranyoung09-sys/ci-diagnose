@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 — 2026-11-05
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+An ECR or CodeArtifact deny and an Artifactory 403 are `permissions`. A 429 from those hosts, Packagist, a Go proxy deadline, and a Rubygems 503 are `flake`. A sumdb checksum mismatch and a yanked gem are `deps`. A Deno `--allow-net` prompt is `permissions`. A sparse-checkout miss and a `packageManager` mismatch are `env`. SELinux and AppArmor denials are `infra`. Conflicting `getStaticPaths` is `test`. A concurrency cancel stays `unknown` and now names itself; a matrix sibling cancel still has no signal.
+
+193 fixtures. Eval 193/193. Notes: [docs/release-notes-v0.15.0.md](docs/release-notes-v0.15.0.md).
+
 ## 0.14.0 — 2026-11-05
 
 Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

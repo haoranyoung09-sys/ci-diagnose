@@ -62,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.14.0` is on the public mirror:
+The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.15.0` is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.14.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.15.0/scripts/install.sh | bash
 ```
 
 That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
@@ -81,7 +81,7 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (177 fixtures). It does not call `gh`.
+The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (193 fixtures). It does not call `gh`.
 
 Weekly notes: [docs/PROGRESS.md](docs/PROGRESS.md).
 
@@ -186,6 +186,9 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | Docker context too large, BuildKit cache export, or `vm.max_map_count` | `infra` | `docker-build-context-too-large-infra`, `buildx-cache-export-failed-infra`, `elasticsearch-vm-max-map-count-infra` |
 | Helm or collector deadline, crates.io 429, or Redis still loading | `flake` | `helm-upgrade-deadline-flake`, `cargo-crates-io-rate-limit-flake`, `redis-loading-not-ready-flake` |
 | Yanked crate, missing Codecov token, or a quarantined download | `deps` / `env` / `permissions` | `cargo-crate-yanked-deps`, `codecov-token-missing-env`, `macos-quarantine-blocked-permissions` |
+| ECR or CodeArtifact deny, or Artifactory 403 | `permissions` | `ecr-pull-denied-permissions`, `codeartifact-token-denied-permissions`, `artifactory-403-permissions` |
+| sumdb mismatch, yanked gem, or static export path collision | `deps` / `test` | `gosum-database-mismatch-deps`, `gem-version-yanked-deps`, `next-static-path-collision-test` |
+| sparse checkout miss, or packageManager field mismatch | `env` | `sparse-checkout-miss-env`, `corepack-packagemanager-mismatch-env` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

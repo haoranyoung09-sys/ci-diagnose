@@ -1,0 +1,8 @@
+{
+  "id": "apparmor-denied-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "AppArmor denied an open on the self-hosted runner. Not a GitHub token 403. Adjust the host profile."
+}

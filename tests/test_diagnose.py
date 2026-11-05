@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 177)
+        self.assertGreaterEqual(len(fixtures), 193)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -742,6 +742,40 @@ class CorpusFixturesTest(unittest.TestCase):
             )
         )
         self.assertNotIn("crate version is yanked", rate["signals"])
+
+    def test_registry_deny_is_not_a_throttle(self) -> None:
+        deny = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "ecr-pull-denied-permissions")
+        )
+        self.assertEqual(deny["category"], "permissions")
+        self.assertIn("cloud API denied the action", deny["signals"])
+        self.assertNotIn("registry returned 429", deny["signals"])
+        throttled = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "codeartifact-429-flake")
+        )
+        self.assertEqual(throttled["category"], "flake")
+        self.assertNotIn("cloud API denied the action", throttled["signals"])
+        yanked = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "gem-version-yanked-deps")
+        )
+        self.assertEqual(yanked["category"], "deps")
+        self.assertNotIn("package index returned 503", yanked["signals"])
+        concurrency = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "concurrency-cancel-unknown")
+        )
+        self.assertEqual(concurrency["category"], "unknown")
+        self.assertIn("concurrency group canceled the run", concurrency["signals"])
+        matrix = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "matrix-cancel-sibling-unknown")
+        )
+        self.assertEqual(matrix["signals"], ["no taxonomy signal"])
+        paths = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "next-static-path-collision-test"
+            )
+        )
+        self.assertEqual(paths["category"], "test")
+        self.assertIn("static export paths collide", paths["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

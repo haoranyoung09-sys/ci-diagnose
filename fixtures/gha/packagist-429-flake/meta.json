@@ -1,0 +1,8 @@
+{
+  "id": "packagist-429-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Packagist returned 429 Too Many Requests. Not a PHP platform mismatch. One rerun is the check."
+}

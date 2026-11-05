@@ -1,0 +1,8 @@
+{
+  "id": "codeartifact-429-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "CodeArtifact returned 429 Too Many Requests. Not an IAM deny. One rerun is the check."
+}

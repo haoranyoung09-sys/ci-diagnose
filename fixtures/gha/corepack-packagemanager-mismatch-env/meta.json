@@ -1,0 +1,8 @@
+{
+  "id": "corepack-packagemanager-mismatch-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "corepack is using a different package manager than the packageManager field. Align the tool version. Do not rewrite the lockfile for this line."
+}
