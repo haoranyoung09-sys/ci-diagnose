@@ -1,0 +1,8 @@
+{
+  "id": "coveralls-token-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Coveralls said the repo token was not provided. Set the name. Do not print the value."
+}

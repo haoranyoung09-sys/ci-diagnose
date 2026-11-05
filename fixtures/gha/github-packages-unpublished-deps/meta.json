@@ -1,0 +1,8 @@
+{
+  "id": "github-packages-unpublished-deps",
+  "label": "deps",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "This package version was unpublished from GitHub Packages. Pick a published version. Not a 403 on publish."
+}

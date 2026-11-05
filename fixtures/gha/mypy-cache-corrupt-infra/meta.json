@@ -1,0 +1,8 @@
+{
+  "id": "mypy-cache-corrupt-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "mypy could not load .mypy_cache because the cache is corrupt. Clear that cache. Not a type error."
+}

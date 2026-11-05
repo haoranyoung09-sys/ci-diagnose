@@ -233,6 +233,24 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `conda-package-not-found-deps` | deps | conda PackagesNotFoundError. |
 | `bazel-analysis-failed-test` | test | Bazel analysis of the target failed. |
 | `bazel-fetch-failed-flake` | flake | Bazel repository fetch failed. |
+| `podman-socket-unavailable-infra` | infra | Cannot connect to the Podman socket. |
+| `testcontainers-port-conflict-infra` | infra | Host port is already allocated. |
+| `kafka-broker-not-ready-flake` | flake | Kafka broker is not ready. |
+| `mongodb-auth-failed-permissions` | permissions | MongoDB authentication failed. |
+| `mongodb-connection-refused-flake` | flake | MongoDB connection refused. |
+| `sentry-token-missing-env` | env | SENTRY_AUTH_TOKEN is unset. |
+| `sonar-quality-gate-failed-test` | test | Quality gate failed. |
+| `sonar-token-rejected-permissions` | permissions | sonar.token was rejected. |
+| `coveralls-token-missing-env` | env | Coveralls repo token was not provided. |
+| `npm-provenance-required-permissions` | permissions | Publish requires provenance. |
+| `github-packages-publish-403-permissions` | permissions | GitHub Packages publish returned 403. |
+| `github-packages-unpublished-deps` | deps | Package version was unpublished. |
+| `mypy-cache-corrupt-infra` | infra | mypy cache is corrupt. |
+| `prettier-check-drift-test` | test | Prettier check found drift. |
+| `turbo-remote-unauthorized-permissions` | permissions | Turbo remote cache unauthorized. |
+| `nx-remote-cache-unreachable-infra` | infra | Nx remote cache could not be reached. |
+| `earthly-daemon-unavailable-infra` | infra | Earthly daemon is not responding. |
+| `dagger-engine-disconnect-infra` | infra | Dagger failed to connect to the engine. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

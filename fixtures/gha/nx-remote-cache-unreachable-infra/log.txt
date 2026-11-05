@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run nx build
+##[endgroup]
+Nx Cloud: cache miss and the remote cache could not be reached
+##[error]Process completed with exit code 1.

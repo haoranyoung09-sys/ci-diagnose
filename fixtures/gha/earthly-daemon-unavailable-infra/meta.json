@@ -1,0 +1,8 @@
+{
+  "id": "earthly-daemon-unavailable-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Earthly daemon is not responding. Not a Docker daemon line. Start the engine."
+}

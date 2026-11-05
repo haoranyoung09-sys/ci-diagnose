@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 209)
+        self.assertGreaterEqual(len(fixtures), 227)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -808,6 +808,50 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(state["category"], "flake")
         self.assertNotIn("Terraform provider lock is inconsistent", state["signals"])
+
+    def test_publish_and_cache_auth_stay_apart(self) -> None:
+        provenance = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "npm-provenance-required-permissions"
+            )
+        )
+        self.assertEqual(provenance["category"], "permissions")
+        unpublished = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "github-packages-unpublished-deps"
+            )
+        )
+        self.assertEqual(unpublished["category"], "deps")
+        self.assertNotIn("GitHub Packages rejected the publish", unpublished["signals"])
+        denied = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "turbo-remote-unauthorized-permissions"
+            )
+        )
+        self.assertEqual(denied["category"], "permissions")
+        missed = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "nx-remote-cache-unreachable-infra"
+            )
+        )
+        self.assertEqual(missed["category"], "infra")
+        self.assertNotIn("remote cache rejected the token", missed["signals"])
+        gate = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "sonar-quality-gate-failed-test"
+            )
+        )
+        self.assertEqual(gate["category"], "test")
+        auth = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "mongodb-auth-failed-permissions")
+        )
+        refused = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "mongodb-connection-refused-flake"
+            )
+        )
+        self.assertEqual(auth["category"], "permissions")
+        self.assertEqual(refused["category"], "flake")
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

@@ -1,0 +1,8 @@
+{
+  "id": "mongodb-connection-refused-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The MongoDB port refused the connection. Not an authentication failure. One rerun is the check."
+}

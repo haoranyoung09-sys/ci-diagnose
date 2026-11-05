@@ -288,6 +288,36 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "permissions",
         8,
+        r"mongoservererror: authentication failed",
+        "MongoDB rejected the credentials",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"sonar\.token",
+        "Sonar scanner token was rejected",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"provenance attestation is required",
+        "publish requires provenance",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"npm\.pkg\.github\.com",
+        "GitHub Packages rejected the publish",
+    ),
+    Rule(
+        "permissions",
+        8,
+        r"remote cache unauthorized|nx cloud: unauthorized",
+        "remote cache rejected the token",
+    ),
+    Rule(
+        "permissions",
+        8,
         r"exceeded its LFS budget",
         "Git LFS budget was exceeded",
     ),
@@ -481,6 +511,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "env",
         8,
+        r"sentry_auth_token",
+        "Sentry auth token is missing",
+    ),
+    Rule(
+        "env",
+        8,
+        r"repo token was not provided",
+        "coverage repo token was not provided",
+    ),
+    Rule(
+        "env",
+        8,
         r"not compatible with your version of node|unsupported engine|the engine \"node\" is incompatible",
         "Node engine does not match this runner",
     ),
@@ -624,6 +666,12 @@ RULES: tuple[Rule, ...] = (
         8,
         r"solvepackagenotfound|packagesnotfounderror",
         "conda solver could not find a package",
+    ),
+    Rule(
+        "deps",
+        8,
+        r"was unpublished from github packages",
+        "package version was unpublished",
     ),
     Rule(
         "deps",
@@ -848,6 +896,18 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "flake",
         8,
+        r"broker may not be available|timed out waiting for a node assignment",
+        "Kafka broker is not ready",
+    ),
+    Rule(
+        "flake",
+        8,
+        r"mongonetworkerror",
+        "MongoDB connection was refused",
+    ),
+    Rule(
+        "flake",
+        8,
         r"notarization request failed: the request timed out",
         "Apple notarization request timed out",
     ),
@@ -926,6 +986,18 @@ RULES: tuple[Rule, ...] = (
         8,
         r"analysis of target \S+ failed",
         "Bazel analysis failed",
+    ),
+    Rule(
+        "test",
+        8,
+        r"quality gate status: failed",
+        "quality gate failed",
+    ),
+    Rule(
+        "test",
+        8,
+        r"forgot to run prettier",
+        "formatter check failed",
     ),
     Rule(
         "test",
@@ -1046,6 +1118,36 @@ RULES: tuple[Rule, ...] = (
         8,
         r"too many clients already|remaining connection slots are reserved",
         "database connection limit was reached",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"cannot connect to podman",
+        "Podman socket is not available",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"port is already allocated",
+        "host port is already allocated",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"mypy_cache|failed to load cache: cache is corrupt",
+        "type checker cache is corrupt",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"remote cache could not be reached|remote caching unavailable",
+        "remote cache could not be reached",
+    ),
+    Rule(
+        "infra",
+        8,
+        r"earthly daemon is not responding|failed to connect to engine",
+        "build engine is disconnected",
     ),
     Rule(
         "infra",

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run npm test
+##[endgroup]
+org.apache.kafka.common.errors.TimeoutException: Timed out waiting for a node assignment. Broker may not be available.
+##[error]Process completed with exit code 1.

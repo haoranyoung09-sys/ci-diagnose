@@ -62,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.16.0` is on the public mirror:
+The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.17.0` is on the public mirror:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.16.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.17.0/scripts/install.sh | bash
 ```
 
 That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
@@ -81,7 +81,7 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (209 fixtures). It does not call `gh`.
+The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (227 fixtures). It does not call `gh`.
 
 Weekly notes: [docs/PROGRESS.md](docs/PROGRESS.md).
 
@@ -192,6 +192,9 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | ImagePullBackOff, or Postgres too many clients | `infra` | `kube-image-pull-backoff-infra`, `postgres-too-many-clients-infra` |
 | CrashLoopBackOff, or Bazel analysis failed | `test` | `kube-crashloop-backoff-test`, `bazel-analysis-failed-test` |
 | Wrapper checksum, or conda package not found | `deps` | `gradle-wrapper-checksum-deps`, `conda-package-not-found-deps` |
+| Podman socket down, or a host port already allocated | `infra` | `podman-socket-unavailable-infra`, `testcontainers-port-conflict-infra` |
+| Quality gate failed, or Prettier check drift | `test` | `sonar-quality-gate-failed-test`, `prettier-check-drift-test` |
+| Provenance required, or a remote cache token rejected | `permissions` | `npm-provenance-required-permissions`, `turbo-remote-unauthorized-permissions` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 

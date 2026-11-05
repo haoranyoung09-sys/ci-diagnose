@@ -1,0 +1,8 @@
+{
+  "id": "mongodb-auth-failed-permissions",
+  "label": "permissions",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "MongoDB rejected the credentials. Not a refused connection. Fix the credential name. Do not print the password."
+}

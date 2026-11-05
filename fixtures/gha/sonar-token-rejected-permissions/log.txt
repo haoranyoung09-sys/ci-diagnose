@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run sonar-scanner
+##[endgroup]
+ERROR: Not authorized. Please check the properties sonar.token and sonar.host.url.
+##[error]Process completed with exit code 1.

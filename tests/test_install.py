@@ -34,7 +34,7 @@ class InstallScriptTest(unittest.TestCase):
             completed = run(["--help"], Path(tmp))
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertIn("--force", completed.stdout)
-        self.assertIn("v0.16.0", completed.stdout)
+        self.assertIn("v0.17.0", completed.stdout)
         self.assertIn("haoranyoung09-sys/ci-diagnose", completed.stdout)
 
     def test_user_install_is_idempotent_and_refuses_a_real_directory(self) -> None:

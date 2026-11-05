@@ -1,0 +1,8 @@
+{
+  "id": "prettier-check-drift-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Prettier found files that are not formatted. Format those files. Not a heap OOM."
+}

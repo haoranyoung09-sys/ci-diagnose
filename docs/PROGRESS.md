@@ -223,6 +223,20 @@ Improvement: Sixteen fixtures cover ImagePullBackOff versus CrashLoopBackOff, Gr
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.16.0 only after the public mirror has this commit.
 
+## 2026-11-05 — 0.17.0
+
+Date: 2026-11-05
+
+Fixtures: 227
+
+Eval: 227/227 (1.000)
+
+Version: 0.17.0
+
+Improvement: Eighteen fixtures cover a Podman socket, a taken host port, Kafka not ready, MongoDB auth versus connection refused, Sentry and Coveralls tokens, a Sonar quality gate versus scanner auth, npm provenance, GitHub Packages 403 versus an unpublished version, a corrupt mypy cache, Prettier check drift, remote cache unauthorized versus unreachable, and Earthly versus Dagger engine disconnect. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.17.0 only after the public mirror has this commit.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

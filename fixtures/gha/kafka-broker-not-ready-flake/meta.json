@@ -1,0 +1,8 @@
+{
+  "id": "kafka-broker-not-ready-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The client timed out waiting for a Kafka node assignment. The broker is not ready. One rerun is the check."
+}
