@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run otel-collector
+##[endgroup]
+otel-collector: failed to scrape endpoint: context deadline exceeded
+##[error]Process completed with exit code 1.

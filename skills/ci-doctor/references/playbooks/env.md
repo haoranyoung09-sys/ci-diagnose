@@ -31,6 +31,8 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 | match could not read a Username, or could not decrypt the repo (`match-git-username-env`, `match-decrypt-failed-env`) | The git credential or passphrase name is missing. Do not print it. |
 | Keystore file not found, Android SDK location not found, or `UnsupportedClassVersionError` (`android-keystore-missing-env`, `android-sdk-location-missing-env`, `bundletool-java-mismatch-env`) | Point at the file or JDK the job expects. Do not commit a keystore. |
 | "smudge filter lfs failed" with no rate limit and no budget line (`git-lfs-smudge-failed-env`) | Env. git-lfs is not set up on the runner. Do not print credentials. |
+| DerivedData does not exist (`xcode-derived-data-missing-env`) | Env. Point the job at a writable DerivedData path. Not a codesign failure. |
+| "Codecov token is missing" (`codecov-token-missing-env`) | Env. Set the name. Do not print the value. A 401 is `permissions`. |
 
 ## Recipe
 
@@ -58,4 +60,4 @@ Corpus: `missing-database-url`, `missing-node-auth-token`, `unset-api-base-url`,
 
 ## 中文
 
-Node 引擎不符（`node-engine-mismatch-env`）或镜像上没有该 Python/Node 版本（`setup-python-version-missing-env`）时改矩阵或 setup 的版本，不要改锁文件。git-lfs smudge 失败且没有速率或配额行（`git-lfs-smudge-failed-env`）先确认 runner 上装了 git-lfs，不要打印凭据。找不到 `action.yml`（`composite-action-path-missing-env`）时改正 `uses` 路径。只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。
+Node 引擎不符（`node-engine-mismatch-env`）或镜像上没有该 Python/Node 版本（`setup-python-version-missing-env`）时改矩阵或 setup 的版本，不要改锁文件。git-lfs smudge 失败且没有速率或配额行（`git-lfs-smudge-failed-env`）先确认 runner 上装了 git-lfs，不要打印凭据。DerivedData 不存在（`xcode-derived-data-missing-env`）改路径，不是签名失败。Codecov token 缺失（`codecov-token-missing-env`）只补名字，不要打印值。找不到 `action.yml`（`composite-action-path-missing-env`）时改正 `uses` 路径。只引用变量或输入的名字，不引用值。仓库级 secret 对另一个 `environment:` 不可见，先核对 job 用的环境再判断缺失。`empty-token-and-permission-unknown` 是 `env` 和 `permissions` 打平，不要填一个假 token，也不要开 `write-all`。一次只补一个名字。下一个错误如果是 403 或锁文件，就换对应 playbook；已经是第二次尝试则停止。

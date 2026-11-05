@@ -1,0 +1,4 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Dependabot
+##[endgroup]
+Dependabot couldn't update this dependency because of an unknown error.

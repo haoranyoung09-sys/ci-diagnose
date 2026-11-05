@@ -1,0 +1,8 @@
+{
+  "id": "dependabot-word-only-unknown",
+  "label": "unknown",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The log only says Dependabot could not update a dependency. There is no resolver, timeout, or token line. Stay unknown. Do not review a Dependabot pull request from this line."
+}

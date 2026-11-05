@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker compose up elasticsearch
+##[endgroup]
+bootstrap check failure: max virtual memory areas vm.max_map_count [65530] is too low
+##[error]Process completed with exit code 1.

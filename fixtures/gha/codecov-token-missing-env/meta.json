@@ -1,0 +1,8 @@
+{
+  "id": "codecov-token-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Codecov refused a tokenless upload because the token is missing. Not a network timeout and not a rejected token. Set the name. Do not print the value."
+}

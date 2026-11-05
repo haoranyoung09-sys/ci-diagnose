@@ -1,0 +1,8 @@
+{
+  "id": "macos-sip-blocked-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "System Integrity Protection blocked a write under a protected path. Not a quarantine attribute and not a token. Write outside the protected path."
+}

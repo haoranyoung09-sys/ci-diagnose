@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.0 — 2026-11-05
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+A Docker build context that is too large, a BuildKit cache export failure, `vm.max_map_count`, a Windows path that is too long, and System Integrity Protection are `infra`. A Helm or collector context deadline, a NuGet 503, a crates.io 429, Redis still loading, and a coverage upload timeout are `flake`. A yanked crate is `deps`. Missing DerivedData and a missing Codecov token are `env`. A NuGet 401, a rejected Codecov token, and `com.apple.quarantine` are `permissions`. The word Dependabot with no resolver line stays `unknown`.
+
+177 fixtures. Eval 177/177. Notes: [docs/release-notes-v0.14.0.md](docs/release-notes-v0.14.0.md).
+
 ## 0.13.0 — 2026-11-05
 
 The GitHub rename stays deferred. Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

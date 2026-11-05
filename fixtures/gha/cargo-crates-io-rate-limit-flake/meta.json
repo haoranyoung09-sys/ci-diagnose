@@ -1,0 +1,8 @@
+{
+  "id": "cargo-crates-io-rate-limit-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "crates.io returned 429 Too Many Requests. Not a yanked crate and not a Cargo.lock selection line. One rerun is the check."
+}

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run make install
+##[endgroup]
+error: System Integrity Protection is enabled and blocked writing to /usr/bin
+##[error]Process completed with exit code 1.

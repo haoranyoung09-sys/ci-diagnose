@@ -1,0 +1,8 @@
+{
+  "id": "docker-build-context-too-large-infra",
+  "label": "infra",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Docker build context is larger than the configured limit. Not a missing layer and not a test. Shrink the context."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "helm-upgrade-deadline-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Helm upgrade failed because the context deadline was exceeded. Not a service health-check line and not an RBAC denial. One rerun is the check."
+}

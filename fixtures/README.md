@@ -183,6 +183,24 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `git-lfs-budget-exceeded-permissions` | permissions | Repository exceeded its LFS budget. |
 | `git-lfs-smudge-failed-env` | env | git-lfs smudge filter failed. |
 | `matrix-cancel-sibling-unknown` | unknown | Canceled because another matrix cell failed. |
+| `docker-build-context-too-large-infra` | infra | Build context is larger than the limit. |
+| `buildx-cache-export-failed-infra` | infra | BuildKit cache export failed. |
+| `helm-upgrade-deadline-flake` | flake | Helm upgrade context deadline exceeded. |
+| `otel-collector-scrape-timeout-flake` | flake | Collector scrape context deadline exceeded. |
+| `nuget-feed-unauthorized-permissions` | permissions | NuGet feed returned 401. |
+| `nuget-feed-503-flake` | flake | NuGet service index returned 503. |
+| `cargo-crates-io-rate-limit-flake` | flake | crates.io returned 429. |
+| `cargo-crate-yanked-deps` | deps | Crate version is yanked. |
+| `xcode-derived-data-missing-env` | env | DerivedData does not exist. |
+| `elasticsearch-vm-max-map-count-infra` | infra | vm.max_map_count is too low. |
+| `redis-loading-not-ready-flake` | flake | Redis is still loading its dataset. |
+| `codecov-token-missing-env` | env | Codecov token is missing. |
+| `codecov-upload-timeout-flake` | flake | Coverage upload timed out. |
+| `codecov-token-rejected-permissions` | permissions | Codecov returned 401 Invalid token. |
+| `windows-path-too-long-infra` | infra | PathTooLongException. |
+| `macos-quarantine-blocked-permissions` | permissions | com.apple.quarantine blocked the tool. |
+| `macos-sip-blocked-infra` | infra | System Integrity Protection blocked a write. |
+| `dependabot-word-only-unknown` | unknown | Only the word Dependabot. No resolver line. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

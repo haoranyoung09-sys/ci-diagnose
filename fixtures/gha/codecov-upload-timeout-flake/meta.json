@@ -1,0 +1,8 @@
+{
+  "id": "codecov-upload-timeout-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The coverage upload timed out. Not a missing token line. One rerun is the check."
+}

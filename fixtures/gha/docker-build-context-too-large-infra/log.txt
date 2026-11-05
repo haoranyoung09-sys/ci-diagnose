@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run docker buildx build .
+##[endgroup]
+error: failed to solve: the build context is larger than the configured limit
+##[error]Process completed with exit code 1.
