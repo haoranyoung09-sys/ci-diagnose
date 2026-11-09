@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run cargo build --target wasm32-unknown-unknown
+##[endgroup]
+wasm-ld: error: unable to find library -lc
+##[error]Process completed with exit code 1.

@@ -1,0 +1,6 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run visual
+##[endgroup]
+Chromatic: Missing project token. Set CHROMATIC_PROJECT_TOKEN.
+Error: PERCY_TOKEN is missing.
+##[error]Process completed with exit code 1.

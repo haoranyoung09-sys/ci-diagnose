@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run php artisan migrate
+##[endgroup]
+ERROR: Dirty database version 12. Fix and force version.
+##[error]Process completed with exit code 1.

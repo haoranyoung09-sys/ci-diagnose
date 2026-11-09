@@ -1,0 +1,8 @@
+{
+  "id": "vercel-build-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Vercel build command next build exited 1. Fix the site build. Not a missing token."
+}

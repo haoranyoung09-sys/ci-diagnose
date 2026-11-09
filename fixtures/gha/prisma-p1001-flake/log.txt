@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run prisma migrate deploy
+##[endgroup]
+Error: P1001: Can't reach database server at example:5432
+##[error]Process completed with exit code 1.

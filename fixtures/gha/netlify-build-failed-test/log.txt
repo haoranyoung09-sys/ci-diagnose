@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run netlify build
+##[endgroup]
+Error: Failed during stage 'building site': Build script returned non-zero exit code: 2
+##[error]Process completed with exit code 1.

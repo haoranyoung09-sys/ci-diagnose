@@ -1,0 +1,8 @@
+{
+  "id": "prisma-migrate-drift-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Prisma detected drift between the database schema and the migration history. Not a P1001 connection error. Reconcile the schema."
+}

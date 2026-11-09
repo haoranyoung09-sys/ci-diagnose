@@ -18,10 +18,10 @@ bash scripts/install.sh --user --cli
 
 `--user` 是默认。它把 `~/.agents/skills/ci-doctor` 符号链接到检出里的 `skills/ci-doctor`，并打印两边的路径。`--cli` 额外写入 `~/.local/bin/diagnose`，那个包装脚本执行 `python3 scripts/diagnose.py`。`--project` 在当前目录链接 `./.agents/skills/ci-doctor`。已有的链接或目录不会被替换，除非加上 `--force`。Python 低于 3.9 时脚本会停下。
 
-Action 引用保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。安装脚本钉在当前发行标签上。公开镜像发布 `v0.17.0` 之后：
+Action 引用保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。安装脚本钉在当前发行标签上。公开镜像发布 `v0.18.0` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.17.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.18.0/scripts/install.sh | bash
 ```
 
 这种形式把标签压缩包下载到 `~/.local/share/ci-fail-classify`。不发送 token。`--claude` 还会链接 `~/.claude/skills/ci-doctor`。装了 Cursor 就不要加它，否则 skill 会被加载两次。

@@ -251,6 +251,24 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `nx-remote-cache-unreachable-infra` | infra | Nx remote cache could not be reached. |
 | `earthly-daemon-unavailable-infra` | infra | Earthly daemon is not responding. |
 | `dagger-engine-disconnect-infra` | infra | Dagger failed to connect to the engine. |
+| `slack-webhook-404-env` | env | Slack webhook returned 404 no_service. |
+| `slack-rate-limit-flake` | flake | Slack API was ratelimited. |
+| `datadog-api-key-missing-env` | env | DD_API_KEY is not set. |
+| `newrelic-license-missing-env` | env | NEW_RELIC_LICENSE_KEY was not provided. |
+| `pulumi-stack-locked-flake` | flake | Pulumi stack is locked. |
+| `pulumi-login-missing-env` | env | Pulumi is not logged in. |
+| `cloudflare-workers-auth-permissions` | permissions | Workers deploy was not authorized. |
+| `vercel-token-missing-env` | env | VERCEL_TOKEN is missing. |
+| `vercel-build-failed-test` | test | next build exited 1 on Vercel. |
+| `netlify-auth-failed-permissions` | permissions | Netlify authentication failed. |
+| `netlify-build-failed-test` | test | Netlify building site stage failed. |
+| `laravel-migrate-dirty-env` | env | Database migration version is dirty. |
+| `django-migrate-conflict-test` | test | Conflicting Django migrations. |
+| `prisma-migrate-drift-env` | env | Prisma schema drift. |
+| `prisma-p1001-flake` | flake | Prisma P1001 cannot reach the database. |
+| `graphql-schema-conflict-test` | test | GraphQL schema could not be merged. |
+| `visual-snapshot-token-missing-env` | env | Chromatic and Percy tokens are missing. |
+| `wasm-link-failed-test` | test | wasm-ld failed to link. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

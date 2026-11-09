@@ -62,10 +62,10 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.17.0` 之后：
+上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.18.0` 之后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.17.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.18.0/scripts/install.sh | bash
 ```
 
 下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
@@ -81,7 +81,7 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-这条 fixture 会打印一份 `deps` 报告，对应 `npm ci` 的锁文件不同步。`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵（227 条 fixture），不调用 `gh`。
+这条 fixture 会打印一份 `deps` 报告，对应 `npm ci` 的锁文件不同步。`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵（245 条 fixture），不调用 `gh`。
 
 每周记录：[docs/PROGRESS.md](docs/PROGRESS.md)。
 
@@ -195,6 +195,9 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | Podman socket 不可用，或宿主端口已被占用 | `infra` | `podman-socket-unavailable-infra`、`testcontainers-port-conflict-infra` |
 | 质量门失败，或 Prettier 检查漂移 | `test` | `sonar-quality-gate-failed-test`、`prettier-check-drift-test` |
 | 发布要求 provenance，或远程缓存拒绝 token | `permissions` | `npm-provenance-required-permissions`、`turbo-remote-unauthorized-permissions` |
+| Slack webhook 404，或缺少 Datadog key | `env` | `slack-webhook-404-env`、`datadog-api-key-missing-env` |
+| Pulumi 栈锁，或 Prisma P1001 | `flake` | `pulumi-stack-locked-flake`、`prisma-p1001-flake` |
+| Workers 部署未授权，或 Vercel 构建失败 | `permissions` / `test` | `cloudflare-workers-auth-permissions`、`vercel-build-failed-test` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 

@@ -1,0 +1,8 @@
+{
+  "id": "django-migrate-conflict-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Django found conflicting migrations with multiple leaf nodes. Merge the migration graph. Not a missing database URL."
+}

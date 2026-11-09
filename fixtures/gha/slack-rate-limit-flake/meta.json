@@ -1,0 +1,8 @@
+{
+  "id": "slack-rate-limit-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Slack API was ratelimited. Not a missing webhook. One rerun after the retry window is the check."
+}

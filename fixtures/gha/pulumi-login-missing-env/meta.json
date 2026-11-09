@@ -1,0 +1,8 @@
+{
+  "id": "pulumi-login-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Pulumi is not logged in. Run login with the existing credential name. Do not print a token. Not a stack lock."
+}

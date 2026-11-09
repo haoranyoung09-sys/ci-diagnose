@@ -1,0 +1,8 @@
+{
+  "id": "datadog-api-key-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "DD_API_KEY is not set. Set the name. Do not print the value. Not a test failure."
+}

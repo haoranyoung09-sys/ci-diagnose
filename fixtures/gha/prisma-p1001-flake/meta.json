@@ -1,0 +1,8 @@
+{
+  "id": "prisma-p1001-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Prisma P1001 could not reach the database server. Not schema drift. One rerun is the check."
+}

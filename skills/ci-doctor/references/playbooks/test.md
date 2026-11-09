@@ -24,6 +24,10 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 | "Analysis of target … failed" (`bazel-analysis-failed-test`) | Test. Fix that target. A repository fetch failure is `flake`. A remote-cache miss is `infra`. |
 | "QUALITY GATE STATUS: FAILED" (`sonar-quality-gate-failed-test`) | Test. Fix the gate. A rejected `sonar.token` is `permissions`. |
 | "Forgot to run Prettier?" (`prettier-check-drift-test`) | Test. Format the named files. A heap OOM is `infra`. |
+| `next build` exited or Netlify "building site" failed (`vercel-build-failed-test`, `netlify-build-failed-test`) | Test. A missing deploy token is `env` or `permissions`. |
+| "Conflicting migrations detected" (`django-migrate-conflict-test`) | Test. Merge the migration graph. A dirty version is `env`. |
+| "Unable to merge GraphQL schema" (`graphql-schema-conflict-test`) | Test. A type was defined more than once. |
+| `wasm-ld: error` (`wasm-link-failed-test`) | Test. Not a heap OOM and not a Rust linker allocation failure. |
 
 ## Recipe
 
@@ -51,4 +55,4 @@ Corpus: `npm-test-assertion`, `pytest-assertion`, `go-test-want-got`, `maven-sur
 
 ## 中文
 
-`getStaticPaths` 路径冲突（`next-static-path-collision-test`）改其中一条路由；同一构建的堆内存耗尽是 infra。`CrashLoopBackOff`（`kube-crashloop-backoff-test`）容器已经启动又退出，去看上一次日志；ImagePullBackOff 是 infra。Bazel analysis 失败（`bazel-analysis-failed-test`）改那个 target；仓库拉取失败是 flake。质量门失败（`sonar-quality-gate-failed-test`）改门禁指出的问题；`sonar.token` 被拒绝是 permissions。Prettier 检查失败（`prettier-check-drift-test`）格式化那些文件。`could not compile` 加上 rustc 类型错误（`cargo-type-mismatch-test`）改编译器指出的类型，不要改 `Cargo.lock`。引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。
+`getStaticPaths` 路径冲突（`next-static-path-collision-test`）改其中一条路由；同一构建的堆内存耗尽是 infra。`CrashLoopBackOff`（`kube-crashloop-backoff-test`）容器已经启动又退出，去看上一次日志；ImagePullBackOff 是 infra。Bazel analysis 失败（`bazel-analysis-failed-test`）改那个 target；仓库拉取失败是 flake。质量门失败（`sonar-quality-gate-failed-test`）改门禁指出的问题；`sonar.token` 被拒绝是 permissions。Prettier 检查失败（`prettier-check-drift-test`）格式化那些文件。`next build` 或 Netlify building site 失败（`vercel-build-failed-test`、`netlify-build-failed-test`）改站点构建。Django 迁移冲突（`django-migrate-conflict-test`）合并迁移图。GraphQL schema 合并不了（`graphql-schema-conflict-test`）改重复的类型。`wasm-ld` 失败（`wasm-link-failed-test`）不是堆内存耗尽。`could not compile` 加上 rustc 类型错误（`cargo-type-mismatch-test`）改编译器指出的类型，不要改 `Cargo.lock`。引用测试名和期望值/实际值。只改产品代码或断言其中一边。不要删除、跳过或 `.only` 测试来换绿。`timeout-and-assertion-unknown` 是打平，先别改断言。`cargo` 只有 `test result: FAILED` 时，先要失败用例的名字，这还不算一次尝试。用日志里的同一条命令复现；第二次仍失败就停下并总结两次 diff。

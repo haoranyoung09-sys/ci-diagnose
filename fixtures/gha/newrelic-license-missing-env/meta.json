@@ -1,0 +1,8 @@
+{
+  "id": "newrelic-license-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "NEW_RELIC_LICENSE_KEY was not provided. Set the name. Do not print the value."
+}

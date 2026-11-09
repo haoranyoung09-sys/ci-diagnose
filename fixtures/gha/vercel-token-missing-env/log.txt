@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run vercel deploy
+##[endgroup]
+Error: No token found. Please login with vercel login or set VERCEL_TOKEN.
+##[error]Process completed with exit code 1.

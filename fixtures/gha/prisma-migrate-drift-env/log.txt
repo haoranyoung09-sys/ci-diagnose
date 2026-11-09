@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run prisma migrate deploy
+##[endgroup]
+Drift detected: Your database schema is not in sync with your migration history.
+##[error]Process completed with exit code 1.

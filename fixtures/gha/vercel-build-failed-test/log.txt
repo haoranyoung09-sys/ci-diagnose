@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run vercel build
+##[endgroup]
+Error: Command "next build" exited with 1
+##[error]Process completed with exit code 1.

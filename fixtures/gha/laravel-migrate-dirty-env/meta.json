@@ -1,0 +1,8 @@
+{
+  "id": "laravel-migrate-dirty-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The database migration version is dirty. Repair that version before migrating again. Not a PHPUnit assertion."
+}
