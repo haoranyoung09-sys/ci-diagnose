@@ -1,0 +1,8 @@
+{
+  "id": "vercel-token-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Vercel found no token. Set VERCEL_TOKEN. Do not print it. Not a build error."
+}

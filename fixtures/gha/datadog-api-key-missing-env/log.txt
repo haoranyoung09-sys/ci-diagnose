@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run datadog-ci
+##[endgroup]
+Error: DD_API_KEY is not set
+##[error]Process completed with exit code 1.

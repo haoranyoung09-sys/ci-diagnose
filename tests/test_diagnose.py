@@ -438,7 +438,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 227)
+        self.assertGreaterEqual(len(fixtures), 245)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -852,6 +852,39 @@ class CorpusFixturesTest(unittest.TestCase):
         )
         self.assertEqual(auth["category"], "permissions")
         self.assertEqual(refused["category"], "flake")
+
+    def test_notify_and_migrate_shapes_stay_apart(self) -> None:
+        missing = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "slack-webhook-404-env")
+        )
+        limited = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "slack-rate-limit-flake")
+        )
+        self.assertEqual(missing["category"], "env")
+        self.assertEqual(limited["category"], "flake")
+        self.assertNotIn("Slack API rate limit", missing["signals"])
+        drift = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "prisma-migrate-drift-env")
+        )
+        down = diagnose.diagnose_fixture(
+            diagnose.load_fixture(ROOT / "fixtures" / "gha" / "prisma-p1001-flake")
+        )
+        self.assertEqual(drift["category"], "env")
+        self.assertEqual(down["category"], "flake")
+        workers = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "cloudflare-workers-auth-permissions"
+            )
+        )
+        self.assertEqual(workers["category"], "permissions")
+        self.assertNotIn("CDN returned 520 from the origin", workers["signals"])
+        visual = diagnose.diagnose_fixture(
+            diagnose.load_fixture(
+                ROOT / "fixtures" / "gha" / "visual-snapshot-token-missing-env"
+            )
+        )
+        self.assertEqual(visual["category"], "env")
+        self.assertIn("visual snapshot token is missing", visual["signals"])
 
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")

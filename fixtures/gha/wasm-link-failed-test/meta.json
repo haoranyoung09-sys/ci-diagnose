@@ -1,0 +1,8 @@
+{
+  "id": "wasm-link-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "wasm-ld failed to link. Not a heap OOM and not a Rust linker allocation failure. Fix the missing symbol or library the linker names."
+}

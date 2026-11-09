@@ -237,6 +237,20 @@ Improvement: Eighteen fixtures cover a Podman socket, a taken host port, Kafka n
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.17.0 only after the public mirror has this commit.
 
+## 2026-11-05 — 0.18.0
+
+Date: 2026-11-05
+
+Fixtures: 245
+
+Eval: 245/245 (1.000)
+
+Version: 0.18.0
+
+Improvement: Eighteen fixtures cover Slack webhook 404 versus rate limit, missing Datadog and New Relic keys, Pulumi lock versus login, Workers deploy auth, Vercel and Netlify token versus build failure, a dirty migration, Django migration conflicts, Prisma drift versus P1001, a GraphQL schema merge failure, missing Chromatic and Percy tokens, and a wasm-ld failure. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.18.0 only after the public mirror has this commit.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

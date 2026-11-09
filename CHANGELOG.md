@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 — 2026-11-05
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.
+
+A Slack webhook 404, a missing Datadog or New Relic key, Pulumi not logged in, a missing Vercel token, a dirty migration, Prisma drift, and a missing Chromatic or Percy token are `env`. Slack rate limit, a locked Pulumi stack, and Prisma P1001 are `flake`. Workers deploy auth and Netlify authentication are `permissions`. A failed site build, conflicting Django migrations, an unmerged GraphQL schema, and a wasm-ld failure are `test`. CDN 520 was already `flake`. A JavaScript heap OOM was already `infra`.
+
+245 fixtures. Eval 245/245. Notes: [docs/release-notes-v0.18.0.md](docs/release-notes-v0.18.0.md).
+
 ## 0.17.0 — 2026-11-05
 
 Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

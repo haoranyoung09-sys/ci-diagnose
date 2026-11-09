@@ -1,0 +1,8 @@
+{
+  "id": "slack-webhook-404-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Slack notify step got 404 no_service. The webhook URL is gone. Fix the URL name. Do not print the webhook."
+}

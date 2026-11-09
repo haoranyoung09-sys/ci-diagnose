@@ -1,0 +1,8 @@
+{
+  "id": "graphql-schema-conflict-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "GraphQL codegen could not merge the schema because a type was defined more than once. Fix the schema. Not a missing token."
+}

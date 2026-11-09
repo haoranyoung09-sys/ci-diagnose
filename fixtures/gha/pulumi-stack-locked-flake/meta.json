@@ -1,0 +1,8 @@
+{
+  "id": "pulumi-stack-locked-flake",
+  "label": "flake",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The Pulumi stack is locked by another update. Not a login failure. One rerun after the lock clears. Do not cancel the lock in that attempt."
+}

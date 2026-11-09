@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run netlify deploy
+##[endgroup]
+Error: Netlify authentication failed. No authorization header
+##[error]Process completed with exit code 1.

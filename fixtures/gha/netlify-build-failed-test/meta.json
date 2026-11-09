@@ -1,0 +1,8 @@
+{
+  "id": "netlify-build-failed-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "Netlify failed during the building site stage. Fix the build script. Not an authentication failure."
+}
