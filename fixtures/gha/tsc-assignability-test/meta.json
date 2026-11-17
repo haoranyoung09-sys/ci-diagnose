@@ -1,0 +1,8 @@
+{
+  "id": "tsc-assignability-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "tsc reported TS2322. The TypeScript source does not type-check. Not a missing node version."
+}

@@ -47,6 +47,10 @@ MAX_EVIDENCE = 6
 # fixture without storing a hit for every matching line of a huge log.
 EVIDENCE_POOL = 32
 MAX_BYTES = 2_000_000
+# A long Actions log fails at the end. Keep the start and the end so an
+# early setup line and the real compiler error both stay inside the cap.
+HEAD_KEEP = 262_144
+OMITTED_MIDDLE = b"\n[ci-doctor omitted middle of log]\n"
 _STDERR_CAP = 256_000
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_FIXTURES = REPO_ROOT / "fixtures" / "gha"
@@ -1080,6 +1084,48 @@ RULES: tuple[Rule, ...] = (
     Rule(
         "test",
         8,
+        r"error: cannot find symbol",
+        "Java compiler cannot find a symbol",
+    ),
+    Rule(
+        "test",
+        8,
+        r"\berror CS\d+:",
+        "C# compiler rejected the source",
+    ),
+    Rule(
+        "test",
+        8,
+        r"\berror TS\d+:",
+        "TypeScript compiler rejected the source",
+    ),
+    Rule(
+        "test",
+        8,
+        r"use of undeclared identifier|undeclared \(first use",
+        "C or C++ name was not declared",
+    ),
+    Rule(
+        "test",
+        8,
+        r"unresolved reference:",
+        "Kotlin compiler rejected a reference",
+    ),
+    Rule(
+        "test",
+        8,
+        r"cannot find '[^']+' in scope",
+        "Swift compiler cannot find a name",
+    ),
+    Rule(
+        "env",
+        8,
+        r"error MSB3644:",
+        ".NET reference assemblies were not found",
+    ),
+    Rule(
+        "test",
+        8,
         r"command \"next build\" exited with|failed during stage 'building site'",
         "site build command failed",
     ),
@@ -1335,6 +1381,97 @@ COMPILED: tuple[tuple[Rule, re.Pattern[str]], ...] = tuple(
     (rule, rule.compile()) for rule in RULES
 )
 
+
+def _required_needles(pattern: str) -> tuple[str, ...] | None:
+    """Literals that must appear before a rule can match.
+
+    ``None`` means the pattern is not safe to prefilter. A tuple is an OR:
+    the line must contain at least one needle. Needles are lowercase.
+
+    ``re`` factors a shared prefix out of ``a|b``, so ``use|undeclared``
+    becomes ``u`` plus a branch. The needles are the prefix plus each side.
+    """
+    try:
+        tree = re._parser.parse(pattern, re.IGNORECASE)
+    except re.error:
+        return None
+
+    def alternatives(seq: object) -> list[str] | None:
+        try:
+            items = list(seq)  # type: ignore[arg-type]
+        except TypeError:
+            return None
+        prefix: list[str] = []
+        for index, item in enumerate(items):
+            if not isinstance(item, tuple) or len(item) != 2:
+                break
+            op, args = item
+            if op is re._constants.LITERAL:
+                prefix.append(chr(args).lower())
+                continue
+            if op is re._constants.AT:
+                continue
+            if op in (re._constants.MAX_REPEAT, re._constants.MIN_REPEAT):
+                lo, _hi, _inner = args
+                if lo == 0:
+                    if len(prefix) >= 4:
+                        return ["".join(prefix)]
+                    prefix.clear()
+                    continue
+            pre = "".join(prefix)
+            if op is re._constants.SUBPATTERN and isinstance(args, tuple) and args:
+                inner = alternatives(args[-1])
+                if inner is None:
+                    return [pre] if len(pre) >= 4 else None
+                if index == len(items) - 1 and not pre:
+                    return inner
+                if len(pre) >= 4:
+                    return [pre]
+                return None
+            if op is re._constants.BRANCH and index == len(items) - 1:
+                found: list[str] = []
+                for alt in args[1]:
+                    alt_needles = alternatives(alt)
+                    if not alt_needles:
+                        return [pre] if len(pre) >= 4 else None
+                    for piece in alt_needles:
+                        combined = pre + piece
+                        if len(combined) < 4:
+                            return [pre] if len(pre) >= 4 else None
+                        found.append(combined)
+                return found or None
+            return [pre] if len(pre) >= 4 else None
+        word = "".join(prefix)
+        return [word] if len(word) >= 4 else None
+
+    found = alternatives(tree)
+    if not found:
+        return None
+    return tuple(dict.fromkeys(found))
+
+
+NEEDLES: tuple[tuple[str, ...] | None, ...] = tuple(
+    _required_needles(rule.pattern) for rule, _pattern in COMPILED
+)
+_NEEDLE_RULES: dict[str, list[int]] = {}
+for _index, _group in enumerate(NEEDLES):
+    if not _group:
+        continue
+    for _needle in _group:
+        _NEEDLE_RULES.setdefault(_needle, []).append(_index)
+NEEDLE_RULES: dict[str, tuple[int, ...]] = {
+    needle: tuple(indexes) for needle, indexes in _NEEDLE_RULES.items()
+}
+_ALL_NEEDLES = sorted(NEEDLE_RULES, key=len, reverse=True)
+FAST_NEEDLES = (
+    re.compile("|".join(re.escape(needle) for needle in _ALL_NEEDLES))
+    if _ALL_NEEDLES
+    else None
+)
+UNFILTERED: tuple[int, ...] = tuple(
+    index for index, needles in enumerate(NEEDLES) if not needles
+)
+
 NEXT_STEPS: dict[str, tuple[str, ...]] = {
     "test": (
         "Open the failing test named in the evidence and compare expected vs received. Change the product code or the assertion, whichever the failure shows is wrong.",
@@ -1391,6 +1528,36 @@ class Hit:
     signal: str
 
 
+@dataclass(frozen=True)
+class LogSpan:
+    """Text that was actually scored.
+
+    ``tail_window_line`` is the 1-based line in this text where the kept tail
+    starts. ``tail_log_line`` is that same line's number in the original log.
+    Head lines keep their original numbers. The omission marker has neither.
+    """
+
+    text: str
+    truncated: bool
+    tail_window_line: int | None = None
+    tail_log_line: int | None = None
+
+    def log_line(self, window_line: int, line_text: str = "") -> int | None:
+        if "ci-doctor omitted middle of log" in line_text:
+            return None
+        if (
+            self.truncated
+            and self.tail_window_line is not None
+            and self.tail_log_line is not None
+            and window_line >= self.tail_window_line
+        ):
+            return self.tail_log_line + (window_line - self.tail_window_line)
+        if self.truncated and self.tail_window_line is not None:
+            if window_line >= self.tail_window_line - 1 and not line_text.strip():
+                return None
+        return window_line
+
+
 @dataclass
 class Classification:
     category: str
@@ -1403,6 +1570,7 @@ class Classification:
     alternates: list[str]
     truncated: bool
     prefix_stripped: bool
+    locations: list[dict[str, object]] | None = None
 
 
 def redact(text: str) -> str:
@@ -1459,18 +1627,114 @@ def _as_float(value: float) -> float:
     return float(f"{value:.2f}")
 
 
+def _finish_window(head: bytes, tail: bytes, total_newlines: int) -> tuple[bytes, int]:
+    """Join head and tail. Return the window and the original line of the tail."""
+    newline = head.rfind(b"\n")
+    if newline >= 0:
+        head = head[: newline + 1]
+    newline = tail.find(b"\n")
+    if newline >= 0:
+        tail = tail[newline + 1 :]
+    window = head + OMITTED_MIDDLE + tail
+    if len(window) > MAX_BYTES:
+        window = window[:MAX_BYTES]
+    before = total_newlines - tail.count(b"\n")
+    return window, before + 1
+
+
+def _assemble_window(head: bytes, tail: bytes) -> bytes:
+    """Join a head and a tail on newline boundaries, under MAX_BYTES."""
+    window, _tail_line = _finish_window(head, tail, head.count(b"\n") + tail.count(b"\n"))
+    return window
+
+
+def _window_bytes(raw: bytes) -> tuple[bytes, bool, int | None]:
+    if len(raw) <= MAX_BYTES:
+        return raw, False, None
+    tail_keep = MAX_BYTES - HEAD_KEEP - len(OMITTED_MIDDLE)
+    if tail_keep < 1024:
+        tail_keep = MAX_BYTES // 2
+    head = raw[: MAX_BYTES - tail_keep - len(OMITTED_MIDDLE)]
+    tail = raw[-tail_keep:]
+    window, tail_log_line = _finish_window(head, tail, raw.count(b"\n"))
+    return window, True, tail_log_line
+
+
+def _span_from_window(window: bytes, truncated: bool, tail_log_line: int | None) -> LogSpan:
+    text = window.decode("utf-8", errors="replace")
+    if not truncated or tail_log_line is None:
+        return LogSpan(text, truncated, None, None)
+    tail_window_line = None
+    for index, line in enumerate(text.splitlines(), start=1):
+        if "ci-doctor omitted middle of log" in line:
+            tail_window_line = index + 1
+            break
+    return LogSpan(text, True, tail_window_line, tail_log_line)
+
+
+def window_text(text: str) -> tuple[str, bool]:
+    """Keep the start and the end of a log that is past MAX_BYTES.
+
+    The middle is not scored. ``truncated`` is true when that happens.
+    ``line`` in evidence is a position in this window, not the original log
+    and not the source file.
+    """
+    span = prepare_span(text)
+    return span.text, span.truncated
+
+
+def _tail_window_line(head_kept: str) -> int:
+    """1-based window line of the first kept tail line.
+
+    ``OMITTED_MIDDLE`` starts and ends with a newline, and the kept head ends
+    on a newline when it has one. That is a blank line, the marker, then the
+    tail. Checked against ``str.splitlines`` in the tests.
+    """
+    return head_kept.count("\n") + 3
+
+
+def _window_ascii(text: str) -> LogSpan:
+    """Window an ASCII log without encoding a second full copy."""
+    tail_keep = MAX_BYTES - HEAD_KEEP - len(OMITTED_MIDDLE)
+    if tail_keep < 1024:
+        tail_keep = MAX_BYTES // 2
+    head_len = MAX_BYTES - tail_keep - len(OMITTED_MIDDLE)
+    head = text[:head_len]
+    tail = text[-tail_keep:]
+    head_cut = head.rfind("\n")
+    if head_cut >= 0:
+        head = head[: head_cut + 1]
+    tail_cut = tail.find("\n")
+    if tail_cut >= 0:
+        tail_start = len(text) - tail_keep + tail_cut + 1
+        tail = tail[tail_cut + 1 :]
+    else:
+        tail_start = len(text) - tail_keep
+    before = text.count("\n", 0, tail_start)
+    marker = OMITTED_MIDDLE.decode("ascii")
+    window = head + marker + tail
+    if len(window) > MAX_BYTES:
+        window = window[:MAX_BYTES]
+    return LogSpan(window, True, _tail_window_line(head), before + 1)
+
+
+def prepare_span(text: str) -> LogSpan:
+    """Window an in-memory log and remember how tail lines map back."""
+    if len(text) <= MAX_BYTES and text.isascii():
+        return LogSpan(text, False, None, None)
+    if text.isascii():
+        return _window_ascii(text)
+    raw = text.encode("utf-8", errors="replace")
+    window, truncated, tail_log_line = _window_bytes(raw)
+    if not truncated:
+        return LogSpan(text, False, None, None)
+    return _span_from_window(window, True, tail_log_line)
+
+
 def _prepare(text: str) -> tuple[str, bool]:
     """Cap an in-memory log at MAX_BYTES. Prefer read_log_text for files."""
-    if len(text) <= MAX_BYTES and text.isascii():
-        return text, False
-    raw = text.encode("utf-8", errors="replace")
-    if len(raw) <= MAX_BYTES:
-        return text, False
-    raw = raw[:MAX_BYTES]
-    newline = raw.rfind(b"\n")
-    if newline >= 0:
-        raw = raw[:newline]
-    return raw.decode("utf-8", errors="replace"), True
+    span = prepare_span(text)
+    return span.text, span.truncated
 
 
 def _read_capped(stream: io.BufferedIOBase, limit: int) -> tuple[bytes, bool]:
@@ -1495,11 +1759,74 @@ def _decode_capped(raw: bytes, truncated: bool) -> str:
     return raw.decode("utf-8", errors="replace")
 
 
-def read_log_text(path: Path) -> tuple[str, bool]:
-    """Stream a log up to MAX_BYTES. The rest of a huge file is not read."""
+def _read_window(stream: io.BufferedIOBase) -> tuple[bytes, bool, int | None]:
+    """Read a stream, keeping only the head and the tail."""
+    head = bytearray()
+    total_newlines = 0
+    while len(head) < HEAD_KEEP:
+        block = stream.read(min(65536, HEAD_KEEP - len(head)))
+        if not block:
+            return bytes(head), False, None
+        total_newlines += block.count(b"\n")
+        head.extend(block)
+    tail_keep = MAX_BYTES - HEAD_KEEP - len(OMITTED_MIDDLE)
+    if tail_keep < 1024:
+        tail_keep = MAX_BYTES // 2
+    tail = bytearray()
+    truncated = False
+    while True:
+        block = stream.read(65536)
+        if not block:
+            break
+        truncated = True
+        total_newlines += block.count(b"\n")
+        tail.extend(block)
+        if len(tail) > tail_keep:
+            del tail[: len(tail) - tail_keep]
+    if not truncated:
+        return bytes(head), False, None
+    window, tail_log_line = _finish_window(bytes(head), bytes(tail), total_newlines)
+    return window, True, tail_log_line
+
+
+def read_log_span(path: Path) -> LogSpan:
+    """Read a log, keeping at most MAX_BYTES, and map tail lines back."""
+    size = path.stat().st_size
     with path.open("rb") as handle:
-        raw, truncated = _read_capped(handle, MAX_BYTES)
-    return _decode_capped(raw, truncated), truncated
+        if size <= MAX_BYTES:
+            raw = handle.read()
+            return LogSpan(raw.decode("utf-8", errors="replace"), False, None, None)
+        head = handle.read(HEAD_KEEP)
+        tail_keep = MAX_BYTES - HEAD_KEEP - len(OMITTED_MIDDLE)
+        if tail_keep < 1024:
+            tail_keep = MAX_BYTES // 2
+        handle.seek(max(0, size - tail_keep))
+        tail = handle.read(tail_keep)
+        # Newlines in the unread middle. The head and tail are already in hand.
+        middle_start = len(head)
+        middle_end = max(middle_start, size - tail_keep)
+        handle.seek(middle_start)
+        middle_newlines = 0
+        remaining = middle_end - middle_start
+        while remaining > 0:
+            block = handle.read(min(65536, remaining))
+            if not block:
+                break
+            middle_newlines += block.count(b"\n")
+            remaining -= len(block)
+    total_newlines = head.count(b"\n") + middle_newlines + tail.count(b"\n")
+    window, tail_log_line = _finish_window(head, tail, total_newlines)
+    return _span_from_window(window, True, tail_log_line)
+
+
+def read_log_text(path: Path) -> tuple[str, bool]:
+    """Read a log, keeping at most MAX_BYTES.
+
+    Files under the cap are read whole. Larger files contribute their start
+    and their end. The middle is not loaded.
+    """
+    span = read_log_span(path)
+    return span.text, span.truncated
 
 
 def _consider_hit(pool: list[Hit], hit: Hit) -> None:
@@ -1592,14 +1919,212 @@ def _drop_exit_137_when_host_is_named(
     scores["infra"] -= COMPILED[exit_index][0].weight
 
 
-def classify(text: str) -> Classification:
+_SOURCE_EXTS = (
+    "py",
+    "pyi",
+    "java",
+    "kt",
+    "kts",
+    "cs",
+    "go",
+    "rs",
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "c",
+    "cc",
+    "cpp",
+    "cxx",
+    "h",
+    "hh",
+    "hpp",
+    "swift",
+)
+_SOURCE_FILE = re.compile(
+    r"(?P<path>(?:[A-Za-z]:)?[^\s\"'][^\n:]{0,220}?\.(?:"
+    + "|".join(_SOURCE_EXTS)
+    + r")):(?P<line>\d+)(?::(?P<col>\d+))?(?::|\s)"
+)
+_SOURCE_PARENS = re.compile(
+    r"(?P<path>(?:[A-Za-z]:\\[^\n():]+|[^:\s\"'][^()\n:]{0,220}))"
+    r"\((?P<line>\d+)(?:,(?P<col>\d+))?\)\s*:"
+)
+_SOURCE_PYTHON = re.compile(
+    r'File "(?P<path>[^"\r\n]{1,240})", line (?P<line>\d+)\b'
+)
+_SOURCE_RUST = re.compile(
+    r"-->\s+(?P<path>\S+?):(?P<line>\d+):(?P<col>\d+)"
+)
+_SOURCE_FILE_URL = re.compile(
+    r"file://(?P<path>/[^\s:]+\.(?:kt|kts|swift|java|py|go|rs|ts|cs)):(?P<line>\d+):(?P<col>\d+)"
+)
+
+
+def _clean_source_path(path: str) -> str | None:
+    """Return a source path, or None when it looks like a URL or a secret."""
+    cleaned = path.strip().strip('"').strip("'")
+    if cleaned.startswith("file://"):
+        cleaned = cleaned[len("file://") :]
+    lowered = cleaned.lower()
+    if (
+        "://" in lowered
+        or lowered.startswith("http")
+        or cleaned.startswith("//")
+    ):
+        return None
+    if any(
+        token in cleaned
+        for token in ("ghp_", "github_pat_", "AKIA", "eyJ", "[REDACTED")
+    ):
+        return None
+    if not any(sep in cleaned for sep in ("/", "\\", ".")):
+        return None
+    if len(cleaned) > 240:
+        return None
+    return cleaned
+
+
+def _source_hit(
+    path: str, line_text: str, column_text: str | None
+) -> dict[str, object] | None:
+    cleaned = _clean_source_path(path)
+    if cleaned is None:
+        return None
+    try:
+        line_no = int(line_text)
+    except ValueError:
+        return None
+    if line_no < 1 or line_no > 1_000_000:
+        return None
+    column = None
+    if column_text:
+        try:
+            column = int(column_text)
+        except ValueError:
+            column = None
+        if column is not None and (column < 1 or column > 100_000):
+            column = None
+    return {"path": cleaned, "line": line_no, "column": column}
+
+
+def _locations_on_line(line: str) -> list[dict[str, object]]:
+    """Source positions written by a compiler. Not log line numbers."""
+    found: list[dict[str, object]] = []
+    seen: set[tuple[str, int, int | None]] = set()
+
+    def add(hit: dict[str, object] | None) -> None:
+        if hit is None:
+            return
+        key = (str(hit["path"]), int(hit["line"]), hit["column"] if isinstance(hit["column"], int) else None)
+        if key in seen:
+            return
+        seen.add(key)
+        found.append(hit)
+
+    for match in _SOURCE_PYTHON.finditer(line):
+        add(_source_hit(match.group("path"), match.group("line"), None))
+    for match in _SOURCE_PARENS.finditer(line):
+        add(_source_hit(match.group("path"), match.group("line"), match.group("col")))
+    for match in _SOURCE_RUST.finditer(line):
+        add(_source_hit(match.group("path"), match.group("line"), match.group("col")))
+    for match in _SOURCE_FILE.finditer(line):
+        add(_source_hit(match.group("path"), match.group("line"), match.group("col")))
+    for match in _SOURCE_FILE_URL.finditer(line):
+        add(_source_hit(match.group("path"), match.group("line"), match.group("col")))
+    return found
+
+
+def _collect_locations(
+    lines: list[str], evidence_lines: list[int], span: LogSpan
+) -> list[dict[str, object]]:
+    """Look beside evidence lines so a rustc ``-->`` line is not missed."""
+    found: list[dict[str, object]] = []
+    seen: set[tuple[str, int, int | None]] = set()
+    for evidence_line in evidence_lines:
+        start = max(1, evidence_line - 8)
+        end = min(len(lines), evidence_line + 8)
+        for window_line in range(start, end + 1):
+            raw = lines[window_line - 1]
+            if "ci-doctor omitted middle of log" in raw:
+                continue
+            redacted = redact(raw)
+            for hit in _locations_on_line(redacted):
+                column = hit["column"] if isinstance(hit["column"], int) else None
+                key = (str(hit["path"]), int(hit["line"]), column)
+                if key in seen:
+                    continue
+                seen.add(key)
+                found.append(
+                    {
+                        "path": hit["path"],
+                        "line": hit["line"],
+                        "column": column,
+                        "window_line": window_line,
+                        "log_line": span.log_line(window_line, redacted),
+                    }
+                )
+            if len(found) >= 3:
+                return found
+    return found
+
+
+def _location_step(locations: list[dict[str, object]], category: str) -> str:
+    first = locations[0]
+    place = f"{first['path']}:{first['line']}"
+    if isinstance(first.get("column"), int):
+        place += f":{first['column']}"
+    window_line = first.get("window_line")
+    log_line = first.get("log_line")
+    where = f"window line {window_line}"
+    if isinstance(log_line, int) and log_line != window_line:
+        where += f", original log line {log_line}"
+    extra = ""
+    if len(locations) > 1:
+        extra = f" {len(locations)} source locations were found; this is the first."
+    if category == "env":
+        action = "The message names a missing tool or pack, not a logic change."
+    elif category == "test":
+        action = "Change that source line or the test that points at it. Do not delete the file to force a green build."
+    else:
+        action = "Quote that source line. Do not invent a different file."
+    return (
+        f"Open {place}. That is a source location, not a log position ({where})."
+        f"{extra} {action}"
+    )
+
+
+def _line_may_hold_secret(line: str) -> bool:
+    """Cheap gate so warning lines skip the secret-rule scan."""
+    return (
+        "=" in line
+        or "://" in line
+        or "eyJ" in line
+        or "ghp_" in line
+        or "github_pat_" in line
+        or "Bearer" in line
+        or "bearer" in line
+        or "AKIA" in line
+        or "BEGIN " in line
+        or "sk_" in line
+        or "npm_" in line
+        or "xox" in line
+    )
+
+
+def classify(text: str, span: LogSpan | None = None) -> Classification:
     """Classify log text. Does not read fixture labels.
 
     Each line is normalized and redacted once, then every rule is scored at
     most once. Matching runs on the redacted line so a secret cannot become
     a signal. Evidence keeps a bounded pool per category.
+    ``evidence[].line`` is a line in the kept window. ``log_line`` is the
+    original log line when it is known. ``source`` is a compiler location.
     """
-    body, truncated = _prepare(text)
+    if span is None:
+        span = prepare_span(text)
+    body = span.text
+    truncated = span.truncated
     failed_jobs = _failed_jobs(body)
     scores = {category: 0 for category in CATEGORIES}
     matched = [False] * len(COMPILED)
@@ -1609,7 +2134,8 @@ def classify(text: str) -> Classification:
     last_line = 0
     ignore_continue = False
 
-    for line_no, raw in enumerate(body.splitlines(), start=1):
+    window_lines = body.splitlines()
+    for line_no, raw in enumerate(window_lines, start=1):
         if failed_jobs is not None:
             job = _job_name(raw)
             if job is not None and job not in failed_jobs:
@@ -1619,24 +2145,41 @@ def classify(text: str) -> Classification:
             prefix_stripped = True
         if not cleaned.strip():
             continue
-        redacted_line = redact(cleaned)
-        lowered = redacted_line.lower()
+        lowered_raw = cleaned.lower()
         # A continue-on-error step is noise. Resume scoring at the next group.
-        if "##[endgroup]" in lowered or lowered.startswith("##[group]"):
+        if "##[endgroup]" in lowered_raw or lowered_raw.startswith("##[group]"):
             ignore_continue = False
-        elif ignore_continue:
             continue
-        elif "continue-on-error" in lowered:
+        if ignore_continue:
+            continue
+        if "continue-on-error" in lowered_raw:
             ignore_continue = True
             continue
-        last_text = redacted_line
         last_line = line_no
-        for index, (rule, pattern) in enumerate(COMPILED):
+        fast_hit = FAST_NEEDLES is not None and FAST_NEEDLES.search(lowered_raw) is not None
+        # Redact only lines that can hold a secret or can match a rule.
+        # A warning line that matches nothing is not evidence.
+        if not fast_hit and not UNFILTERED:
+            last_text = cleaned
+            continue
+        redacted_line = redact(cleaned) if _line_may_hold_secret(cleaned) else cleaned
+        lowered = redacted_line.lower() if redacted_line is not cleaned else lowered_raw
+        last_text = redacted_line
+        candidates = set(UNFILTERED)
+        if FAST_NEEDLES is not None and (
+            fast_hit if redacted_line is cleaned else FAST_NEEDLES.search(lowered) is not None
+        ):
+            for needle, indexes in NEEDLE_RULES.items():
+                if needle in lowered:
+                    candidates.update(indexes)
+        for index in candidates:
+            if matched[index]:
+                continue
+            rule, pattern = COMPILED[index]
             if pattern.search(redacted_line) is None:
                 continue
-            if not matched[index]:
-                matched[index] = True
-                scores[rule.category] += rule.weight
+            matched[index] = True
+            scores[rule.category] += rule.weight
             _consider_hit(
                 pools[rule.category],
                 Hit(
@@ -1702,19 +2245,41 @@ def classify(text: str) -> Classification:
         if signal not in deduped:
             deduped.append(signal)
 
+    locations = _collect_locations(
+        window_lines, [hit.line_no for hit in evidence_hits], span
+    )
+    evidence: list[dict[str, object]] = []
+    for hit in evidence_hits:
+        item: dict[str, object] = {
+            "line": hit.line_no,
+            "text": hit.text[:300],
+            "log_line": span.log_line(hit.line_no, hit.text),
+        }
+        for loc in locations:
+            if loc.get("window_line") == hit.line_no:
+                item["source"] = {
+                    "path": loc["path"],
+                    "line": loc["line"],
+                    "column": loc["column"],
+                }
+                break
+        evidence.append(item)
+    steps = list(NEXT_STEPS[category])
+    if locations:
+        steps.insert(0, _location_step(locations, category))
+
     return Classification(
         category=category,
         confidence=confidence,
         confidence_level=confidence_level(confidence),
-        evidence=[
-            {"line": hit.line_no, "text": hit.text[:300]} for hit in evidence_hits
-        ],
-        next_steps=list(NEXT_STEPS[category]),
+        evidence=evidence,
+        next_steps=steps,
         scores=scores,
         signals=deduped,
         alternates=alternates,
         truncated=truncated,
         prefix_stripped=prefix_stripped,
+        locations=locations,
     )
 
 
@@ -1839,8 +2404,11 @@ def build_report(
     log_path: Path | None = None,
     fixture: dict[str, object] | None = None,
     truncated: bool = False,
+    span: LogSpan | None = None,
 ) -> dict[str, object]:
-    result = classify(log_text)
+    if span is None and truncated:
+        span = LogSpan(log_text, True, None, None)
+    result = classify(log_text, span=span)
     meta = fixture["meta"] if fixture else {}
     assert isinstance(meta, dict)
     expected = meta.get("label") if fixture else None
@@ -1859,6 +2427,7 @@ def build_report(
         "scores": result.scores,
         "alternates": result.alternates,
         "truncated": bool(result.truncated or truncated),
+        "locations": result.locations or [],
         "prefix_stripped": result.prefix_stripped,
         "redacted": True,
         "expected_label": expected,
@@ -1894,7 +2463,9 @@ def format_report(report: dict[str, object]) -> str:
     if signals:
         lines.append("signals: " + "; ".join(str(item) for item in signals))
     if report.get("truncated"):
-        lines.append("truncated: log exceeded 2MB and was cut before classification")
+        lines.append(
+            "truncated: middle omitted; L numbers are window lines, not original log lines"
+        )
     if report.get("prefix_stripped"):
         lines.append("prefix_stripped: removed gh job/step/timestamp prefixes")
     lines.append("")
@@ -1907,6 +2478,17 @@ def format_report(report: dict[str, object]) -> str:
         for item in evidence:
             assert isinstance(item, dict)
             lines.append(f"  L{item['line']:<4} {item['text']}")
+            source = item.get("source")
+            if isinstance(source, dict):
+                column = source.get("column")
+                place = f"{source['path']}:{source['line']}"
+                if isinstance(column, int):
+                    place += f":{column}"
+                log_line = item.get("log_line")
+                note = f"source {place}"
+                if isinstance(log_line, int) and log_line != item.get("line"):
+                    note += f"; original log line {log_line}"
+                lines.append(f"       {note}")
     lines.append("")
     lines.append("next_steps:")
     steps = report["next_steps"]
@@ -1997,12 +2579,16 @@ class CommandResult:
     stdout: str
     stderr: str
     truncated: bool = False
+    tail_window_line: int | None = None
+    tail_log_line: int | None = None
 
 
 @dataclass(frozen=True)
 class FetchedLog:
     text: str
     truncated: bool
+    tail_window_line: int | None = None
+    tail_log_line: int | None = None
 
 
 @dataclass(frozen=True)
@@ -2084,10 +2670,11 @@ def dry_run_payload(request: RunRequest) -> dict[str, object]:
 
 
 def default_runner(argv: list[str]) -> CommandResult:
-    """Run a command and keep at most MAX_BYTES of stdout.
+    """Run a command and keep the head and tail of stdout, at most MAX_BYTES.
 
     A live `gh run view --log-failed` can stream far more than we score.
-    Hitting the cap kills the process so a full pipe cannot stall the read.
+    The middle is discarded while the process runs. The 120s timeout still
+    stops a stream that never ends.
     """
     try:
         proc = subprocess.Popen(
@@ -2106,14 +2693,18 @@ def default_runner(argv: list[str]) -> CommandResult:
     stdout_raw = b""
     stderr_raw = b""
     truncated = False
+    tail_window_line: int | None = None
+    tail_log_line: int | None = None
 
     def consume_stdout() -> None:
-        nonlocal stdout_raw, truncated
-        data, hit_cap = _read_capped(proc.stdout, MAX_BYTES)
+        nonlocal stdout_raw, truncated, tail_window_line, tail_log_line
+        data, hit_cap, tail_line = _read_window(proc.stdout)
         stdout_raw = data
         truncated = hit_cap
-        if hit_cap:
-            proc.kill()
+        tail_log_line = tail_line
+        if hit_cap and tail_line is not None:
+            decoded = _span_from_window(data, True, tail_line)
+            tail_window_line = decoded.tail_window_line
 
     def consume_stderr() -> None:
         nonlocal stderr_raw
@@ -2140,11 +2731,18 @@ def default_runner(argv: list[str]) -> CommandResult:
             ) from None
         out_thread.join(timeout=5)
         err_thread.join(timeout=5)
+        stdout_text = (
+            _span_from_window(stdout_raw, True, tail_log_line).text
+            if truncated and tail_log_line is not None
+            else stdout_raw.decode("utf-8", errors="replace")
+        )
         return CommandResult(
             returncode,
-            _decode_capped(stdout_raw, truncated),
+            stdout_text,
             stderr_raw.decode("utf-8", errors="replace"),
             truncated,
+            tail_window_line,
+            tail_log_line,
         )
     finally:
         proc.stdout.close()
@@ -2192,7 +2790,12 @@ def fetch_failed_log(
             "gh returned an empty failed-step log. The run may still be in "
             "progress, or no step failed."
         )
-    return FetchedLog(redact(result.stdout), result.truncated)
+    return FetchedLog(
+        redact(result.stdout),
+        result.truncated,
+        result.tail_window_line,
+        result.tail_log_line,
+    )
 
 
 def run_self_check() -> int:
@@ -2548,8 +3151,13 @@ def main(argv: list[str] | None = None) -> int:
                     file=sys.stderr,
                 )
                 return 2
-            log_text, truncated = read_log_text(log_path)
-            report = build_report(log_text, log_path=log_path, truncated=truncated)
+            span = read_log_span(log_path)
+            report = build_report(
+                span.text,
+                log_path=log_path,
+                truncated=span.truncated,
+                span=span,
+            )
         elif args.run_url or args.run_id:
             request = parse_run_request(args.run_url, args.run_id, args.repo)
             if args.dry_run:
@@ -2559,7 +3167,13 @@ def main(argv: list[str] | None = None) -> int:
                     print(format_dry_run(request), end="")
                 return 0
             fetched = fetch_failed_log(request)
-            report = build_report(fetched.text, truncated=fetched.truncated)
+            span = LogSpan(
+                fetched.text,
+                fetched.truncated,
+                fetched.tail_window_line,
+                fetched.tail_log_line,
+            )
+            report = build_report(fetched.text, truncated=fetched.truncated, span=span)
             report["id"] = f"{request.repo}#{request.run_id}"
             report["log"] = " ".join(request.command())
             report["repo"] = request.repo

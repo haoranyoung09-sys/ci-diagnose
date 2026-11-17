@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run clang++ -c main.cc
+##[endgroup]
+main.cc:8:3: error: use of undeclared identifier 'widget'
+##[error]Process completed with exit code 1.

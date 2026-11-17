@@ -24,7 +24,7 @@ compatibility: >-
   Action is composite, runs python3 on the runner, and does not call an LLM.
 metadata:
   author: ci-doctor
-  version: "0.18.0"
+  version: "0.21.0"
   taxonomy: v0
 ---
 
@@ -52,7 +52,7 @@ If the user writes in Chinese, write the final report in Chinese. Keep category 
 
 - The user wants a merge decision or "safe to merge". Refuse.
 - Dependabot, Renovate, GitLab CI, or CircleCI. Say this skill does not cover that, and do not invent a category.
-- The log is empty, or `truncated: true` and the failed step is past the 2MB cut. Ask for the failed step. Do not guess from the kept prefix.
+- The log is empty, or `truncated: true` and the failed step was in the omitted middle. The start and the end are kept. Ask for the failed step if the window is still not enough.
 - The category is `unknown` or `alternates` is non-empty. Do not pick the easier side. A hook line with no checkout error (`checkout-hook-only-unknown`) is not a TLS flake.
 
 Human feature intro, in English and 中文: repository `README.md` and `README.zh-CN.md`, section Features. Taxonomy and playbooks in this directory stay in English; category ids stay English in a Chinese report.

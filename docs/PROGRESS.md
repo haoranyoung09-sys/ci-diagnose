@@ -251,6 +251,48 @@ Improvement: Eighteen fixtures cover Slack webhook 404 versus rate limit, missin
 
 Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.18.0 only after the public mirror has this commit.
 
+## 2026-11-10 — 0.19.0
+
+Date: 2026-11-10
+
+Fixtures: 251
+
+Eval: 251/251 (1.000)
+
+Version: 0.19.0
+
+Improvement: Large logs keep the start and the end instead of dropping the failure. javac, C#, TypeScript, and C/C++ undeclared-name errors classify as test. A missing .NET targeting pack is env. Regex scans are gated by a required literal. Python stayed the only runtime after timing the noisy-log path. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.19.0 only after the public mirror has this commit. A later pass can quote the compiler's file:line in the next step more specifically.
+
+## 2026-11-14 — 0.20.0
+
+Date: 2026-11-14
+
+Fixtures: 251
+
+Eval: 251/251 (1.000)
+
+Version: 0.20.0
+
+Improvement: Compiler diagnostics now quote a source file, line, and column separately from the log window line and the original log line. The first next step says to open that source location. Kotlin unresolved references and Swift missing names are test. Python stayed the only runtime. Public URLs stay haoranyoung09-sys/ci-diagnose. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo. Publish tag v0.20.0 only after the public mirror has this commit.
+
+## 2026-11-17 — 0.21.0
+
+Date: 2026-11-17
+
+Fixtures: 251
+
+Eval: 251/251 (1.000)
+
+Version: 0.21.0
+
+Improvement: ASCII logs no longer pay a second full encode to keep original log line numbers. Source locations stay. Same-host bench: large-log peak memory is below 0.19.0 and 0.20.0; wall time is slightly under 0.20.0 and still a few percent over 0.19.0. READMEs separate the Python 3.9+ runtime from recognized log ecosystems and show a checked javac demo. This published release is 0.21.0. The curl pin is v0.21.0. `@v1` includes it once that tag points here. The Action display name stays ci-fail-classify.
+
+Next: Leave `.github/workflows/triage-comment.yml` disabled (`if: false`). Do not rename the public GitHub repo.
+
 ## 中文
 
 每周公开记录。复制上面的模板，填一周。数字以本仓库为准：数 `fixtures/gha` 下的目录，再跑 `make eval`。该命令不调用 `gh`。报告只供参考，不是合并结论。不要编造 star 数或徽章。

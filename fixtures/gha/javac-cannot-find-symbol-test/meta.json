@@ -1,0 +1,8 @@
+{
+  "id": "javac-cannot-find-symbol-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "javac cannot find a symbol. That is a compile error in the Java source, not an unknown exit. Fix the missing type."
+}

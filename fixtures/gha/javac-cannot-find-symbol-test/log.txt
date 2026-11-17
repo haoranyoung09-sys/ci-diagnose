@@ -1,0 +1,7 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run javac src/App.java
+##[endgroup]
+src/App.java:10: error: cannot find symbol
+  symbol:   class Widget
+  location: class App
+##[error]Process completed with exit code 1.

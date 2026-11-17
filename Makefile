@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: diagnose self-check test eval smoke demo
+.PHONY: diagnose self-check test eval smoke demo bench
 
 diagnose:
 	$(PYTHON) scripts/diagnose.py --fixtures-dir fixtures/gha
@@ -18,3 +18,6 @@ smoke: self-check test diagnose eval
 
 demo:
 	$(PYTHON) scripts/render_demo.py
+
+bench:
+	$(PYTHON) scripts/bench_classify.py
