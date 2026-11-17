@@ -2,9 +2,35 @@
 
 [English](README.md)
 
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
+这个工具实际要安装的运行时只有 Python 3.9 或更高。[`scripts/install.sh`](scripts/install.sh) 检查的就是这个下限。跑它不需要编译器，也不需要 Rust crate 或 Go module。
+
 CI 挂了，或者 GitHub Actions 是红的？给日志归类，引用打码后的证据，提出一处最小修复，并说明如何验证。只供参考，不是合并结论。
 
-Action 的显示名是 `ci-fail-classify`。公开 GitHub 路径仍是 `haoranyoung09-sys/ci-diagnose`，仓库改名还没落地。agent skill 的目录仍是 `ci-doctor`。这不是 CI 服务器。它不替你构建、签名或托管应用。两条路并列：下面的 Action，或一条命令安装 skill 和命令行。
+Action 的显示名是 `ci-fail-classify`。公开 GitHub 路径是 `haoranyoung09-sys/ci-diagnose`。agent skill 的目录仍是 `ci-doctor`。这不是 CI 服务器。它不替你构建、签名或托管应用。
+
+## 这一版是 0.21.0
+
+公开发布的就是 [v0.21.0](https://github.com/haoranyoung09-sys/ci-diagnose/releases/tag/v0.21.0)。[`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md) 里的 skill 版本是 `0.21.0`。源文件位置、大日志窗口，以及下面的生态徽章，都在这个标签上。
+
+`uses: haoranyoung09-sys/ci-diagnose@v1` 在 `v1` 指向这次提交之后，就包含这些功能。输入、输出和 branding 不变。
+
+## 能认的日志
+
+这些徽章是分类器认得的日志来自哪些生态。它们不是本仓库要编译或钉版本的依赖。这里不声称任何编译器版本。
+
+[![Java](https://img.shields.io/badge/Java-log%20shapes-007396?logo=openjdk&logoColor=white)](docs/taxonomy.md)
+[![C#](https://img.shields.io/badge/C%23-log%20shapes-512BD4?logo=csharp&logoColor=white)](docs/taxonomy.md)
+[![TypeScript](https://img.shields.io/badge/TypeScript-log%20shapes-3178C6?logo=typescript&logoColor=white)](docs/taxonomy.md)
+[![Rust](https://img.shields.io/badge/Rust-log%20shapes-000000?logo=rust&logoColor=white)](docs/taxonomy.md)
+[![Go](https://img.shields.io/badge/Go-log%20shapes-00ADD8?logo=go&logoColor=white)](docs/taxonomy.md)
+[![C++](https://img.shields.io/badge/C%2B%2B-log%20shapes-00599C?logo=cplusplus&logoColor=white)](docs/taxonomy.md)
+[![Kotlin](https://img.shields.io/badge/Kotlin-log%20shapes-7F52FF?logo=kotlin&logoColor=white)](docs/taxonomy.md)
+[![Swift](https://img.shields.io/badge/Swift-log%20shapes-F05138?logo=swift&logoColor=white)](docs/taxonomy.md)
+
+Python 也会作为日志形态出现（`File "…", line N`、pytest 的 `FAILED`）。那和上面的 Python 3.9+ 运行时徽章不是一回事。
 
 ## 和别的工具差在哪
 
@@ -62,13 +88,13 @@ bash scripts/install.sh --user --cli
 
 它会打印 skill 路径（`~/.agents/skills/ci-doctor`）。加上 `--cli` 时还会写入 `~/.local/bin/diagnose`。如果提示不在 `PATH` 里，把 `~/.local/bin` 加进去。`--project` 改为在当前目录链接 `./.agents/skills/ci-doctor`。`--claude` 只给 Claude Code 用；Cursor 会因此把同一个 skill 加载两次。
 
-上面的 Action 保持 `uses: haoranyoung09-sys/ci-diagnose@v1`。`@v1` 在兼容的发布上才会移动。安装脚本钉在发行标签上。这一版在公开镜像有 `v0.18.0` 之后：
+`uses: haoranyoung09-sys/ci-diagnose@v1` 在 `v1` 指向这里之后就是这一版。curl 安装钉在 `v0.21.0`。不发送 token。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.18.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.21.0/scripts/install.sh | bash
 ```
 
-下载的是标签压缩包，不发送 token。标签还不在时，脚本会停下，并告诉你改从检出目录运行。说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
+说明见 [docs/hosts.zh-CN.md](docs/hosts.zh-CN.md)。Action、命令行和 skill 怎么分开：[docs/architecture.md](docs/architecture.md)。
 
 ## 30 秒演示
 
@@ -81,7 +107,19 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-这条 fixture 会打印一份 `deps` 报告，对应 `npm ci` 的锁文件不同步。`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵（245 条 fixture），不调用 `gh`。
+这条 fixture 会打印一份 `deps` 报告，对应 `npm ci` 的锁文件不同步。上面的图就是那份报告，由文字生成，不是 github.com 的录屏。
+
+这一版也会指出编译器说的文件和行。在这个目录里：
+
+```bash
+sh scripts/demo_offline.sh
+```
+
+和这条命令核对过的输出在 [`docs/examples/javac-report.txt`](docs/examples/javac-report.txt)。图由同一段文字生成，不是屏幕录制。
+
+![javac-cannot-find-symbol-test 的源文件位置](docs/demo-source-location.svg)
+
+`make eval` 打印 `fixtures/gha` 的准确率和混淆矩阵，不调用 `gh`。`make bench` 会重复跑 `scripts/bench_classify.py`。
 
 每周记录：[docs/PROGRESS.md](docs/PROGRESS.md)。
 
@@ -113,7 +151,7 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 
 ### 它怎么工作
 
-1. 读日志，到 2MB 停止。空日志是 `unknown`。截断点之后的信号不计分，报告会标 `truncated`。
+1. 读日志，最多保留 2MB：开头和结尾。中间省略，报告标 `truncated`。空日志是 `unknown`。
 2. 去掉 `gh` 的 job、step 和时间戳前缀。先打码常见 token，再打分。打码不是完整扫描。
 3. 日志里有多个 job、且只有一部分失败时，只给失败的 job 打分。绿 job 上的一句话不能获胜（`multi-job-one-step-failed`）。失败 job 本身没有信号时，结果保持 `unknown`（`multi-job-green-noise-unknown`）。
 4. 打开该类别的 playbook，只跟一条配方。打平不是去选更好改的那一类。
@@ -198,6 +236,8 @@ CI Doctor 给失败的 GitHub Actions 日志归类，引用打码后的证据，
 | Slack webhook 404，或缺少 Datadog key | `env` | `slack-webhook-404-env`、`datadog-api-key-missing-env` |
 | Pulumi 栈锁，或 Prisma P1001 | `flake` | `pulumi-stack-locked-flake`、`prisma-p1001-flake` |
 | Workers 部署未授权，或 Vercel 构建失败 | `permissions` / `test` | `cloudflare-workers-auth-permissions`、`vercel-build-failed-test` |
+| javac、csc、tsc，或 clang/gcc 未声明的名字 | `test` | `javac-cannot-find-symbol-test`、`csharp-type-not-found-test`、`tsc-assignability-test`、`clang-undeclared-identifier-test` |
+| 缺少 MSBuild targeting pack | `env` | `msbuild-targeting-pack-missing-env` |
 
 Playbook 在 [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/)。每一份都有配方、验证、停止条件，和一段简短中文。
 
@@ -248,7 +288,7 @@ python3 scripts/diagnose.py --self-check
 
 `.github/workflows/triage-comment.yml` 是只读失败评论的实验草稿。job 被关掉（`if: false`），工作流只有 `contents: read`，文件里没有 token。
 
-超过 2MB 的日志会在该上限内的换行处截断后再打分，报告里会标出 `truncated`。文件剩余部分不会读入内存。
+超过 2MB 的日志保留开头和结尾，中间不读入内存。报告标 `truncated`。证据里的 `L` 号是这段窗口里的位置。若保留的是文件末尾，报告还会给出原始日志行号。`src/App.java:10` 这种是源文件位置，不是日志行号。
 
 单条 fixture 的报告形如：
 
@@ -310,7 +350,7 @@ python3 scripts/diagnose.py /tmp/ci-doctor-run.log
 - 不要 force-push，也不要改写已经发布的历史，除非操作者明确要求。
 - 不要为了变绿把 `permissions:` 放宽成 `write-all`，也不要用个人 token 换掉 `GITHUB_TOKEN`。
 - 置信度分 `high`、`medium`、`low`。不要说某个改动可以安全合并。
-- 超过 2 MB 的日志会被截断，报告里 `truncated` 为 true。
+- 超过 2 MB 的日志保留开头和结尾，报告里 `truncated` 为 true。
 
 ## 分类
 

@@ -1,0 +1,8 @@
+{
+  "id": "msbuild-targeting-pack-missing-env",
+  "label": "env",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "MSBuild MSB3644 means the .NET reference assemblies are not on the runner. Install the targeting pack. Not a CS error in the program."
+}

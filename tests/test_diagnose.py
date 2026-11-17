@@ -89,26 +89,30 @@ class LargeLogsTest(unittest.TestCase):
         self.assertLessEqual(len(result.evidence), diagnose.MAX_EVIDENCE)
         self.assertEqual(result.scores["test"], 6)
 
-    def test_file_reader_stops_before_the_tail(self) -> None:
+    def test_file_reader_keeps_the_tail_and_redacts_it(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "huge.log"
             with path.open("wb") as handle:
                 handle.write(b"FAIL src/a.test.ts\n")
-                handle.write(b"n\n" * 1_200_000)
+                handle.write(b"n\n" * 200_000)
+                handle.write(b"MIDDLEMARKER\n")
+                handle.write(b"n\n" * 1_000_000)
                 handle.write(b"TAILMARKER " + TOKEN.encode() + b"\n")
             self.assertGreater(path.stat().st_size, diagnose.MAX_BYTES)
             text, truncated = diagnose.read_log_text(path)
             code, out, err = run_main([str(path), "--format", "json"])
         self.assertTrue(truncated)
-        self.assertNotIn("TAILMARKER", text)
-        self.assertNotIn(TOKEN, text)
+        self.assertIn("FAIL src/a.test.ts", text)
+        self.assertIn("TAILMARKER", text)
+        self.assertNotIn("MIDDLEMARKER", text)
+        self.assertIn("omitted middle of log", text)
         self.assertLessEqual(len(text.encode()), diagnose.MAX_BYTES)
         self.assertEqual(code, 0, err)
         report = json.loads(out)
         self.assertTrue(report["truncated"])
         self.assertEqual(report["category"], "test")
         self.assertNotIn(TOKEN, out)
-        self.assertNotIn("TAILMARKER", out)
+        self.assertIn("TAILMARKER", text)
 
     def test_runner_kills_a_huge_stdout(self) -> None:
         code = (
@@ -120,7 +124,8 @@ class LargeLogsTest(unittest.TestCase):
         result = diagnose.default_runner([sys.executable, "-c", code])
         self.assertTrue(result.truncated)
         self.assertIn("FAIL src/a.test.ts", result.stdout)
-        self.assertNotIn("TAILMARKER", result.stdout)
+        self.assertIn("TAILMARKER", result.stdout)
+        self.assertIn("omitted middle of log", result.stdout)
         self.assertLessEqual(len(result.stdout.encode()), diagnose.MAX_BYTES)
 
 
@@ -295,13 +300,14 @@ class AmbiguousSignalsTest(unittest.TestCase):
         self.assertEqual(clear.confidence_level, "high")
         self.assertEqual(close.confidence_level, "medium")
 
-    def test_truncated_tail_is_not_scored(self) -> None:
+    def test_truncated_log_keeps_the_tail_signal(self) -> None:
         text = ("noise line\n" * 200_000) + "FAIL src/hidden.test.ts\n"
         self.assertGreater(len(text.encode()), diagnose.MAX_BYTES)
         result = diagnose.classify(text)
         self.assertTrue(result.truncated)
-        self.assertEqual(result.category, "unknown")
-        self.assertNotIn("FAIL path line", result.signals)
+        self.assertEqual(result.category, "test")
+        self.assertIn("FAIL path line", result.signals)
+        self.assertTrue(any("hidden.test.ts" in hit["text"] for hit in result.evidence))
 
     def test_green_job_cannot_outrank_the_failed_step(self) -> None:
         text = (
@@ -438,7 +444,7 @@ class EncodingTest(unittest.TestCase):
 class CorpusFixturesTest(unittest.TestCase):
     def test_published_fixtures_still_match(self) -> None:
         fixtures = diagnose.load_fixtures(ROOT / "fixtures" / "gha")
-        self.assertGreaterEqual(len(fixtures), 245)
+        self.assertGreaterEqual(len(fixtures), 251)
         for fixture in fixtures:
             report = diagnose.diagnose_fixture(fixture)
             self.assertTrue(
@@ -886,6 +892,40 @@ class CorpusFixturesTest(unittest.TestCase):
         self.assertEqual(visual["category"], "env")
         self.assertIn("visual snapshot token is missing", visual["signals"])
 
+    def test_compiler_errors_are_not_unknown(self) -> None:
+        cases = {
+            "javac-cannot-find-symbol-test": ("test", "Java compiler cannot find a symbol"),
+            "csharp-type-not-found-test": ("test", "C# compiler rejected the source"),
+            "tsc-assignability-test": ("test", "TypeScript compiler rejected the source"),
+            "clang-undeclared-identifier-test": ("test", "C or C++ name was not declared"),
+            "gcc-undeclared-identifier-test": ("test", "C or C++ name was not declared"),
+            "msbuild-targeting-pack-missing-env": (
+                "env",
+                ".NET reference assemblies were not found",
+            ),
+        }
+        for fixture_id, (category, signal) in cases.items():
+            report = diagnose.diagnose_fixture(
+                diagnose.load_fixture(ROOT / "fixtures" / "gha" / fixture_id)
+            )
+            self.assertEqual(report["category"], category, fixture_id)
+            self.assertIn(signal, report["signals"], fixture_id)
+        gcc = "main.c:4:5: error: 'widget' undeclared (first use in this function)\n"
+        self.assertEqual(diagnose.classify(gcc).category, "test")
+
+    def test_prefilter_needles_are_necessary(self) -> None:
+        for fixture in diagnose.load_fixtures(ROOT / "fixtures" / "gha"):
+            for line in str(fixture["log_text"]).splitlines():
+                lowered = line.lower()
+                for index, (_rule, pattern) in enumerate(diagnose.COMPILED):
+                    needles = diagnose.NEEDLES[index]
+                    if not needles or pattern.search(line) is None:
+                        continue
+                    self.assertTrue(
+                        any(needle in lowered for needle in needles),
+                        fixture["id"],
+                    )
+
     def test_npm_signal_order_matches_the_readme(self) -> None:
         fixture = diagnose.load_fixture(ROOT / "fixtures" / "gha" / "npm-test-assertion")
         report = diagnose.diagnose_fixture(fixture)
@@ -899,6 +939,139 @@ class CorpusFixturesTest(unittest.TestCase):
                 "test suite failed summary",
             ],
         )
+
+
+class SourceLocationTest(unittest.TestCase):
+    def _locations(self, text: str) -> list[dict[str, object]]:
+        report = diagnose.build_report(text)
+        locations = report["locations"]
+        self.assertIsInstance(locations, list)
+        assert isinstance(locations, list)
+        return locations
+
+    def test_compilers_quote_source_not_log_lines(self) -> None:
+        samples = {
+            "src/App.java:10: error: cannot find symbol\n": ("src/App.java", 10, None),
+            "Program.cs(12,5): error CS0246: The type 'Widget' could not be found\n": (
+                "Program.cs",
+                12,
+                5,
+            ),
+            "src/app.ts(3,5): error TS2322: Type 'string' is not assignable to type 'number'.\n": (
+                "src/app.ts",
+                3,
+                5,
+            ),
+            "main.cc:8:3: error: use of undeclared identifier 'widget'\n": (
+                "main.cc",
+                8,
+                3,
+            ),
+            "main.c:4:5: error: 'widget' undeclared (first use in this function)\n": (
+                "main.c",
+                4,
+                5,
+            ),
+            "error[E0308]: mismatched types\n --> src/main.rs:10:9\n": (
+                "src/main.rs",
+                10,
+                9,
+            ),
+            "health_test.go:12: got 500, want 200\n": ("health_test.go", 12, None),
+            'File "src/app.py", line 15, in helper\n': ("src/app.py", 15, None),
+            "src/App.kt:10:5: error: unresolved reference: widget\n": (
+                "src/App.kt",
+                10,
+                5,
+            ),
+            "App.swift:9:7: error: cannot find 'widget' in scope\n": (
+                "App.swift",
+                9,
+                7,
+            ),
+            "e: file:///src/App.kt:11:2: Unresolved reference: widget\n": (
+                "/src/App.kt",
+                11,
+                2,
+            ),
+        }
+        for text, (path, line_no, column) in samples.items():
+            locations = self._locations(text)
+            self.assertTrue(locations, text)
+            first = locations[0]
+            self.assertEqual(first["path"], path, text)
+            self.assertEqual(first["line"], line_no, text)
+            self.assertEqual(first["column"], column, text)
+            self.assertNotEqual(first["line"], first["window_line"], text)
+            step = diagnose.build_report(text)["next_steps"]
+            assert isinstance(step, list)
+            self.assertIn(path, str(step[0]))
+            self.assertIn("not a log position", str(step[0]))
+
+    def test_prefixes_windows_paths_and_negatives(self) -> None:
+        ansi = (
+            "build\tCompile\t2026-10-26T01:14:22.1038427Z "
+            "\x1b[31mC:\\src\\App.cs(12,5): error CS0246: missing Widget\x1b[0m\n"
+        )
+        first = self._locations(ansi)[0]
+        self.assertEqual(first["path"], "C:\\src\\App.cs")
+        self.assertEqual(first["line"], 12)
+        self.assertEqual(first["column"], 5)
+        for text in (
+            "2026-10-26T01:14:22.1038427Z Process completed with exit code 1\n",
+            "error code: 520\n",
+            "https://example.com/a.py:1:1\n",
+            "no source here\n",
+        ):
+            self.assertEqual(self._locations(text), [], text)
+
+    def test_secret_in_a_path_is_not_a_location(self) -> None:
+        token = "ghp_" + ("b" * 36)
+        text = f'File "src/{token}.py", line 4\nAssertionError: expected 1\n'
+        report = diagnose.build_report(text)
+        blob = json.dumps(report)
+        self.assertNotIn(token, blob)
+        locations = report["locations"]
+        assert isinstance(locations, list)
+        for loc in locations:
+            assert isinstance(loc, dict)
+            self.assertNotIn("ghp_", str(loc["path"]))
+
+    def test_ascii_window_matches_the_byte_window(self) -> None:
+        text = ("n\n" * 1_200_000) + "src/App.java:10: error: cannot find symbol\n"
+        span = diagnose.prepare_span(text)
+        window, truncated, tail_log = diagnose._window_bytes(text.encode("ascii"))
+        expect = diagnose._span_from_window(window, truncated, tail_log)
+        self.assertTrue(span.truncated)
+        self.assertEqual(span.text, expect.text)
+        self.assertEqual(span.tail_log_line, expect.tail_log_line)
+        self.assertEqual(span.tail_window_line, expect.tail_window_line)
+        self.assertLess(len(span.text.encode()), len(text.encode()))
+
+    def test_tail_log_line_is_not_the_window_line(self) -> None:
+        lines = [f"noise {index}\n" for index in range(250_000)]
+        lines.append("src/App.java:10: error: cannot find symbol\n")
+        text = "".join(lines)
+        report = diagnose.build_report(text)
+        self.assertTrue(report["truncated"])
+        self.assertEqual(report["category"], "test")
+        locations = report["locations"]
+        assert isinstance(locations, list) and locations
+        first = locations[0]
+        self.assertEqual(first["path"], "src/App.java")
+        self.assertEqual(first["line"], 10)
+        self.assertEqual(first["log_line"], 250_001)
+        self.assertLess(int(first["window_line"]), int(first["log_line"]))
+        self.assertIn("original log line 250001", str(report["next_steps"][0]))
+
+    def test_two_locations_do_not_collapse(self) -> None:
+        text = (
+            "src/A.java:2: error: cannot find symbol\n"
+            "src/B.java:9:4: error: cannot find symbol\n"
+        )
+        locations = self._locations(text)
+        self.assertGreaterEqual(len(locations), 2)
+        self.assertIn("2 source locations", str(diagnose.build_report(text)["next_steps"][0]))
 
 
 if __name__ == "__main__":

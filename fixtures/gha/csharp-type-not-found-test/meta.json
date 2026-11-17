@@ -1,0 +1,8 @@
+{
+  "id": "csharp-type-not-found-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "The C# compiler reported CS0246 for a missing type. Not a missing targeting pack. Add the type or the using."
+}

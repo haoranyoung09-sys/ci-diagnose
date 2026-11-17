@@ -1,0 +1,22 @@
+ci-doctor 0.1.0
+id: javac-cannot-find-symbol-test
+log: fixtures/gha/javac-cannot-find-symbol-test/log.txt
+category: test
+confidence: 0.79 (medium)
+advisory: classification only; not a merge decision
+expected_label: test
+label_match: yes
+signals: Java compiler cannot find a symbol
+
+evidence:
+  L4    src/App.java:10: error: cannot find symbol
+       source src/App.java:10
+
+next_steps:
+  1. Open src/App.java:10. That is a source location, not a log position (window line 4). Change that source line or the test that points at it. Do not delete the file to force a green build.
+  2. Open the failing test named in the evidence and compare expected vs received. Change the product code or the assertion, whichever the failure shows is wrong.
+  3. Reproduce with the same command the job ran, then re-run that job. Do not delete or skip the test to force a green build.
+  4. A second failure with a different assertion is a new hypothesis. Stop after two unsuccessful fix attempts.
+
+notes:
+  javac cannot find a symbol. That is a compile error in the Java source, not an unknown exit. Fix the missing type.

@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run dotnet build
+##[endgroup]
+error MSB3644: The reference assemblies for .NETFramework,Version=v4.8 were not found.
+##[error]Process completed with exit code 1.

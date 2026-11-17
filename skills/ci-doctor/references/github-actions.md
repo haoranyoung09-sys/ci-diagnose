@@ -47,7 +47,7 @@ gh run view --job DATABASE_ID --repo OWNER/REPO --log-failed > /tmp/ci-doctor-jo
 python3 scripts/diagnose.py /tmp/ci-doctor-job.log
 ```
 
-Write logs under `/tmp`. Do not commit them. Share the diagnose report, not the raw log. The CLI strips the `job<TAB>step<TAB>timestamp` prefix and truncates input past 2 MB (`truncated: true`).
+Write logs under `/tmp`. Do not commit them. Share the diagnose report, not the raw log. The CLI strips the `job<TAB>step<TAB>timestamp` prefix. Past 2 MB it keeps the start and the end and sets `truncated: true`.
 
 ## After the report
 

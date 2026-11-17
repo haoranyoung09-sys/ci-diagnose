@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.21.0 — 2026-11-17
+
+This published release is 0.21.0. `uses: haoranyoung09-sys/ci-diagnose@v1` includes it once `v1` points at this commit. The curl one-liner pins `v0.21.0`.
+
+ASCII logs over 2MB are windowed without encoding a second full copy. Original `log_line` and compiler `source` locations stay. Same-host timings are in the release notes: memory on the large logs is lower than 0.20.0 and lower than 0.19.0; wall time is a little under 0.20.0 and still a few percent above 0.19.0.
+
+READMEs in English and 中文 separate the Python 3.9+ runtime from log ecosystems, and show a checked javac source-location demo on this release.
+
+251 fixtures. Eval 251/251. Notes: [docs/release-notes-v0.21.0.md](docs/release-notes-v0.21.0.md).
+
+## 0.20.0 — 2026-11-14
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged. The CLI stays Python.
+
+When a compiler names a file, the report separates three positions: `source` (file, line, column in the repo), `line` (position in the kept window), and `log_line` (position in the original log when the middle was omitted). The first next step says to open the source location. Kotlin `unresolved reference:` and Swift `cannot find 'name' in scope` are `test`. A `file://` path is accepted. URLs, timestamps, and redacted tokens are not source locations.
+
+251 fixtures. Eval 251/251. Notes: [docs/release-notes-v0.20.0.md](docs/release-notes-v0.20.0.md).
+
+## 0.19.0 — 2026-11-10
+
+Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged. The CLI stays Python 3.9+ stdlib. A second runtime was not added.
+
+Logs over 2MB keep the start and the end. The middle is not loaded, and the report still says `truncated`. javac `cannot find symbol`, `error CS`, `error TS`, and an undeclared C or C++ name are `test`. `error MSB3644` is `env`. Rule matching skips a regex when a required literal is absent, so a noisy log is scored without a rewrite.
+
+251 fixtures. Eval 251/251. Notes: [docs/release-notes-v0.19.0.md](docs/release-notes-v0.19.0.md).
+
 ## 0.18.0 — 2026-11-05
 
 Clone URLs, Action `uses:` examples, and the install curl URL stay on `https://github.com/haoranyoung09-sys/ci-diagnose`. The Action display name stays `ci-fail-classify`. Inputs, outputs, and branding are unchanged.

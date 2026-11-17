@@ -1,0 +1,8 @@
+{
+  "id": "gcc-undeclared-identifier-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "gcc says the name was undeclared on first use. Fix the C source. Not a missing header search that only says file not found."
+}

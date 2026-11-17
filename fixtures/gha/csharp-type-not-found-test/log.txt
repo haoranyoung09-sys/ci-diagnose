@@ -1,0 +1,5 @@
+##[notice]synthetic redacted fixture — invented for ci-doctor, not a real workflow run
+##[group]Run dotnet build
+##[endgroup]
+Program.cs(12,5): error CS0246: The type or namespace name 'Widget' could not be found
+##[error]Process completed with exit code 1.

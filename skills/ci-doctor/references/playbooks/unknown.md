@@ -40,7 +40,7 @@ Corpus:
 
 Do not rescue a tie by picking the alternate you know how to edit. Do not promote `force-push-refusal-only-unknown` into `permissions` and then force-push. Do not promote `cache-eacces-unknown` into `permissions` and grant `contents: write`.
 
-If `truncated: true`, you do not have the tail of the log. Ask for the failed step, not the whole multi-megabyte file.
+If `truncated: true`, the middle of the log was omitted. The start and the end were scored. Ask for the failed step if that window is still not enough. Do not ask for the whole multi-megabyte file.
 
 ## Recipe
 

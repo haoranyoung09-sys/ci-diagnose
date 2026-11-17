@@ -116,6 +116,10 @@ Docker 构建上下文超过限制是 `infra`（`docker-build-context-too-large-
 
 Slack webhook `404 no_service` 是 `env`（`slack-webhook-404-env`）。Slack `ratelimited` 是 `flake`（`slack-rate-limit-flake`）。缺少 `DD_API_KEY` 或 `NEW_RELIC_LICENSE_KEY` 是 `env`（`datadog-api-key-missing-env`、`newrelic-license-missing-env`）。Pulumi 栈被锁是 `flake`（`pulumi-stack-locked-flake`）。Pulumi 未登录是 `env`（`pulumi-login-missing-env`）。Workers 部署未授权是 `permissions`（`cloudflare-workers-auth-permissions`），不是 CDN 520。缺少 Vercel token 是 `env`（`vercel-token-missing-env`）。`next build` 失败或 Netlify building site 阶段失败是 `test`（`vercel-build-failed-test`、`netlify-build-failed-test`）。Netlify 认证失败是 `permissions`（`netlify-auth-failed-permissions`）。数据库迁移版本 dirty 是 `env`（`laravel-migrate-dirty-env`）。Django 迁移冲突是 `test`（`django-migrate-conflict-test`）。Prisma drift 是 `env`（`prisma-migrate-drift-env`）。Prisma `P1001` 是 `flake`（`prisma-p1001-flake`）。GraphQL schema 合并不了是 `test`（`graphql-schema-conflict-test`）。缺少 Chromatic 或 Percy token 是 `env`（`visual-snapshot-token-missing-env`）。`wasm-ld` 失败是 `test`（`wasm-link-failed-test`）。
 
+## 0.19.0 新增
+
+`error: cannot find symbol` 是 `test`（`javac-cannot-find-symbol-test`）。`error CS` 加数字是 `test`（`csharp-type-not-found-test`）。`error TS` 加数字是 `test`（`tsc-assignability-test`）。未声明的标识符是 `test`（`clang-undeclared-identifier-test`、`gcc-undeclared-identifier-test`）。`error MSB3644` 是 `env`（`msbuild-targeting-pack-missing-env`）。超过 2MB 的日志保留开头和结尾，中间省略，`truncated` 为 true。证据 `line` 是窗口位置。`log_line` 是原始日志行号。`source` 是编译器给出的文件、行和列。Kotlin `unresolved reference:` 和 Swift `cannot find 'name' in scope` 是 `test`。
+
 ## 如何扩展
 
 先加 fixture，再加信号，然后改本文件和 [`skills/ci-doctor/references/taxonomy.md`](../skills/ci-doctor/references/taxonomy.md)。重命名 id 是分类版本变更，不是顺手一改。见 [CONTRIBUTING.md](../CONTRIBUTING.md)。

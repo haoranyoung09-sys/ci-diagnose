@@ -149,16 +149,12 @@ def text_from_log_download(raw: bytes, limit: int) -> str:
             raise ActionError("the run log archive was empty")
         failed = [(name, text) for name, text in files if _failed_log_text(name, text)]
         chosen = failed if failed and len(failed) < len(files) else files
-        pieces: list[str] = []
-        total = 0
-        for name, text in chosen:
-            block = f"# log file: {name}\n{text}"
-            pieces.append(block)
-            total += len(block)
-            if total >= limit:
-                break
-        return "\n".join(pieces)[:limit]
-    return raw.decode("utf-8", errors="replace")[:limit]
+        pieces = [f"# log file: {name}\n{text}" for name, text in chosen]
+        # classify() keeps the head and the tail when this exceeds the cap.
+        del limit
+        return "\n".join(pieces)
+    del limit
+    return raw.decode("utf-8", errors="replace")
 
 
 def _event_pull_request(path: str | None) -> str:
@@ -219,7 +215,9 @@ def render_summary(report: dict[str, object]) -> str:
     if alternates:
         lines.append("| alternates | " + ", ".join(f"`{item}`" for item in alternates) + " |")
     if report.get("truncated"):
-        lines.append("| truncated | log was cut at 2MB before scoring |")
+        lines.append(
+            "| truncated | middle omitted; L numbers are window lines, not source lines |"
+        )
     lines.extend(["", "### Evidence", ""])
     if not evidence:
         lines.append("No evidence line.")
@@ -228,6 +226,13 @@ def render_summary(report: dict[str, object]) -> str:
             assert isinstance(item, dict)
             shown = escape_md(str(item["text"])).replace("`", "'")
             lines.append(f"- L{item['line']}: `{shown}`")
+            source = item.get("source")
+            if isinstance(source, dict):
+                column = source.get("column")
+                place = f"{source['path']}:{source['line']}"
+                if isinstance(column, int):
+                    place += f":{column}"
+                lines.append(f"  source `{escape_md(place)}` (not a log line)")
     lines.extend(["", "### Next step", ""])
     if steps:
         lines.append("1. " + escape_md(str(steps[0])))
@@ -430,8 +435,13 @@ def run(environ: dict[str, str] | None = None, http: HttpFn | None = None) -> in
             path = Path(log_path)
             if not path.is_file():
                 raise ActionError(f"log-path not found: {log_path}")
-            text, truncated = diagnose.read_log_text(path)
-            report = diagnose.build_report(text, log_path=path, truncated=truncated)
+            span = diagnose.read_log_span(path)
+            report = diagnose.build_report(
+                span.text,
+                log_path=path,
+                truncated=span.truncated,
+                span=span,
+            )
         elif fixture:
             directory = diagnose.REPO_ROOT / "fixtures" / "gha" / fixture
             loaded = diagnose.load_fixture(directory)
@@ -453,7 +463,7 @@ def run(environ: dict[str, str] | None = None, http: HttpFn | None = None) -> in
                 write_outputs(env.get("GITHUB_OUTPUT"), report)
                 print(summary)
                 return 0
-            report = diagnose.build_report(text, truncated=len(text.encode("utf-8")) >= diagnose.MAX_BYTES)
+            report = diagnose.build_report(text)
     except diagnose.CorpusError as exc:
         print(str(exc), file=sys.stderr)
         return 2

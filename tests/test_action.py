@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -236,6 +237,35 @@ class ActionEntryTest(unittest.TestCase):
         self.assertEqual(summary, render_demo.build_summary_svg(report))
         self.assertIn("scripts/render_demo.py", terminal)
         self.assertIn("Not a screenshot of GitHub", summary)
+        source_text, _report = render_demo.load_fixture_report(
+            "javac-cannot-find-symbol-test"
+        )
+        source_svg = (ROOT / "docs" / "demo-source-location.svg").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(
+            source_svg,
+            render_demo.build_terminal_svg(
+                source_text,
+                command="python3 scripts/diagnose.py --fixture javac-cannot-find-symbol-test",
+                title="CI Doctor source location demo",
+                desc="Generated from fixtures/gha/javac-cannot-find-symbol-test on this 0.21.0 release. Not a recording of github.com.",
+            ),
+        )
+        saved = (ROOT / "docs" / "examples" / "javac-report.txt").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(saved, source_text)
+        self.assertIn("source src/App.java:10", saved)
+        self.assertIn("not a log position", saved)
+        demo = subprocess.run(
+            ["sh", str(ROOT / "scripts" / "demo_offline.sh")],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(demo.returncode, 0, demo.stderr)
+        self.assertEqual(demo.stdout, saved)
 
 
 if __name__ == "__main__":

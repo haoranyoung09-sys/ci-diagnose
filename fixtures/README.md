@@ -269,6 +269,12 @@ The loader checks `meta.json`, rejects secret-like strings, and fails the smoke 
 | `graphql-schema-conflict-test` | test | GraphQL schema could not be merged. |
 | `visual-snapshot-token-missing-env` | env | Chromatic and Percy tokens are missing. |
 | `wasm-link-failed-test` | test | wasm-ld failed to link. |
+| `javac-cannot-find-symbol-test` | test | javac cannot find a symbol. |
+| `csharp-type-not-found-test` | test | C# CS0246 missing type. |
+| `tsc-assignability-test` | test | tsc TS2322. |
+| `clang-undeclared-identifier-test` | test | clang undeclared identifier. |
+| `gcc-undeclared-identifier-test` | test | gcc undeclared name. |
+| `msbuild-targeting-pack-missing-env` | env | MSB3644 reference assemblies missing. |
 | `android-sdk-location-missing-env` | env | Android SDK location was not found. |
 
 Add a case by the steps in [CONTRIBUTING.md](../CONTRIBUTING.md).

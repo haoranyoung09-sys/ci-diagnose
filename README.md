@@ -2,9 +2,35 @@
 
 [中文](README.zh-CN.md)
 
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
+The only runtime this tool installs is Python 3.9 or newer. That floor is what [`scripts/install.sh`](scripts/install.sh) checks. No compiler, no Rust crate, and no Go module is required to run it.
+
 CI failed, or GitHub Actions is red? Classify the log, quote redacted evidence, propose one minimal fix, and say how to verify it. Advisory only. Not a merge decision.
 
-The Action display name is `ci-fail-classify`. The public GitHub path is still `haoranyoung09-sys/ci-diagnose` until that rename lands. The agent skill directory stays `ci-doctor`. This is not a CI server. It does not build, sign, or host your app. Two ways in, side by side: the Action below, or one install command for the skill and CLI.
+The Action display name is `ci-fail-classify`. The public GitHub path is `haoranyoung09-sys/ci-diagnose`. The agent skill directory stays `ci-doctor`. This is not a CI server. It does not build, sign, or host your app.
+
+## This release is 0.21.0
+
+This published tree is [v0.21.0](https://github.com/haoranyoung09-sys/ci-diagnose/releases/tag/v0.21.0). The skill version in [`skills/ci-doctor/SKILL.md`](skills/ci-doctor/SKILL.md) is `0.21.0`. Source locations, the large-log window, and the ecosystem badges below are on this tag.
+
+`uses: haoranyoung09-sys/ci-diagnose@v1` includes these features once the `v1` tag points at this commit. Inputs, outputs, and branding stay the same.
+
+## Logs we recognize
+
+These badges are ecosystems whose log lines the classifier knows. They are not packages this repo builds or pins. No compiler version is claimed.
+
+[![Java](https://img.shields.io/badge/Java-log%20shapes-007396?logo=openjdk&logoColor=white)](docs/taxonomy.md)
+[![C#](https://img.shields.io/badge/C%23-log%20shapes-512BD4?logo=csharp&logoColor=white)](docs/taxonomy.md)
+[![TypeScript](https://img.shields.io/badge/TypeScript-log%20shapes-3178C6?logo=typescript&logoColor=white)](docs/taxonomy.md)
+[![Rust](https://img.shields.io/badge/Rust-log%20shapes-000000?logo=rust&logoColor=white)](docs/taxonomy.md)
+[![Go](https://img.shields.io/badge/Go-log%20shapes-00ADD8?logo=go&logoColor=white)](docs/taxonomy.md)
+[![C++](https://img.shields.io/badge/C%2B%2B-log%20shapes-00599C?logo=cplusplus&logoColor=white)](docs/taxonomy.md)
+[![Kotlin](https://img.shields.io/badge/Kotlin-log%20shapes-7F52FF?logo=kotlin&logoColor=white)](docs/taxonomy.md)
+[![Swift](https://img.shields.io/badge/Swift-log%20shapes-F05138?logo=swift&logoColor=white)](docs/taxonomy.md)
+
+Python also appears as a log shape (`File "…", line N`, pytest `FAILED`). That is separate from the Python 3.9+ runtime badge above.
 
 ## How this differs
 
@@ -62,13 +88,13 @@ bash scripts/install.sh --user --cli
 
 That prints the skill path (`~/.agents/skills/ci-doctor`) and, with `--cli`, writes `~/.local/bin/diagnose`. Add `~/.local/bin` to `PATH` if the script says it is missing. `--project` links `./.agents/skills/ci-doctor` in the current directory instead. `--claude` is only for Claude Code; Cursor would then load the skill twice.
 
-The Action above stays `uses: haoranyoung09-sys/ci-diagnose@v1`. That `@v1` tag moves when a release stays compatible. The install script is pinned to a release tag. For this release, after `v0.18.0` is on the public mirror:
+`uses: haoranyoung09-sys/ci-diagnose@v1` includes this release once `v1` points here. The curl install is pinned to `v0.21.0`. It does not send a token.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.18.0/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/haoranyoung09-sys/ci-diagnose/v0.21.0/scripts/install.sh | bash
 ```
 
-That download uses the tag archive. It does not send a token. If the tag is missing, the script stops and tells you to run it from a checkout. Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
+Details: [docs/hosts.md](docs/hosts.md). How the Action, CLI, and skill fit together: [docs/architecture.md](docs/architecture.md).
 
 ## 30-second demo
 
@@ -81,7 +107,19 @@ python3 scripts/diagnose.py --fixture npm-ci-lockfile-drift
 make eval
 ```
 
-The fixture command prints a `deps` report for an `npm ci` lockfile drift. `make eval` prints accuracy and a confusion matrix for `fixtures/gha` (245 fixtures). It does not call `gh`.
+That fixture command prints a `deps` report for an `npm ci` lockfile drift. The pictures above are that report. They are generated text, not a recording of github.com.
+
+This release also names a compiler file and line. From this directory:
+
+```bash
+sh scripts/demo_offline.sh
+```
+
+The saved output, checked against that command, is [`docs/examples/javac-report.txt`](docs/examples/javac-report.txt). The picture is generated from the same text. It is not a screen recording.
+
+![Source location for javac-cannot-find-symbol-test](docs/demo-source-location.svg)
+
+`make eval` prints accuracy and a confusion matrix for `fixtures/gha`. It does not call `gh`. `make bench` repeats `scripts/bench_classify.py`.
 
 Weekly notes: [docs/PROGRESS.md](docs/PROGRESS.md).
 
@@ -113,7 +151,7 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 
 ### How it works
 
-1. Read the log. Stop at 2MB. An empty log stays `unknown`. A signal that sits past the cut is not scored, and the report says `truncated`.
+1. Read the log. Keep at most 2MB: the start and the end. The middle is omitted and the report says `truncated`. An empty log stays `unknown`.
 2. Strip `gh` job, step, and timestamp prefixes. Redact common token shapes, then score. Redaction is best-effort.
 3. If the log names more than one job and only some of them failed, score the failed jobs. A phrase on a green job does not win (`multi-job-one-step-failed`). If the failed job has no signal, the result stays `unknown` (`multi-job-green-noise-unknown`).
 4. Open the playbook for that category and follow one recipe. A tie is not permission to pick the easier side.
@@ -198,6 +236,8 @@ Definitions and the fixture for each signal: [docs/taxonomy.md](docs/taxonomy.md
 | Slack webhook 404, or a missing Datadog key | `env` | `slack-webhook-404-env`, `datadog-api-key-missing-env` |
 | Pulumi stack lock, or Prisma P1001 | `flake` | `pulumi-stack-locked-flake`, `prisma-p1001-flake` |
 | Workers deploy unauthorized, or a Vercel build failure | `permissions` / `test` | `cloudflare-workers-auth-permissions`, `vercel-build-failed-test` |
+| javac, csc, tsc, or clang/gcc undeclared name | `test` | `javac-cannot-find-symbol-test`, `csharp-type-not-found-test`, `tsc-assignability-test`, `clang-undeclared-identifier-test` |
+| MSBuild targeting pack missing | `env` | `msbuild-targeting-pack-missing-env` |
 
 Playbooks: [`skills/ci-doctor/references/playbooks/`](skills/ci-doctor/references/playbooks/). Each one has a recipe, a verify step, a stop, and a short 中文 note.
 
@@ -248,7 +288,7 @@ python3 scripts/diagnose.py --self-check
 
 `.github/workflows/triage-comment.yml` is an experimental sketch of a read-only failure comment. The job is disabled (`if: false`), the workflow has `contents: read` only, and it stores no token.
 
-A log larger than 2MB is cut on a newline under that cap before scoring, and the report says `truncated`. The rest of the file is not loaded.
+A log larger than 2MB keeps its start and its end. The middle is not loaded. The report says `truncated`. Evidence `L` numbers are positions in that window. When the kept tail is not the start of the file, the report also gives the original log line. A compiler path such as `src/App.java:10` is a source location, not either of those log positions.
 
 A single fixture looks like this:
 
@@ -308,7 +348,7 @@ One job needs the API `databaseId` from `gh run view --json jobs`, not the trail
 - Never force-push, and never rewrite published history unless the operator asked.
 - Do not widen `permissions:` to `write-all` or replace `GITHUB_TOKEN` with a personal token to get a green job.
 - Confidence is `high`, `medium`, or `low`. Do not say a change is safe to merge.
-- Logs over 2 MB are truncated and the report sets `truncated` to true.
+- Logs over 2 MB keep the start and the end. The report sets `truncated` to true.
 
 ## Taxonomy
 

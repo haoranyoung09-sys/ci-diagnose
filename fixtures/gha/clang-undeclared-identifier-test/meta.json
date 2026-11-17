@@ -1,0 +1,8 @@
+{
+  "id": "clang-undeclared-identifier-test",
+  "label": "test",
+  "source": "synthetic",
+  "redacted": true,
+  "host": "github-actions",
+  "notes": "clang says the identifier was not declared. Fix the C or C++ source. Not a linker out-of-memory line."
+}
